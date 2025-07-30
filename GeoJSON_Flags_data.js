@@ -1257,7 +1257,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"350",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"350","city":"0","repair":"74"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"350","city":"0","repair":"100"},
 "geometry":{"type":"Polygon","coordinates":[[[-2890,-1741],[-2863,-1741],[-2863,-1734],[-2890,-1734]]]} 
 },
 {"type":"Feature",
