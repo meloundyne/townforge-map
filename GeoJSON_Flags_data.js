@@ -222,7 +222,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"56",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"156 x 36","economic_power":"150","id":"56","city":"0","repair":"80"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"156 x 36","economic_power":"150","id":"56","city":"0","repair":"79"},
 "geometry":{"type":"Polygon","coordinates":[[[-796,305],[-641,305],[-641,340],[-796,340]]]} 
 },
 {"type":"Feature",
@@ -252,7 +252,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"79",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"32 x 64","economic_power":"150","id":"79","city":"0","repair":"93"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"32 x 64","economic_power":"150","id":"79","city":"0","repair":"92"},
 "geometry":{"type":"Polygon","coordinates":[[[-2710,-2954],[-2679,-2954],[-2679,-2891],[-2710,-2891]]]} 
 },
 {"type":"Feature",
@@ -262,7 +262,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"81",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"128 x 15","economic_power":"150","id":"81","city":"0","repair":"82"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"128 x 15","economic_power":"150","id":"81","city":"0","repair":"81"},
 "geometry":{"type":"Polygon","coordinates":[[[-2710,-2969],[-2583,-2969],[-2583,-2955],[-2710,-2955]]]} 
 },
 {"type":"Feature",
@@ -302,7 +302,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"113",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 65","economic_power":"150","id":"113","city":"0","repair":"74"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 65","economic_power":"150","id":"113","city":"0","repair":"99"},
 "geometry":{"type":"Polygon","coordinates":[[[6750,4865],[6764,4865],[6764,4929],[6750,4929]]]} 
 },
 {"type":"Feature",
@@ -317,7 +317,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"124",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 60","economic_power":"150","id":"124","city":"0","repair":"86"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 60","economic_power":"150","id":"124","city":"0","repair":"85"},
 "geometry":{"type":"Polygon","coordinates":[[[5469,820],[5483,820],[5483,879],[5469,879]]]} 
 },
 {"type":"Feature",
@@ -417,7 +417,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"144",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"17","role_name":"fishery","size":"120 x 208","economic_power":"150","id":"144","city":"0","repair":"79"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"17","role_name":"fishery","size":"120 x 208","economic_power":"150","id":"144","city":"0","repair":"78"},
 "geometry":{"type":"Polygon","coordinates":[[[3305,-2711],[3424,-2711],[3424,-2504],[3305,-2504]]]} 
 },
 {"type":"Feature",
@@ -447,7 +447,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"157",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"156 x 256","economic_power":"150","id":"157","city":"0","repair":"94"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"156 x 256","economic_power":"150","id":"157","city":"0","repair":"93"},
 "geometry":{"type":"Polygon","coordinates":[[[-796,341],[-641,341],[-641,596],[-796,596]]]} 
 },
 {"type":"Feature",
@@ -467,7 +467,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"161",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"150","id":"161","city":"0","repair":"98"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"150","id":"161","city":"0","repair":"97"},
 "geometry":{"type":"Polygon","coordinates":[[[940,-1523],[1195,-1523],[1195,-1268],[940,-1268]]]} 
 },
 {"type":"Feature",
@@ -632,12 +632,12 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"217",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 79","economic_power":"150","id":"217","city":"0","repair":"99"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 79","economic_power":"150","id":"217","city":"0","repair":"98"},
 "geometry":{"type":"Polygon","coordinates":[[[-2582,-2969],[-2568,-2969],[-2568,-2891],[-2582,-2891]]]} 
 },
 {"type":"Feature",
 "id":"218",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"17","role_name":"fishery","size":"124 x 124","economic_power":"120","id":"218","city":"0","repair":"76"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"17","role_name":"fishery","size":"124 x 124","economic_power":"120","id":"218","city":"0","repair":"75"},
 "geometry":{"type":"Polygon","coordinates":[[[-2708,-3093],[-2585,-3093],[-2585,-2970],[-2708,-2970]]]} 
 },
 {"type":"Feature",
@@ -697,7 +697,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"230",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 256","economic_power":"100","id":"230","city":"0","repair":"96"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 256","economic_power":"100","id":"230","city":"0","repair":"95"},
 "geometry":{"type":"Polygon","coordinates":[[[-530,-1461],[-523,-1461],[-523,-1206],[-530,-1206]]]} 
 },
 {"type":"Feature",
@@ -717,7 +717,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"234",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"32 x 64","economic_power":"100","id":"234","city":"0","repair":"77"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"32 x 64","economic_power":"100","id":"234","city":"0","repair":"76"},
 "geometry":{"type":"Polygon","coordinates":[[[-2171,-2930],[-2140,-2930],[-2140,-2867],[-2171,-2867]]]} 
 },
 {"type":"Feature",
@@ -727,12 +727,12 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"236",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"128 x 15","economic_power":"100","id":"236","city":"0","repair":"97"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"128 x 15","economic_power":"100","id":"236","city":"0","repair":"96"},
 "geometry":{"type":"Polygon","coordinates":[[[-2235,-2945],[-2108,-2945],[-2108,-2931],[-2235,-2931]]]} 
 },
 {"type":"Feature",
 "id":"237",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 79","economic_power":"100","id":"237","city":"0","repair":"95"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"15 x 79","economic_power":"100","id":"237","city":"0","repair":"94"},
 "geometry":{"type":"Polygon","coordinates":[[[-2107,-2945],[-2093,-2945],[-2093,-2867],[-2107,-2867]]]} 
 },
 {"type":"Feature",
@@ -767,7 +767,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"244",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"126 x 15","economic_power":"100","id":"244","city":"0","repair":"84"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"126 x 15","economic_power":"100","id":"244","city":"0","repair":"83"},
 "geometry":{"type":"Polygon","coordinates":[[[-2223,-2779],[-2098,-2779],[-2098,-2765],[-2223,-2765]]]} 
 },
 {"type":"Feature",
@@ -947,7 +947,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"287",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"287","city":"0","repair":"82"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"287","city":"0","repair":"81"},
 "geometry":{"type":"Polygon","coordinates":[[[-2733,-1859],[-2724,-1859],[-2724,-1850],[-2733,-1850]]]} 
 },
 {"type":"Feature",
@@ -1057,7 +1057,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"310",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 28","economic_power":"100","id":"310","city":"0","repair":"81"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 28","economic_power":"100","id":"310","city":"0","repair":"80"},
 "geometry":{"type":"Polygon","coordinates":[[[-2662,-1849],[-2655,-1849],[-2655,-1822],[-2662,-1822]]]} 
 },
 {"type":"Feature",
@@ -1142,7 +1142,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"327",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"327","city":"0","repair":"86"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"327","city":"0","repair":"85"},
 "geometry":{"type":"Polygon","coordinates":[[[-2900,-1722],[-2891,-1722],[-2891,-1713],[-2900,-1713]]]} 
 },
 {"type":"Feature",
@@ -1152,7 +1152,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"329",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"329","city":"0","repair":"95"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"329","city":"0","repair":"94"},
 "geometry":{"type":"Polygon","coordinates":[[[-2900,-1702],[-2891,-1702],[-2891,-1693],[-2900,-1693]]]} 
 },
 {"type":"Feature",
@@ -1162,7 +1162,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"331",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"331","city":"0","repair":"94"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"331","city":"0","repair":"93"},
 "geometry":{"type":"Polygon","coordinates":[[[-2900,-1682],[-2891,-1682],[-2891,-1673],[-2900,-1673]]]} 
 },
 {"type":"Feature",
@@ -1172,7 +1172,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"333",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"333","city":"0","repair":"82"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"333","city":"0","repair":"81"},
 "geometry":{"type":"Polygon","coordinates":[[[-2900,-1662],[-2891,-1662],[-2891,-1653],[-2900,-1653]]]} 
 },
 {"type":"Feature",
@@ -1252,12 +1252,12 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"349",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"349","city":"0","repair":"92"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"349","city":"0","repair":"91"},
 "geometry":{"type":"Polygon","coordinates":[[[-2890,-1751],[-2863,-1751],[-2863,-1744],[-2890,-1744]]]} 
 },
 {"type":"Feature",
 "id":"350",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"350","city":"0","repair":"75"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"350","city":"0","repair":"74"},
 "geometry":{"type":"Polygon","coordinates":[[[-2890,-1741],[-2863,-1741],[-2863,-1734],[-2890,-1734]]]} 
 },
 {"type":"Feature",
@@ -1277,12 +1277,12 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"354",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"354","city":"0","repair":"81"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"354","city":"0","repair":"80"},
 "geometry":{"type":"Polygon","coordinates":[[[-2890,-1701],[-2863,-1701],[-2863,-1694],[-2890,-1694]]]} 
 },
 {"type":"Feature",
 "id":"355",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"355","city":"0","repair":"96"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"355","city":"0","repair":"95"},
 "geometry":{"type":"Polygon","coordinates":[[[-2890,-1691],[-2863,-1691],[-2863,-1684],[-2890,-1684]]]} 
 },
 {"type":"Feature",
@@ -1292,7 +1292,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"357",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"357","city":"0","repair":"92"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"357","city":"0","repair":"91"},
 "geometry":{"type":"Polygon","coordinates":[[[-2890,-1671],[-2863,-1671],[-2863,-1664],[-2890,-1664]]]} 
 },
 {"type":"Feature",
@@ -1412,7 +1412,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"381",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"381","city":"0","repair":"83"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"381","city":"0","repair":"82"},
 "geometry":{"type":"Polygon","coordinates":[[[-2578,-1674],[-2569,-1674],[-2569,-1665],[-2578,-1665]]]} 
 },
 {"type":"Feature",
@@ -1427,7 +1427,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"384",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"384","city":"0","repair":"99"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"10 x 10","economic_power":"100","id":"384","city":"0","repair":"98"},
 "geometry":{"type":"Polygon","coordinates":[[[-2578,-1704],[-2569,-1704],[-2569,-1695],[-2578,-1695]]]} 
 },
 {"type":"Feature",
@@ -1492,27 +1492,27 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"397",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"397","city":"0","repair":"87"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"397","city":"0","repair":"86"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1593],[-2579,-1593],[-2579,-1586],[-2606,-1586]]]} 
 },
 {"type":"Feature",
 "id":"398",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"398","city":"0","repair":"92"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"398","city":"0","repair":"91"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1603],[-2579,-1603],[-2579,-1596],[-2606,-1596]]]} 
 },
 {"type":"Feature",
 "id":"399",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"399","city":"0","repair":"74"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"399","city":"0","repair":"99"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1613],[-2579,-1613],[-2579,-1606],[-2606,-1606]]]} 
 },
 {"type":"Feature",
 "id":"400",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"400","city":"0","repair":"93"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"400","city":"0","repair":"92"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1623],[-2579,-1623],[-2579,-1616],[-2606,-1616]]]} 
 },
 {"type":"Feature",
 "id":"401",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"401","city":"0","repair":"95"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"401","city":"0","repair":"94"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1633],[-2579,-1633],[-2579,-1626],[-2606,-1626]]]} 
 },
 {"type":"Feature",
@@ -1522,7 +1522,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"403",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"403","city":"0","repair":"81"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"403","city":"0","repair":"80"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1663],[-2579,-1663],[-2579,-1656],[-2606,-1656]]]} 
 },
 {"type":"Feature",
@@ -1537,7 +1537,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"406",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"406","city":"0","repair":"78"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"406","city":"0","repair":"77"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1683],[-2579,-1683],[-2579,-1676],[-2606,-1676]]]} 
 },
 {"type":"Feature",
@@ -1597,7 +1597,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"418",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"418","city":"0","repair":"83"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"28 x 8","economic_power":"100","id":"418","city":"0","repair":"82"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1803],[-2579,-1803],[-2579,-1796],[-2606,-1796]]]} 
 },
 {"type":"Feature",
@@ -1727,7 +1727,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"447",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 28","economic_power":"100","id":"447","city":"0","repair":"87"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 28","economic_power":"100","id":"447","city":"0","repair":"86"},
 "geometry":{"type":"Polygon","coordinates":[[[-2624,-1565],[-2617,-1565],[-2617,-1538],[-2624,-1538]]]} 
 },
 {"type":"Feature",
@@ -1752,7 +1752,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"452",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 28","economic_power":"100","id":"452","city":"0","repair":"87"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"8 x 28","economic_power":"100","id":"452","city":"0","repair":"86"},
 "geometry":{"type":"Polygon","coordinates":[[[-2674,-1565],[-2667,-1565],[-2667,-1538],[-2674,-1538]]]} 
 },
 {"type":"Feature",
@@ -1857,7 +1857,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"474",
-"properties":{"name":"","owner":"yaoxi","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"150","id":"474","city":"0","repair":"88"},
+"properties":{"name":"","owner":"yaoxi","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"150","id":"474","city":"0","repair":"87"},
 "geometry":{"type":"Polygon","coordinates":[[[1238,518],[1493,518],[1493,773],[1238,773]]]} 
 },
 {"type":"Feature",
@@ -1877,7 +1877,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"478",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"150","id":"478","city":"0","repair":"77"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"150","id":"478","city":"0","repair":"76"},
 "geometry":{"type":"Polygon","coordinates":[[[1532,252],[1787,252],[1787,507],[1532,507]]]} 
 },
 {"type":"Feature",
@@ -1962,7 +1962,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"495",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"495","city":"0","repair":"83"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"495","city":"0","repair":"82"},
 "geometry":{"type":"Polygon","coordinates":[[[843,1771],[1098,1771],[1098,2026],[843,2026]]]} 
 },
 {"type":"Feature",
@@ -1987,7 +1987,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"500",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"500","city":"0","repair":"84"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"500","city":"0","repair":"83"},
 "geometry":{"type":"Polygon","coordinates":[[[1488,1124],[1743,1124],[1743,1379],[1488,1379]]]} 
 },
 {"type":"Feature",
@@ -2032,7 +2032,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"510",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"510","city":"0","repair":"91"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"510","city":"0","repair":"90"},
 "geometry":{"type":"Polygon","coordinates":[[[397,570],[652,570],[652,825],[397,825]]]} 
 },
 {"type":"Feature",
@@ -2062,7 +2062,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"516",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"516","city":"0","repair":"91"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"516","city":"0","repair":"90"},
 "geometry":{"type":"Polygon","coordinates":[[[-872,597],[-617,597],[-617,852],[-872,852]]]} 
 },
 {"type":"Feature",
@@ -2072,7 +2072,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"518",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"518","city":"0","repair":"91"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"518","city":"0","repair":"90"},
 "geometry":{"type":"Polygon","coordinates":[[[-596,853],[-341,853],[-341,1108],[-596,1108]]]} 
 },
 {"type":"Feature",
@@ -2087,7 +2087,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"521",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"521","city":"0","repair":"93"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"200","id":"521","city":"0","repair":"92"},
 "geometry":{"type":"Polygon","coordinates":[[[-570,1109],[-315,1109],[-315,1364],[-570,1364]]]} 
 },
 {"type":"Feature",
@@ -2097,12 +2097,12 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"523",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"523","city":"0","repair":"98"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"523","city":"0","repair":"97"},
 "geometry":{"type":"Polygon","coordinates":[[[-58,1357],[197,1357],[197,1612],[-58,1612]]]} 
 },
 {"type":"Feature",
 "id":"524",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"524","city":"0","repair":"84"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"1","role_name":"agricultural","size":"256 x 256","economic_power":"200","id":"524","city":"0","repair":"83"},
 "geometry":{"type":"Polygon","coordinates":[[[-314,1365],[-59,1365],[-59,1620],[-314,1620]]]} 
 },
 {"type":"Feature",
@@ -2167,7 +2167,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"539",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"10","role_name":"stonecutter","size":"221 x 223","economic_power":"200","id":"539","city":"0","repair":"97"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"10","role_name":"stonecutter","size":"221 x 223","economic_power":"200","id":"539","city":"0","repair":"96"},
 "geometry":{"type":"Polygon","coordinates":[[[564,-2647],[784,-2647],[784,-2425],[564,-2425]]]} 
 },
 {"type":"Feature",
@@ -2259,7 +2259,7 @@ var Flags_city1 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"553",
-"properties":{"name":"sdf","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"300","id":"553","city":"1","repair":"98"},
+"properties":{"name":"sdf","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"300","id":"553","city":"1","repair":"97"},
 "geometry":{"type":"Polygon","coordinates":[[[-1894,-306],[-1639,-306],[-1639,-51],[-1894,-51]]]} 
 },
 {"type":"Feature",
@@ -2324,7 +2324,7 @@ var Flags_city1 = {"type":"FeatureCollection","features":[
 },
 {"type":"Feature",
 "id":"566",
-"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"300","id":"566","city":"1","repair":"98"},
+"properties":{"name":"","owner":"Meloun","active":"true","role":"5","role_name":"basic residential","size":"256 x 256","economic_power":"300","id":"566","city":"1","repair":"97"},
 "geometry":{"type":"Polygon","coordinates":[[[-2324,1547],[-2069,1547],[-2069,1802],[-2324,1802]]]} 
 },
 {"type":"Feature",
@@ -2346,7 +2346,7 @@ var Flags_city1 = {"type":"FeatureCollection","features":[
 var Flags_city2 = {"type":"FeatureCollection","features":[
 {"type":"Feature",
 "id":"550",
-"properties":{"name":"njkdcskjnds sdfsdf dffse errerw town square","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"256 x 256","economic_power":"150","id":"550","city":"2","repair":"98"},
+"properties":{"name":"njkdcskjnds sdfsdf dffse errerw town square","owner":"Meloun","active":"true","role":"15","role_name":"road","size":"256 x 256","economic_power":"150","id":"550","city":"2","repair":"97"},
 "geometry":{"type":"Polygon","coordinates":[[[-128,-128],[127,-128],[127,127],[-128,127]]]} 
 },
 ]}
