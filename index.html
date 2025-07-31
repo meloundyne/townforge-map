@@ -41,12 +41,12 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
     display: none;
 }
 </style>
-<!-- info box top rigth--> 
+<!-- info box top right--> 
 <style>
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } 
 .info h4 { margin: 0 0 5px; color: #777; }
 </style>
-<!-- info box top rigth-->
+<!-- info box top right-->
 <!-- info legend bottom right-->
 <style>
 .circle_repair {
@@ -251,7 +251,7 @@ const GeoJSON_Flags_Owner_City_3 = L.geoJson(Flags_city3, {
 	})
 inactive_flags3.addTo(BaseLayer_GeoJSON_City_3)
 
-//<!-- Info panel top rigth -->>
+//<!-- Info panel top right -->>
 const info = L.control();
 
 info.onAdd = function (map) {
@@ -266,7 +266,7 @@ info.update = function (props) {
 	};
 
 info.addTo(map);	
-//<!-- Info panel top rigth -->>
+//<!-- Info panel top right -->>
 
 function getColor(d) {
                 return  d == 0  ? "white"  :
@@ -481,7 +481,7 @@ L.rectangle([xy([-11783, -3748]),xy([51102, 17889])], {color: 'Orange',fill: fal
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_2);
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_3);
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> / Generated at 2025/07/30_21:26 UTC / Blockchain height: 1,288,440')
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> / Generated at 2025/07/31_11:56 UTC / Blockchain height: 1,288,440')
 function getFlagIDFromName(value) {
   // Find the feature with the matching name
   const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3,];
@@ -490,7 +490,7 @@ function getFlagIDFromName(value) {
   // Return the entire properties object if found, otherwise null
 	if (feature) {
 	const log_message000210 = value
-	const log_message000211 = 'Name : ID'
+	const log_message000211 = ' : Name | ID : '
 	const log_message000212 = feature.properties.id
 	log_message0002 = log_message000210 + log_message000211 + log_message000212
 	console.log(log_message0002)
@@ -597,7 +597,7 @@ if (city === '3') { BaseLayer_GeoJSON_City_3.addTo(map)}
 function goToFlag1() {
         var x = document.getElementById('search_form_1');
         var text001 = '';
-        text001 += 'Go To Flag Id:' + x.elements[0].value
+        text001 += 'Go To Flag Id: ' + x.elements[0].value
 		console.log(text001);
 		const log_message0001 = getCoordinatesInfoFromID(x.elements[0].value);
 		console.log(log_message0001);
@@ -605,7 +605,7 @@ function goToFlag1() {
 function goToFlag2() {
         var x = document.getElementById('search_form_2');
         var text001 = '';
-        text001 += 'Go To Flag Name:' + x.elements[0].value
+        text001 += 'Go To Flag Name: ' + x.elements[0].value
 		console.log(text001);
 		const log_message0001 = getCoordinatesInfoFromID(getFlagIDFromName(x.elements[0].value));
 		console.log(log_message0001);
@@ -613,35 +613,26 @@ function goToFlag2() {
 
 function sendToConsole1() {                                 
 		var x = document.getElementById('search_form_1');              
-		var text = '<b>Results:</b>';                                        
-		var i;                                                
-		for (i = 0; i < x.length ;i++) {                      
+		var text = '<b>Results:</b>';                                                            
 		text += getFlagInfoFromID(x.elements[0].value) + '<br>';
 		document.getElementById("search_form_result1").innerHTML = text;
 		document.getElementById("button01").disabled = false;
-		console.log(x.elements[i].value);
-		}                                                       
+		console.log(x.elements[0].value);                                                     
 	}
 function sendToConsole2() {                                 
-		var x = document.getElementById('search_form_2');              
-		var text = '<b>Results:</b>';                                        
-		var i;                                                
-		for (i = 0; i < x.length ;i++) {                      
+		var x = document.getElementById('search_form_2');
+		console.log(x.elements[0].value);
+		var text = '<b>Results:</b>';                                                            
 		text += getFlagInfoFromID(getFlagIDFromName(x.elements[0].value)) + '<br>';
 		document.getElementById("search_form_result2").innerHTML = text;
 		document.getElementById("button02").disabled = false;
-		console.log(x.elements[i].value);
-		}                                                       
 	}
 function sendToConsole3() {                                 
 		var x = document.getElementById('search_form_3');              
-		var text = '<b>Owned Flags:</b><br>';                                        
-		var i;                                                
-		for (i = 0; i < x.length ;i++) {                      
+		var text = '<b>Owned Flags:</b><br>';                                                            
 		text += getAccountFromName(x.elements[0].value) + '<br>';
 		document.getElementById("search_form_result3").innerHTML = text;
-		console.log(x.elements[i].value);
-		}                                                       
+		console.log(x.elements[0].value);                                                   
 	}
 function runAutocomplete_flag_id() {
 	/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
@@ -740,9 +731,9 @@ onClick: () => {
   ],
 }).addTo(map);
 //<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
-// <!-- x=0 y=0 zoom=0 -->
+//<!-- x=0 y=0 zoom=0 -->
 map.setView( [0, 0], -1);
-// <!-- x=0 y=0 zoom=0 -->
+//<!-- x=0 y=0 zoom=0 -->
 </script>
 </body>
 </html>
