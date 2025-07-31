@@ -139,7 +139,7 @@ L.simpleGraticule(options).addTo(map);
 //<!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
 var bounds = [[-50102,-50102], [50102,50102]];map.fitBounds(bounds);
 map.setMaxBounds([[-55102,-55102], [55102,55102]]);
-var legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"circle_repair\">> 70%</div>   <br><div style=\"background-color:LightSalmon\" class=\"circle_repair\">> 60%</div>  <br><div style=\"background-color:Coral\" class=\"circle_repair\">> 50%</div>        <br><div style=\"background-color:Tomato\" class=\"circle_repair\">> 40%</div>       <br><div style=\"background-color:OrangeRed\" class=\"circle_repair\">> 30%</div>    <br><div style=\"background-color:MediumPurple\" class=\"circle_repair\">> 20%</div> <br><div style=\"background-color:RebeccaPurple\" class=\"circle_repair\">> 00%</div><br><div style=\"background-color:white\" class=\"circle_repair\">= 00%</div>        "                                                                                    
+const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"circle_repair\">> 70%</div>   <br><div style=\"background-color:LightSalmon\" class=\"circle_repair\">> 60%</div>  <br><div style=\"background-color:Coral\" class=\"circle_repair\">> 50%</div>        <br><div style=\"background-color:Tomato\" class=\"circle_repair\">> 40%</div>       <br><div style=\"background-color:OrangeRed\" class=\"circle_repair\">> 30%</div>    <br><div style=\"background-color:MediumPurple\" class=\"circle_repair\">> 20%</div> <br><div style=\"background-color:RebeccaPurple\" class=\"circle_repair\">> 00%</div><br><div style=\"background-color:white\" class=\"circle_repair\">= 00%</div>        "                                                                                    
 const legend_repair = L.control({position: 'bottomright'});                          
 legend_repair.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -151,7 +151,7 @@ legend_repair.onAdd = function (map) {
 //legend_repair.addTo(map);
 
 
-var legend_role_text="<div style=\"background-color:    white \" class=\"circle_role\">none                </div><br><div style=\"background-color:LawnGreen \" class=\"circle_role\">agricultural        </div><br><div style=\"background-color:Cyan \" class=\"circle_role\">craft               </div><br><div style=\"background-color:SaddleBrown \" class=\"circle_role\">industrial          </div><br><div style=\"background-color:Magenta \" class=\"circle_role\">commercial          </div><br><div style=\"background-color:Orange \" class=\"circle_role\">basic residential   </div><br><div style=\"background-color:DarkOrange \" class=\"circle_role\">affluent residential</div><br><div style=\"background-color:OrangeRed \" class=\"circle_role\">luxury residential  </div><br><div style=\"background-color:DarkSlateGray \" class=\"circle_role\">military            </div><br><div style=\"background-color:MediumSlateBlue \" class=\"circle_role\">cultural            </div><br><div style=\"background-color:Silver\" class=\"circle_role\">stonecutter         </div><br><div style=\"background-color:ForestGreen\" class=\"circle_role\">sawmill             </div><br><div style=\"background-color:SandyBrown\" class=\"circle_role\">kiln                </div><br><div style=\"background-color:Tan\" class=\"circle_role\">smelter             </div><br><div style=\"background-color:NavajoWhite\" class=\"circle_role\">workforce           </div><br><div style=\"background-color:DimGray\" class=\"circle_role\">road                </div><br><div style=\"background-color:RebeccaPurple\" class=\"circle_role\">research            </div><br><div style=\"background-color:RoyalBlue\" class=\"circle_role\">fishery             </div>"
+const legend_role_text="<div style=\"background-color:    white \" class=\"circle_role\">none                </div><br><div style=\"background-color:LawnGreen \" class=\"circle_role\">agricultural        </div><br><div style=\"background-color:Cyan \" class=\"circle_role\">craft               </div><br><div style=\"background-color:SaddleBrown \" class=\"circle_role\">industrial          </div><br><div style=\"background-color:Magenta \" class=\"circle_role\">commercial          </div><br><div style=\"background-color:Orange \" class=\"circle_role\">basic residential   </div><br><div style=\"background-color:DarkOrange \" class=\"circle_role\">affluent residential</div><br><div style=\"background-color:OrangeRed \" class=\"circle_role\">luxury residential  </div><br><div style=\"background-color:DarkSlateGray \" class=\"circle_role\">military            </div><br><div style=\"background-color:MediumSlateBlue \" class=\"circle_role\">cultural            </div><br><div style=\"background-color:Silver\" class=\"circle_role\">stonecutter         </div><br><div style=\"background-color:ForestGreen\" class=\"circle_role\">sawmill             </div><br><div style=\"background-color:SandyBrown\" class=\"circle_role\">kiln                </div><br><div style=\"background-color:Tan\" class=\"circle_role\">smelter             </div><br><div style=\"background-color:NavajoWhite\" class=\"circle_role\">workforce           </div><br><div style=\"background-color:DimGray\" class=\"circle_role\">road                </div><br><div style=\"background-color:RebeccaPurple\" class=\"circle_role\">research            </div><br><div style=\"background-color:RoyalBlue\" class=\"circle_role\">fishery             </div>"
            
 const legend_role = L.control({position: 'bottomright'});    
 legend_role.onAdd = function (map) {        
@@ -164,7 +164,7 @@ legend_role.onAdd = function (map) {
 legend_role.addTo(map);          
 
         
-var legend_owner_text="Colors are generated from account name"
+const legend_owner_text="Colors are generated from account name"
 
 const legend_owner = L.control({position: 'bottomright'});
 legend_owner.onAdd = function (map) {
@@ -175,14 +175,12 @@ legend_owner.onAdd = function (map) {
 };
 
 //legend_owner.addTo(map);
-
-var all_flags = ["1","2","3","4","5","9","10","12","13","14","15","18","19","23","25","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","79","80","81","82","83","84","103","108","109","111","113","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","172","173","174","175","186","187","188","189","190","191","192","193","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","253","254","255","256","257","258","259","260","261","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569",] 
-
-var account_ids = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36",] 
-
-var account_names = ["Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsengaard treasury","Meloun","L","Romer","Syksy","Rucknium","Avatar I","Avatar II grey","Avatar III fat","PotR","PotR jr","Avatar test","badjabber","A16","TFQuests","Avatar 4","Avatar V","Avatar 6","Avatar 7","Avatar 11","avatar 8","yaoxi","Island treasury","Avatar 12","Avatar 13","preland","Pauleheister","jdawg420","redcathode","jdawg42","njkdcskjnds sdfsdf dffse errerw treasury","ABC123 treasury","Happy Cook",]
-
-var flag_names = ["Helsengaard town square","Tower","North Road","farm","Agricultural Field","Chop Chop on the Beach","East Street I","Cityside Gardens","Fishing Pier","Cityside Longhaus","Hare house","Icecrack Shack","Ugly Field","North side road","Syyskuunian Crafts","Western Road I","Helsengaard Park","Syysstad Imports & Exports","South-East Alleyway","East Street II","House by the Sea","Nice field","Big House","Work Bunks","Downtown Pad","Seaside Road II","Seaside Road I","Boat Builders","Seaside Road III","Syyskuunian Docks","Oats are good for you","Cow Paradise","Bad sawmill","Weird Table","Island town square","cfgvbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv","House 2","house2","Syysstad Embassy","Syystadt Embassy Gardens","Tuorla, Helsengaard Observatory","njkdcskjnds sdfsdf dffse errerw town square","ABC123 town square","dfg","sdf","retert","fdgdfg","dsfsd","dsfgs","sdfsfd","erterter","dgfg","sdfsdf","aweawed","sdfsdfsdf","fdgdgf","ztutzutz","fgfg",]
+const all_flags = ["1","2","3","4","5","9","10","12","13","14","15","18","19","23","25","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","79","80","81","82","83","84","103","108","109","111","113","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","172","173","174","175","186","187","188","189","190","191","192","193","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","253","254","255","256","257","258","259","260","261","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569",] 
+const account_ids = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36",] 
+const ACCOUNT_NAME = ["","Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsengaard treasury","Meloun","L","Romer","Syksy","Rucknium","Avatar I","Avatar II grey","Avatar III fat","PotR","PotR jr","Avatar test","badjabber","A16","TFQuests","Avatar 4","Avatar V","Avatar 6","Avatar 7","Avatar 11","avatar 8","yaoxi","Island treasury","Avatar 12","Avatar 13","preland","Pauleheister","jdawg420","redcathode","jdawg42","njkdcskjnds sdfsdf dffse errerw treasury","ABC123 treasury","Happy Cook",]
+const city_names = ["Helsengaard","Island","njkdcskjnds sdfsdf dffse errerw","ABC123",]
+const FLAG_ROLE_NAME = ["","agricultural","craft","industrial","commercial","basic residential","affluent residential","luxury residential","military","cultural","stonecutter","sawmill","kiln","smelter","workforce","road","research","fishery",]
+const flag_names = ["Helsengaard town square","Tower","North Road","farm","Agricultural Field","Chop Chop on the Beach","East Street I","Cityside Gardens","Fishing Pier","Cityside Longhaus","Hare house","Icecrack Shack","Ugly Field","North side road","Syyskuunian Crafts","Western Road I","Helsengaard Park","Syysstad Imports & Exports","South-East Alleyway","East Street II","House by the Sea","Nice field","Big House","Work Bunks","Downtown Pad","Seaside Road II","Seaside Road I","Boat Builders","Seaside Road III","Syyskuunian Docks","Oats are good for you","Cow Paradise","Bad sawmill","Weird Table","Island town square","cfgvbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv","House 2","house2","Syysstad Embassy","Syystadt Embassy Gardens","Tuorla, Helsengaard Observatory","njkdcskjnds sdfsdf dffse errerw town square","ABC123 town square","dfg","sdf","retert","fdgdfg","dsfsd","dsfgs","sdfsfd","erterter","dgfg","sdfsdf","aweawed","sdfsdfsdf","fdgdgf","ztutzutz","fgfg",]
 
 const BaseLayer_GeoJSON_City_0 = L.geoJson([]).addTo(map);
 const inactive_flags0 = L.featureGroup([]);
@@ -261,14 +259,14 @@ info.onAdd = function (map) {
 	};
 
 info.update = function (props) {
-		const contents = props ? `<table><tr><td>Name:</td><td><b>${props.name}</b></td></tr><tr><td>Owner:</td><td>${props.owner}</td></tr><tr><td>Role:</td><td>${props.role_name}</td></tr><tr><td>Active:</td><td>${props.active}</td></tr><tr><td>Flag ID:</td><td> ${props.id}</td></tr></table>` : 'Hover over a Flag'; // props is properties in geojson data
+		const contents = props ? `<table><tr><td>Name:</td><td><b>${props.name}</b></td></tr><tr><td>Owner:</td><td>${ACCOUNT_NAME[props.owner]}</td></tr><tr><td>Role:</td><td>${FLAG_ROLE_NAME[props.role]}</td></tr><tr><td>Active:</td><td>${props.active}</td></tr><tr><td>Flag ID:</td><td> ${props.id}</td></tr></table>` : 'Hover over a Flag'; // props is properties in geojson data
 		this._div.innerHTML = `<h4>Flag Info</h4>${contents}`;
 	};
 
 info.addTo(map);	
 //<!-- Info panel top right -->>
 
-function getColor(d) {
+function getColor_role(d) {
                 return  d == 0  ? "white"  :
                         d == 1  ? "LawnGreen"  :
                         d == 2  ? "Cyan"  :
@@ -326,7 +324,7 @@ function Style_Normal(feature) {
 			color: getColor_active(feature.properties.active),
 			dashArray: '4',
 			fillOpacity: 0.8,
-			fillColor: getColor(feature.properties.role)
+			fillColor: getColor_role(feature.properties.role)
 		};
 	}
 	
@@ -348,7 +346,7 @@ function Style_Owner(feature) {
 			color: getColor_active(feature.properties.active),
 			dashArray: '4',
 			fillOpacity: 0.8,
-			fillColor: getColor_owner(feature.properties.owner)
+			fillColor: getColor_owner(ACCOUNT_NAME[feature.properties.owner])
 	};
 }
 
@@ -383,7 +381,7 @@ function onEachFeature(feature, layer) {
 			mouseover: function_highlightFeature,	
 			mouseout: function_resetHighlight,	
 		});
-		var popup_text=(`<table class='popup_table'><tr><td>Name:</td><td><b>${feature.properties.name}</b></td></tr><tr><td>Owner:</td><td>${feature.properties.owner}</td></tr><tr><td>Role:</td><td>${feature.properties.role_name}</td></tr><tr><td>Active:</td><td>${feature.properties.active}</td></tr><tr><td>Flag ID:</td><td>${feature.properties.id}</td></tr><tr><td>Size: </td><td>${feature.properties.size}</td></tr><tr><td>Economic Power: </td><td>${feature.properties.economic_power} %</td></tr><tr><td>Repair: </td><td>${feature.properties.repair} %</td></tr></table>`)
+		var popup_text=(`<table class='popup_table'><tr><td>Name:</td><td><b>${feature.properties.name}</b></td></tr><tr><td>Owner:</td><td>${ACCOUNT_NAME[feature.properties.owner]}</td></tr><tr><td>Role:</td><td>${FLAG_ROLE_NAME[feature.properties.role]}</td></tr><tr><td>Active:</td><td>${feature.properties.active}</td></tr><tr><td>Flag ID:</td><td>${feature.properties.id}</td></tr><tr><td>Size: </td><td>${feature.properties.size}</td></tr><tr><td>Economic Power: </td><td>${feature.properties.economic_power} %</td></tr><tr><td>Repair: </td><td>${feature.properties.repair} %</td></tr></table>`)
 		layer.bindPopup(popup_text);
 	}	
 const featureGroup_firefighting = L.featureGroup([]);
@@ -481,7 +479,7 @@ L.rectangle([xy([-11783, -3748]),xy([51102, 17889])], {color: 'Orange',fill: fal
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_2);
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_3);
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> / Generated at 2025/07/31_11:56 UTC / Blockchain height: 1,288,440')
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/07/31_16:31 UTC | Blockchain height: 1,288,440')
 function getFlagIDFromName(value) {
   // Find the feature with the matching name
   const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3,];
@@ -511,11 +509,11 @@ function getFlagInfoFromID(value) {
       html += '<table><tr><td>Name:</td><td><b>'
       html += feature.properties.name
       html += '</b></td></tr><tr><td>Owner:</td><td>'
-      html += feature.properties.owner
+      html += ACCOUNT_NAME[feature.properties.owner]
       html += '</b></td></tr><tr><td>City:</td><td>'
-      html += feature.properties.city
+      html += city_names[feature.properties.city]
       html += '</td></tr><tr><td>Role:</td><td>'
-      html += feature.properties.role_name
+      html += FLAG_ROLE_NAME[feature.properties.role]
       html += '</td></tr><tr><td>Active:</td><td>'
       html += feature.properties.active
       html += '</td></tr><tr><td>Flag ID:</td><td>'
@@ -538,7 +536,7 @@ function getAccountFromName(value) {
   const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3,];
   for (const cityGeoJSON of allFlagsCities) {
   // Filter features where properties.owner matches the given ownerName
-  const filteredFeatures = cityGeoJSON.features.filter(feature => feature.properties.owner === value);
+  const filteredFeatures = cityGeoJSON.features.filter(feature => ACCOUNT_NAME[feature.properties.owner] === value);
   // Extract the properties.id for each filtered feature
   const ids = filteredFeatures.map(feature => feature.properties.id);
   let result = '';
@@ -644,7 +642,7 @@ function runAutocomplete_flag_names() {
 	}
 function runAutocomplete_account_names() {
 	/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-	autocomplete(document.getElementById("myInput3"), account_names);
+	autocomplete(document.getElementById("myInput3"), ACCOUNT_NAME);
 	}
 
 	
