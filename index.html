@@ -28,7 +28,6 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
 -->
 <!-- Autocomplete on forms --> 
 
-<!-- .popup_without_tip .leaflet-popup-tip   first value add/edit second already defined value--> 
 <style>
 #map { height: 100%;
        width:  100%;
@@ -37,18 +36,17 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
 .popup_table {
        white-space: nowrap;
 }
+/*<!-- .popup_without_tip .leaflet-popup-tip   first value add/edit second already defined value--> */
 .popup_without_tip .leaflet-popup-tip {
     display: none;
 }
-</style>
-<!-- info box top right--> 
-<style>
+
+/*<!-- info box top right--> */
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } 
 .info h4 { margin: 0 0 5px; color: #777; }
-</style>
-<!-- info box top right-->
-<!-- info legend bottom right-->
-<style>
+/*<!-- info box top right-->*/
+
+/*<!-- info legend bottom right-->*/
 .circle_repair {
   height: 18px;
   width: 45px;
@@ -63,10 +61,9 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
   white-space: nowrap;
   text-align: center;
 }
-</style>
-<!-- info legend bottom right-->
-<!-- Pulsing Marker -->
-<style>
+/*<!-- info legend bottom right-->*/
+
+/*<!-- Pulsing Marker -->*/
 .css-icon {
 }
 .gps_ring {	
@@ -83,15 +80,49 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
 	    50% {opacity: 1.0;}
 	    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
+/*<!-- Pulsing Marker -->*/
+
+/*<!-- Home Button -->*/
+#HomeButton{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 27px;
+    left: 45px;
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    border-radius: 5px;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    opacity: 0.8;
+    text-align: center;
+    z-index: 1000;
+}
+#HomeButton:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+/*<!-- Home Button -->*/
+
 </style>
-<!-- Pulsing Marker -->
 </head>
+
 <body>
-<div id="map"></div>
-<script type="text/javascript" src="GeoJSON_Flags_data.js"></script> 
+
+<div id="map">
+  <!-- Home Button -->
+  <button id="HomeButton" title='Reset Map View' onclick='map.setView( [0, 0], -1);'>
+    <img src="./dist/home.svg" style="width:19px;"></img>
+  </button>
+  <!-- Home Button -->
+</div>
+
+<script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
+
 <script>
- 
- 
+
 var map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -5,
@@ -99,6 +130,7 @@ var map = L.map('map', {
     maxBoundsViscosity: 0.1,
     zoomControl: false, // i have it after attribution
 });
+
 var img_inactive = './dist/inactive.svg'
 
 //<!-- Pulsing Marker -->
@@ -513,7 +545,7 @@ L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false,
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_3);
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_4);
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/01_12:32 UTC | Blockchain height: 1,290,630')
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/01_18:31 UTC | Blockchain height: 1,291,692')
 L.control.zoom({position:'bottomleft'}).addTo(map)
 function getFlagIDFromName(value) {
   // Find the feature with the matching name
@@ -685,10 +717,9 @@ function runAutocomplete_account_names() {
 	
 //<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 L.control.burgerMenu({
-  title: "Menu",
-  menuIcon: "M" ,
+  title: "Search Menu",
+  menuIcon: "<img src='./dist/search.svg' style='width:20px;'>" ,
   menuItems: [
-    {title: "Center Map", onClick: () => { map.setView( [0, 0]);},},
     {title: "Search Flag ID", onClick: () => { 
         var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
             .setLatLng(xy([0, 0]))
@@ -716,6 +747,7 @@ L.control.burgerMenu({
 //<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 L.control.burgerMenu({
   title: "Menu",
+  menuIcon: "<img src='./dist/info.svg' style='width:20px;'>" ,
   menuItems: [
     {
       title: "City info",
