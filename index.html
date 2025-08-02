@@ -99,6 +99,8 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
     opacity: 0.8;
     text-align: center;
     z-index: 1000;
+    justify-content: center;
+    align-items: center;
 }
 #HomeButton:hover{
     opacity: 1;
@@ -114,7 +116,7 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
 <div id="map">
   <!-- Home Button -->
   <button id="HomeButton" title='Reset Map View' onclick='map.setView( [0, 0], -1);'>
-    <img src="./dist/home.svg" style="width:19px;"></img>
+    <img src="./dist/home.svg" style="width:20px;"></img>
   </button>
   <!-- Home Button -->
 </div>
@@ -545,7 +547,7 @@ L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false,
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_3);
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_GeoJSON_City_4);
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/01_18:31 UTC | Blockchain height: 1,291,692')
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/02_00:36 UTC | Blockchain height: 1,292,786')
 L.control.zoom({position:'bottomleft'}).addTo(map)
 function getFlagIDFromName(value) {
   // Find the feature with the matching name
