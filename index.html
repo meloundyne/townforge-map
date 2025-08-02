@@ -429,6 +429,27 @@ function generateTable(data, Value) {
 function formatNumberWithDots(numberStr) {
   return numberStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+
+function parseDate(str) {
+      const [date, time] = str.split('_');
+      const [year, month, day] = date.split('/').map(Number);
+      const [hour, minute] = time.split(':').map(Number);
+      return new Date(Date.UTC(year, month - 1, day, hour, minute));
+  }
+  
+function update_tick_timer() {
+      const now = new Date();
+      let diff = target - now; // ms difference
+      const prefix = "Last update: ";
+      diff = Math.abs(diff);
+      const totalSeconds = Math.floor(diff / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      timerEl.textContent =
+        `${prefix}${hours}h ${minutes}m ${seconds}s`;
+  }
+  
 </script>
 <script>
 
@@ -681,7 +702,12 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/02_14:49 UTC | Blockchain height: 1,295,376')
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/02_18:23 UTC | Blockchain height: 1,296,016 | <abbr id="timer">Loading...</abbr>')
+const givenStr = "2025/08/02_18:23"// attribution tick timer
+const target = parseDate(givenStr);// attribution timer
+const timerEl = document.getElementById('timer');// attribution tick timer
+update_tick_timer();// attribution tick timer
+setInterval(update_tick_timer, 1000);// attribution tick timer
 L.control.zoom({position:'bottomleft'}).addTo(map)
 const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"circle_repair\">> 70%</div>   <br><div style=\"background-color:LightSalmon\" class=\"circle_repair\">> 60%</div>  <br><div style=\"background-color:Coral\" class=\"circle_repair\">> 50%</div>        <br><div style=\"background-color:Tomato\" class=\"circle_repair\">> 40%</div>       <br><div style=\"background-color:OrangeRed\" class=\"circle_repair\">> 30%</div>    <br><div style=\"background-color:MediumPurple\" class=\"circle_repair\">> 20%</div> <br><div style=\"background-color:RebeccaPurple\" class=\"circle_repair\">> 00%</div><br><div style=\"background-color:white\" class=\"circle_repair\">= 00%</div>        "                                                                                    
 const legend_repair = L.control({position: 'bottomright'});                          
@@ -713,7 +739,6 @@ legend_owner.onAdd = function (map) {
 	div.innerHTML = legend_owner_text;
 	return div;
 };
-
 var baseMaps = {
 'Helsengaard': BaseLayer_GeoJSON_City_0,
 'Island': BaseLayer_GeoJSON_City_1,
