@@ -649,7 +649,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 "properties":{"name":"","owner":"5","active":"true","role":"15","size":"8 x 28","economic_power":"100","city":"0","repair":"75"},
 "geometry":{"type":"Polygon","coordinates":[[[-2622,-1849],[-2615,-1849],[-2615,-1822],[-2622,-1822]]]}},
 {"type":"Feature","id":"315",
-"properties":{"name":"","owner":"5","active":"true","role":"15","size":"8 x 28","economic_power":"100","city":"0","repair":"74"},
+"properties":{"name":"","owner":"5","active":"true","role":"15","size":"8 x 28","economic_power":"100","city":"0","repair":"100"},
 "geometry":{"type":"Polygon","coordinates":[[[-2612,-1849],[-2605,-1849],[-2605,-1822],[-2612,-1822]]]}},
 {"type":"Feature","id":"316",
 "properties":{"name":"","owner":"5","active":"true","role":"15","size":"28 x 8","economic_power":"100","city":"0","repair":"91"},

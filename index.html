@@ -108,6 +108,11 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
 }
 /*<!-- Home Button -->*/
 
+tr:nth-child(even) {
+/*Use an rgba() color to specify the transparency of the color:*/
+  background-color: rgba(117, 117, 117, 0.1);
+}
+
 </style>
 </head>
 
@@ -120,6 +125,7 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
   <!-- Home Button -->
 </div>
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
+<script type="text/javascript" src="Account_data.js"></script>
 <script>
 function getColor_role(d) {
                 return  d == 0  ? "white"  :
@@ -235,7 +241,7 @@ function onEachFeature(feature, layer) {
 			mouseout: function_resetHighlight,	
 		});
 		var popup_text=(`<table class='popup_table'><tr><td>Name:</td><td><b>${feature.properties.name}</b></td></tr><tr><td>Owner:</td><td>${ACCOUNT_NAME[feature.properties.owner]}</td></tr><tr><td>Role:</td><td>${FLAG_ROLE_NAME[feature.properties.role]}</td></tr><tr><td>Active:</td><td>${feature.properties.active}</td></tr><tr><td>Flag ID:</td><td>${feature.id}</td></tr><tr><td>Size: </td><td>${feature.properties.size}</td></tr><tr><td>Economic Power: </td><td>${feature.properties.economic_power} %</td></tr><tr><td>Repair: </td><td>${feature.properties.repair} %</td></tr></table>`)
-		layer.bindPopup(popup_text);
+		layer.bindPopup(popup_text,{maxWidth: 1000,});
 	}
 
 function getFlagIDFromName(value) {
@@ -405,6 +411,24 @@ function runAutocomplete_account_names() {
 	autocomplete(document.getElementById("myInput3"), ACCOUNT_NAME);
 	}
 
+function generateTable(data, Value) {
+  const entries = Object.entries(data).filter(([key, value]) => !isNaN(key) && Array.isArray(value));
+  entries.sort((a,b) => Number(b[1][Value]) - Number(a[1][Value]));
+
+  let html = `<table class='popup_table'>`;
+  html += `<thead><tr><th colspan="2">${Account_data_fieldNames[Value]}</th></tr></thead><tbody>`;
+
+  for (const [index, accountArray] of entries) {
+    html += `<tr><td>${ACCOUNT_NAME[index]}</td><td align="right">${formatNumberWithDots(accountArray[Value])}</td></tr>`;
+  }
+
+  html += `</tbody></table>`;
+  return html;
+}
+
+function formatNumberWithDots(numberStr) {
+  return numberStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 </script>
 <script>
 
@@ -657,7 +681,7 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/02_12:25 UTC | Blockchain height: 1,294,937')
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/02_14:49 UTC | Blockchain height: 1,295,376')
 L.control.zoom({position:'bottomleft'}).addTo(map)
 const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"circle_repair\">> 70%</div>   <br><div style=\"background-color:LightSalmon\" class=\"circle_repair\">> 60%</div>  <br><div style=\"background-color:Coral\" class=\"circle_repair\">> 50%</div>        <br><div style=\"background-color:Tomato\" class=\"circle_repair\">> 40%</div>       <br><div style=\"background-color:OrangeRed\" class=\"circle_repair\">> 30%</div>    <br><div style=\"background-color:MediumPurple\" class=\"circle_repair\">> 20%</div> <br><div style=\"background-color:RebeccaPurple\" class=\"circle_repair\">> 00%</div><br><div style=\"background-color:white\" class=\"circle_repair\">= 00%</div>        "                                                                                    
 const legend_repair = L.control({position: 'bottomright'});                          
@@ -740,10 +764,10 @@ L.control.burgerMenu({
 //<!-- https://github.com/BenPortner/leaflet-burgermenu -->
 //<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 L.control.burgerMenu({
-  title: "Menu",
+  title: "Info Menu",
   menuIcon: "<img src='./dist/info.svg' style='width:20px;'>" ,
   menuItems: [
-    {
+    { 
       title: "City info",
       menuItems: [
           
@@ -792,6 +816,48 @@ L.control.burgerMenu({
         .openOn(map);
         },
     },
+      ],
+    },
+    { 
+      title: "Leaderboards",
+      menuItems: [
+                  {title: "Gold",
+                  menuItems: [
+                       {title: "Balance",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 0)).openOn(map);},},
+                       {title: "Demonetized coins",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 4)).openOn(map);},},
+                       {title: "Gold smelted",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 6)).openOn(map);},},
+                       {title: "Tax paid",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 17)).openOn(map);},},
+                  ],},
+                  {title: "Food",
+                  menuItems: [
+                       {title: "Food consumed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 5)).openOn(map);},},
+                       {title: "Grain harvested",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 7)).openOn(map);},},
+                       {title: "Vegetables harvested",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 18)).openOn(map);},},
+                  ],},
+                  {title: "Food - Animals",
+                  menuItems: [
+                       {title: "Moose killed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 1)).openOn(map);},},
+                       {title: "Bears killed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 2)).openOn(map);},},
+                       {title: "Fish fished",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 3)).openOn(map);},},
+                  ],},
+                  {title: "Other",
+                  menuItems: [
+                       {title: "Level",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 8)).openOn(map);},},
+                       {title: "Auctions created",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 9)).openOn(map);},},
+                       {title: "Buildings demolished",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 10)).openOn(map);},},
+                       {title: "Discoveries",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 11)).openOn(map);},},
+                       {title: "Fires put out",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 12)).openOn(map);},},
+                       {title: "Pearls found",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 13)).openOn(map);},},
+                       {title: "Trades",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 14)).openOn(map);},},
+                       {title: "POS Blocks found",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 15)).openOn(map);},},
+                       {title: "Prestige",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 16)).openOn(map);},},
+                  ],},
+                  {title: "Sustained",
+                  menuItems: [
+                       {title: "Sustained blocks",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 19)).openOn(map);},},
+                       {title: "Sustained food",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 20)).openOn(map);},},
+                       {title: "Sustained gold",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 21)).openOn(map);},},
+                  ],},
       ],
     },
   ],
