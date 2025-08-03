@@ -459,6 +459,9 @@ var map = L.map('map', {
     maxZoom: 3,
     maxBoundsViscosity: 0.1,
     zoomControl: false, // i have it after attribution
+    inertia: false,
+    zoomAnimation: false,
+    fadeAnimation: false,
 });
 
 var img_inactive = './dist/inactive.svg'
@@ -852,8 +855,8 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/03_20:14 UTC | Blockchain height: 1,300,671 | <abbr id="timer">Loading...</abbr>')
-const givenStr = "2025/08/03_20:14"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | Generated at 2025/08/03_23:33 UTC | Blockchain height: 1,301,413 | <abbr id="timer">Loading...</abbr>')
+const givenStr = "2025/08/03_23:33"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
