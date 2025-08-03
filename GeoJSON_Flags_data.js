@@ -922,7 +922,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 "properties":{"name":"","owner":"5","active":"true","role":"15","size":"28 x 8","economic_power":"100","city":"0","repair":"99"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1673],[-2579,-1673],[-2579,-1666],[-2606,-1666]]]}},
 {"type":"Feature","id":"406",
-"properties":{"name":"","owner":"5","active":"true","role":"15","size":"28 x 8","economic_power":"100","city":"0","repair":"74"},
+"properties":{"name":"","owner":"5","active":"true","role":"15","size":"28 x 8","economic_power":"100","city":"0","repair":"100"},
 "geometry":{"type":"Polygon","coordinates":[[[-2606,-1683],[-2579,-1683],[-2579,-1676],[-2606,-1676]]]}},
 {"type":"Feature","id":"407",
 "properties":{"name":"","owner":"5","active":"true","role":"15","size":"28 x 8","economic_power":"100","city":"0","repair":"78"},
@@ -1314,7 +1314,7 @@ var Flags_city0 = {"type":"FeatureCollection","features":[
 ]}
 var Flags_city1 = {"type":"FeatureCollection","features":[
 {"type":"Feature","id":"173",
-"properties":{"name":"Island town square","owner":"5","active":"true","role":"15","size":"256 x 256","economic_power":"150","city":"1","repair":"74"},
+"properties":{"name":"Island town square","owner":"5","active":"true","role":"15","size":"256 x 256","economic_power":"150","city":"1","repair":"100"},
 "geometry":{"type":"Polygon","coordinates":[[[-128,-128],[127,-128],[127,127],[-128,127]]]}},
 {"type":"Feature","id":"174",
 "properties":{"name":"","owner":"5","active":"true","role":"5","size":"256 x 256","economic_power":"150","city":"1","repair":"97"},
