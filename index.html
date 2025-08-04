@@ -1,46 +1,44 @@
 <html>
 <head>
 <title>Townforge | Map</title>
- <link rel="stylesheet" href="./dist/leaflet.css"/>
+	<link rel="stylesheet" href="./dist/leaflet.css"/>
 <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="./dist/leaflet.js"></script>
-     
+	<script src="./dist/leaflet.js"></script>
+
 <!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
-<link rel="stylesheet" href="./dist/L.SimpleGraticule.css" />
-<script src="./dist/L.SimpleGraticule.js"></script>
+	<link rel="stylesheet" href="./dist/L.SimpleGraticule.css" />
+	<script src="./dist/L.SimpleGraticule.js"></script>
 <!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
 
 <!-- https://github.com/BenPortner/leaflet-burgermenu --> 
-<link rel="stylesheet"
-  href="./dist/leaflet-burgermenu.css"/>
-<script src="./dist/leaflet-burgermenu.umd.min.js"></script>
-<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
+	<link rel="stylesheet" href="./dist/leaflet-burgermenu.css"/>
+	<script src="./dist/leaflet-burgermenu.umd.min.js"></script>
+<!-- https://github.com/BenPortner/leaflet-burgermenu -->
 
 <!-- Autocomplete on forms --> 
-<link rel="stylesheet"
-  href="./dist/my-autocomplete.css"/>
-<script src="./dist/my-autocomplete.js"></script>
-<!-- function runAutocomplete() {
-/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-autocomplete(document.getElementById("myInput"), countries); 
-/*An array containing all the country names in the world:*/
-var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
--->
+	<link rel="stylesheet" href="./dist/my-autocomplete.css"/>
+	<script src="./dist/my-autocomplete.js"></script>
+	<!-- function runAutocomplete() {
+	/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+	autocomplete(document.getElementById("myInput"), countries); 
+	/*An array containing all the country names in the world:*/
+	var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
+	-->
 <!-- Autocomplete on forms --> 
 
 <style>
-#map { height: 100%;
-       width:  100%;
-       background: none;
+#map {
+	height: 100%;
+	width:  100%;
+	background: none;
 }
 .popup_table {
-       white-space: nowrap;
+	white-space: nowrap;
 }
 /*<!-- .popup_without_tip .leaflet-popup-tip   first value add/edit second already defined value--> */
 .popup_without_tip .leaflet-popup-tip {
-    display: none;
+	display: none;
 }
-
 /*<!-- info box top right--> */
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } 
 .info h4 { margin: 0 0 5px; color: #777; }
@@ -48,69 +46,76 @@ var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
 
 /*<!-- info legend bottom right-->*/
 .circle_repair {
-  height: 18px;
-  width: 45px;
-  border-radius: 15%;
-  white-space: nowrap;
-  text-align: center;
+	height: 18px;
+	width: 45px;
+	border-radius: 15%;
+	white-space: nowrap;
+	text-align: center;
 }
 .circle_role {
-  height: 18px;
-  width: 115px;
-  border-radius: 15%;
-  white-space: nowrap;
-  text-align: center;
+	height: 18px;
+	width: 115px;
+	border-radius: 15%;
+	white-space: nowrap;
+	text-align: center;
+}
+.circle_EP {
+	height: 18px;
+	width: 55px;
+	border-radius: 15%;
+	white-space: nowrap;
+	text-align: center;
 }
 /*<!-- info legend bottom right-->*/
 
 /*<!-- Pulsing Marker -->*/
 .css-icon {
 }
-.gps_ring {	
+.gps_ring {
 	border: 3px solid #999;
-	 -webkit-border-radius: 30px;
-	 height: 18px;
-	 width: 18px;		
-    -webkit-animation: pulsate 1s ease-out;
-    -webkit-animation-iteration-count: infinite; 
-    /*opacity: 0.0*/
+	-webkit-border-radius: 30px;
+	height: 18px;
+	width: 18px;
+	-webkit-animation: pulsate 1s ease-out;
+	-webkit-animation-iteration-count: infinite; 
+	/*opacity: 0.0*/
 }
 @-webkit-keyframes pulsate {
-	    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
-	    50% {opacity: 1.0;}
-	    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+	0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+	50% {opacity: 1.0;}
+	100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
 /*<!-- Pulsing Marker -->*/
 
 /*<!-- Home Button -->*/
 #HomeButton{
-    display: flex;
-    align-items: center;
-    position: absolute;
-    bottom: 27px;
-    left: 45px;
-    width: 32px;
-    height: 32px;
-    background-color: white;
-    border-radius: 5px;
-    border-color: gray;
-    border-style: solid;
-    border-width: 1px 1px 1px 1px;
-    opacity: 0.8;
-    text-align: center;
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	align-items: center;
+	position: absolute;
+	bottom: 27px;
+	left: 45px;
+	width: 32px;
+	height: 32px;
+	background-color: white;
+	border-radius: 5px;
+	border-color: gray;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	opacity: 0.8;
+	text-align: center;
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
 }
 #HomeButton:hover{
-    opacity: 1;
-    cursor: pointer;
+	opacity: 1;
+	cursor: pointer;
 }
 /*<!-- Home Button -->*/
 
 tr:nth-child(even) {
-/*Use an rgba() color to specify the transparency of the color:*/
-  background-color: rgba(117, 117, 117, 0.1);
+	/*Use an rgba() color to specify the transparency of the color:*/
+	background-color: rgba(117, 117, 117, 0.1);
 }
 
 </style>
@@ -118,66 +123,75 @@ tr:nth-child(even) {
 
 <body>
 <div id="map">
-  <!-- Home Button -->
-  <button id="HomeButton" title='Reset Map View' onclick='map.setView( [0, 0], -1);'>
-    <img src="./dist/home.svg" style="width:20px;"></img>
-  </button>
-  <!-- Home Button -->
+	<!-- Home Button -->
+	<button id="HomeButton" title='Reset Map View' onclick='map.setView( [0, 0], -1);'>
+	<img src="./dist/home.svg" style="width:20px;"></img>
+	</button>
+	<!-- Home Button -->
 </div>
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
 <script type="text/javascript" src="Account_data.js"></script>
 <script>
 function getColor_role(d) {
-                return  d == 0  ? "white"  :
-                        d == 1  ? "LawnGreen"  :
-                        d == 2  ? "Cyan"  :
-                        d == 3  ? "SaddleBrown"  :
-                        d == 4  ? "Magenta"  :
-                        d == 5  ? "Orange"  :
-                        d == 6  ? "DarkOrange"  :
-                        d == 7  ? "OrangeRed"  :
-                        d == 8  ? "DarkSlateGray"  :
-                        d == 9  ? "MediumSlateBlue"  :
-                        d == 10 ? "Silver" :
-                        d == 11 ? "ForestGreen" :
-                        d == 12 ? "SandyBrown" :
-                        d == 13 ? "Tan" :
-                        d == 14 ? "NavajoWhite" :
-                        d == 15 ? "DimGray" :
-                        d == 16 ? "RebeccaPurple" :
-                        d == 17 ? "RoyalBlue" : "white" ;
-                        }
+	return  d == 0  ? "white"  :
+			d == 1  ? "LawnGreen"  :
+			d == 2  ? "Cyan"  :
+			d == 3  ? "SaddleBrown"  :
+			d == 4  ? "Magenta"  :
+			d == 5  ? "Orange"  :
+			d == 6  ? "DarkOrange"  :
+			d == 7  ? "OrangeRed"  :
+			d == 8  ? "DarkSlateGray"  :
+			d == 9  ? "MediumSlateBlue"  :
+			d == 10 ? "Silver" :
+			d == 11 ? "ForestGreen" :
+			d == 12 ? "SandyBrown" :
+			d == 13 ? "Tan" :
+			d == 14 ? "NavajoWhite" :
+			d == 15 ? "DimGray" :
+			d == 16 ? "RebeccaPurple" :
+			d == 17 ? "RoyalBlue" : "white" ;
+	}
 
 function getColor_active(d) {
-                return  d == "true"  ? "Green" :
-                        d == "false" ? "Red"   : "white" ;
-                        }
+	return  d == "true"  ? "Green"	:
+			d == "false" ? "Red"	: "white" ;
+	}
                         
 function getColor_repair(d) {
-                return  d > 70 ? "Chartreuse"            :
-                        d > 60 ? "LightSalmon"           :
-                        d > 50 ? "Coral"                 :
-                        d > 40 ? "Tomato"                :
-                        d > 30 ? "OrangeRed"             :
-                        d > 20 ? "MediumPurple"          :
-                        d >  0 ? "RebeccaPurple"         :
-                        d == 0 ? "white"                 : "white" ;
-                        }
+	return  d > 70 ? "Chartreuse"		:
+			d > 60 ? "LightSalmon"		:
+			d > 50 ? "Coral"			:
+			d > 40 ? "Tomato"			:
+			d > 30 ? "OrangeRed"		:
+			d > 20 ? "MediumPurple" 	:
+			d >  0 ? "RebeccaPurple"	:
+			d == 0 ? "white"			: "white" ;
+	}
                         
 function getColor_owner(str) {
-let sum = 0;
-  for (let i = 0; i < str.length; i++) {
-    sum += str.charCodeAt(i);
-  }
-  // map the sum to RGB by splitting it into three parts
-  const r = (sum * 7) % 256; // change number in "sum * 7" to get different color, it must be prime number 
-  const g = (sum * 41) % 256; // prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
-  const b = (sum * 67) % 256; //
-  return `#${[r, g, b]
-    .map((x) => x.toString(16).padStart(2, '0'))
-    .join('')}`;
+	let sum = 0;
+	for (let i = 0; i < str.length; i++) {
+		sum += str.charCodeAt(i);
+		}
+	// map the sum to RGB by splitting it into three parts
+	const r = (sum * 7) % 256; // change number in "sum * 7" to get different color, it must be prime number 
+	const g = (sum * 41) % 256; // prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
+	const b = (sum * 67) % 256; //
+	return `#${[r, g, b]
+	.map((x) => x.toString(16).padStart(2, '0'))
+	.join('')}`;
 }                        
-                        
+
+function getColor_Economic_Power(d) {
+	return  d == 300 ? "#0AF51A"	:
+			d >  250 ? "#23AC1F"	:
+			d >  200 ? "#22681B"	:
+			d >  150 ? "#F58F0A"	:
+			d >  100 ? "#AD6614"	:
+			d == 100 ? "#694014"	: "white" ;
+	}
+
 function Style_Normal(feature) {
 		return {
 			weight: 1,
@@ -211,6 +225,17 @@ function Style_Owner(feature) {
 	};
 }
 
+function Style_Economic_Power(feature) {
+		return {
+			weight: 1,
+			opacity: 1,
+			color: getColor_active(feature.properties.active),
+			dashArray: '4',
+			fillOpacity: 0.8,
+			fillColor: getColor_Economic_Power(feature.properties.economic_power)
+	};
+}
+
 function function_highlightFeature(e) {
 		const layer = e.target;
 
@@ -225,7 +250,7 @@ function function_highlightFeature(e) {
 	
 function function_resetHighlight(e) {
 		const layer = e.target;
-		
+
 		layer.setStyle({
 			weight: 1,
 			dashArray: '4',
@@ -245,164 +270,164 @@ function onEachFeature(feature, layer) {
 	}
 
 function getFlagIDFromName(value) {
-  const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
-  for (const cityGeoJSON of allFlagsCities) {
-  const feature = cityGeoJSON.features.find(f => f.properties.name === value);
-	if (feature) {
-	const log_message000210 = value
-	const log_message000211 = ' : Name | ID : '
-	const log_message000212 = feature.id
-	log_message0002 = log_message000210 + log_message000211 + log_message000212
-	console.log(log_message0002)
-	return feature.id
+	const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
+	for (const cityGeoJSON of allFlagsCities) {
+		const feature = cityGeoJSON.features.find(f => f.properties.name === value);
+		if (feature) {
+			const log_message000210 = value
+			const log_message000211 = ' : Name | ID : '
+			const log_message000212 = feature.id
+			log_message0002 = log_message000210 + log_message000211 + log_message000212
+			console.log(log_message0002)
+			return feature.id
+			}
+		}
+	return null;
 	}
-  }
-  return null;
-}
 
 function getFlagInfoFromID(value) {
-  const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
-  for (const cityGeoJSON of allFlagsCities) {
-  const feature = cityGeoJSON.features.find(f => f.id === value);
-      if (feature) {
-      let html =''
-      html += '<table><tr><td>Name:</td><td><b>'
-      html += feature.properties.name
-      html += '</b></td></tr><tr><td>Owner:</td><td>'
-      html += ACCOUNT_NAME[feature.properties.owner]
-      html += '</b></td></tr><tr><td>House:</td><td>'
-      html += ACCOUNT_HOUSE[feature.properties.owner]
-      html += '</b></td></tr><tr><td>City:</td><td>'
-      html += city_names[feature.properties.city]
-      html += '</td></tr><tr><td>Role:</td><td>'
-      html += FLAG_ROLE_NAME[feature.properties.role]
-      html += '</td></tr><tr><td>Active:</td><td>'
-      html += feature.properties.active
-      html += '</td></tr><tr><td>Flag ID:</td><td>'
-      html += feature.id
-      html += '</td></tr><tr><td>Size: </td><td>'
-      html += feature.properties.size
-      html += '</td></tr><tr><td>Economic Power: </td><td>'
-      html += feature.properties.economic_power
-      html += ' %</td></tr><tr><td>Repair: </td><td>'
-      html += feature.properties.repair
-      html += ' %</td></tr></table>'
-      return html;
-    }
-  }
-  return null;
-}
+	const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
+	for (const cityGeoJSON of allFlagsCities) {
+		const feature = cityGeoJSON.features.find(f => f.id === value);
+		if (feature) {
+			let html =''
+			html += '<table><tr><td>Name:</td><td><b>'
+			html += feature.properties.name
+			html += '</b></td></tr><tr><td>Owner:</td><td>'
+			html += ACCOUNT_NAME[feature.properties.owner]
+			html += '</b></td></tr><tr><td>House:</td><td>'
+			html += ACCOUNT_HOUSE[feature.properties.owner]
+			html += '</b></td></tr><tr><td>City:</td><td>'
+			html += city_names[feature.properties.city]
+			html += '</td></tr><tr><td>Role:</td><td>'
+			html += FLAG_ROLE_NAME[feature.properties.role]
+			html += '</td></tr><tr><td>Active:</td><td>'
+			html += feature.properties.active
+			html += '</td></tr><tr><td>Flag ID:</td><td>'
+			html += feature.id
+			html += '</td></tr><tr><td>Size: </td><td>'
+			html += feature.properties.size
+			html += '</td></tr><tr><td>Economic Power: </td><td>'
+			html += feature.properties.economic_power
+			html += ' %</td></tr><tr><td>Repair: </td><td>'
+			html += feature.properties.repair
+			html += ' %</td></tr></table>'
+			return html;
+			}
+		}
+	return null;
+	}
 
 function getAccountFromName(value) {
-  const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
-  for (const cityGeoJSON of allFlagsCities) {
-  const filteredFeatures = cityGeoJSON.features.filter(feature => ACCOUNT_NAME[feature.properties.owner] === value);
-  const ids = filteredFeatures.map(feature => feature.id);
-  let result = '';
-  for (let i = 0; i < ids.length; i++) {
-    result += ids[i];
-    // Add comma after the item if it's not the last one
-    if (i !== ids.length - 1) result += ', ';
-    breakAfter = 10;
-    // Insert <br> after every 'breakAfter' items, but not at the very end
-    if ((i + 1) % breakAfter === 0 && i !== ids.length - 1) result += '<br>';
-  }
-  // Return the entire properties object if found, otherwise null
-      if (result) {
-		console.log(result);
-      return result;
-    }
-  }
-  return null;
-}
+	const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
+	for (const cityGeoJSON of allFlagsCities) {
+		const filteredFeatures = cityGeoJSON.features.filter(feature => ACCOUNT_NAME[feature.properties.owner] === value);
+		const ids = filteredFeatures.map(feature => feature.id);
+		let result = '';
+		for (let i = 0; i < ids.length; i++) {
+			result += ids[i];
+			// Add comma after the item if it's not the last one
+			if (i !== ids.length - 1) result += ', ';
+			breakAfter = 10;
+			// Insert <br> after every 'breakAfter' items, but not at the very end
+			if ((i + 1) % breakAfter === 0 && i !== ids.length - 1) result += '<br>';
+			}
+		// Return the entire properties object if found, otherwise null
+		if (result) {
+			console.log(result);
+			return result;
+			}
+		}
+	return null;
+	}
 
 function Jump_to_Flag_from_ID(value) {
-  const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
-  for (const cityGeoJSON of allFlagsCities) {
-    // Use Array.prototype.find to locate the feature with the matching name property
-    const feature = cityGeoJSON.features.find(f => f.id === value);
-    if (feature) {
-        var text = ""
-        text += 'Jumped to Flag Id:' + value
-        // If found, return the id, else return null or undefined
-        const x = ( feature.geometry.coordinates[0][0][0] + ( ( feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] ) / 2 ));
-        const y = ( feature.geometry.coordinates[0][0][1] + ( ( feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] ) / 2 ));
-        const city = feature.properties.city
-        BaseLayer_GeoJSON_City_0.removeFrom(map)
-        BaseLayer_GeoJSON_City_1.removeFrom(map)
-        BaseLayer_GeoJSON_City_2.removeFrom(map)
-        BaseLayer_GeoJSON_City_3.removeFrom(map)
-        BaseLayer_GeoJSON_City_4.removeFrom(map)
-        if (city === '0') { BaseLayer_GeoJSON_City_0.addTo(map)}
-        if (city === '1') { BaseLayer_GeoJSON_City_1.addTo(map)}
-        if (city === '2') { BaseLayer_GeoJSON_City_2.addTo(map)}
-        if (city === '3') { BaseLayer_GeoJSON_City_3.addTo(map)}
-        if (city === '4') { BaseLayer_GeoJSON_City_4.addTo(map)}
-        map.closePopup();
-        map.removeLayer(SearchMarker);
-        SearchMarker = new L.marker(xy([x, y])).on('click', function(e) { map.removeLayer(SearchMarker);});
-	    map.addLayer(SearchMarker);
-	    var text1 = ""
-	    text1 += 'Flag ID ' + value
-	    SearchMarker.bindPopup(text1).openPopup();
-        map.setView( xy([x, y]));
-        return feature ? text : null;
-    }
-  }
-  // If not found in any cities
-  return null;
-}
+	const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
+	for (const cityGeoJSON of allFlagsCities) {
+		// Use Array.prototype.find to locate the feature with the matching name property
+		const feature = cityGeoJSON.features.find(f => f.id === value);
+		if (feature) {
+			var text = ""
+			text += 'Jumped to Flag Id:' + value
+			// If found, return the id, else return null or undefined
+			const x = ( feature.geometry.coordinates[0][0][0] + ( ( feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] ) / 2 ));
+			const y = ( feature.geometry.coordinates[0][0][1] + ( ( feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] ) / 2 ));
+			const city = feature.properties.city
+			BaseLayer_GeoJSON_City_0.removeFrom(map)
+			BaseLayer_GeoJSON_City_1.removeFrom(map)
+			BaseLayer_GeoJSON_City_2.removeFrom(map)
+			BaseLayer_GeoJSON_City_3.removeFrom(map)
+			BaseLayer_GeoJSON_City_4.removeFrom(map)
+			if (city === '0') { BaseLayer_GeoJSON_City_0.addTo(map)}
+			if (city === '1') { BaseLayer_GeoJSON_City_1.addTo(map)}
+			if (city === '2') { BaseLayer_GeoJSON_City_2.addTo(map)}
+			if (city === '3') { BaseLayer_GeoJSON_City_3.addTo(map)}
+			if (city === '4') { BaseLayer_GeoJSON_City_4.addTo(map)}
+			map.closePopup();
+			map.removeLayer(SearchMarker);
+			SearchMarker = new L.marker(xy([x, y])).on('click', function(e) { map.removeLayer(SearchMarker);});
+			map.addLayer(SearchMarker);
+			text1 = ""
+			text1 += 'Flag ID ' + value
+			SearchMarker.bindPopup(text1).openPopup();
+			map.setView( xy([x, y]));
+			return feature ? text : null;
+			}
+		}
+	// If not found in any cities
+	return null;
+	}
 
 function goToFlag1() {
-        var x = document.getElementById('search_form_1');
-        var text001 = '';
-        text001 += 'Go To Flag Id: ' + x.elements[0].value
-		console.log(text001);
-		const log_message0001 = Jump_to_Flag_from_ID(x.elements[0].value);
-		console.log(log_message0001);
+	var x = document.getElementById('search_form_1');
+	var text001 = '';
+	text001 += 'Go To Flag Id: ' + x.elements[0].value
+	console.log(text001);
+	const log_message0001 = Jump_to_Flag_from_ID(x.elements[0].value);
+	console.log(log_message0001);
 	}
 
 function goToFlag2() {
-        var x = document.getElementById('search_form_2');
-        var text001 = '';
-        text001 += 'Go To Flag Name: ' + x.elements[0].value
-		console.log(text001);
-		const log_message0001 = Jump_to_Flag_from_ID(getFlagIDFromName(x.elements[0].value));
-		console.log(log_message0001);
+	var x = document.getElementById('search_form_2');
+	var text001 = '';
+	text001 += 'Go To Flag Name: ' + x.elements[0].value
+	console.log(text001);
+	const log_message0001 = Jump_to_Flag_from_ID(getFlagIDFromName(x.elements[0].value));
+	console.log(log_message0001);
 	}
 
 function sendToConsole1() {                                 
-		var x = document.getElementById('search_form_1');              
-		var text = '<b>Results:</b>';                                                            
-		text += getFlagInfoFromID(x.elements[0].value) + '<br>';
-		document.getElementById("search_form_result1").innerHTML = text;
-		document.getElementById("button01").disabled = false;
-		console.log(x.elements[0].value);                                                     
+	var x = document.getElementById('search_form_1');              
+	var text = '<b>Results:</b>';                                                            
+	text += getFlagInfoFromID(x.elements[0].value) + '<br>';
+	document.getElementById("search_form_result1").innerHTML = text;
+	document.getElementById("button01").disabled = false;
+	console.log(x.elements[0].value);                                                     
 	}
 
 function sendToConsole2() {                                 
-		var x = document.getElementById('search_form_2');
-		console.log(x.elements[0].value);
-		var text = '<b>Results:</b>';                                                            
-		text += getFlagInfoFromID(getFlagIDFromName(x.elements[0].value)) + '<br>';
-		document.getElementById("search_form_result2").innerHTML = text;
-		document.getElementById("button02").disabled = false;
+	var x = document.getElementById('search_form_2');
+	console.log(x.elements[0].value);
+	var text = '<b>Results:</b>';                                                            
+	text += getFlagInfoFromID(getFlagIDFromName(x.elements[0].value)) + '<br>';
+	document.getElementById("search_form_result2").innerHTML = text;
+	document.getElementById("button02").disabled = false;
 	}
 
 function sendToConsole3() {                                 
-		var x = document.getElementById('search_form_3');              
-		var text = '<b>Owned Flags:</b><br>';                                                            
-		text += getAccountFromName(x.elements[0].value) + '<br>';
-		document.getElementById("search_form_result3").innerHTML = text;
-		console.log(x.elements[0].value);                                                   
+	var x = document.getElementById('search_form_3');              
+	var text = '<b>Owned Flags:</b><br>';                                                            
+	text += getAccountFromName(x.elements[0].value) + '<br>';
+	document.getElementById("search_form_result3").innerHTML = text;
+	console.log(x.elements[0].value);                                                   
 	}
 
 function sendToConsole4() {                                 
-		var x = document.getElementById('search_form_4');              
-		var text = '<b>Owned Flags:</b><br>';                                                            
-		text += getAccountFromName(x.elements[0].value) + '<br>';
-		document.getElementById("search_form_result4").innerHTML = text;
-		console.log(x.elements[0].value);                                                   
+	var x = document.getElementById('search_form_4');              
+	var text = '<b>Owned Flags:</b><br>';                                                            
+	text += getAccountFromName(x.elements[0].value) + '<br>';
+	document.getElementById("search_form_result4").innerHTML = text;
+	console.log(x.elements[0].value);                                                   
 	}
 
 function runAutocomplete_flag_id() {
@@ -425,56 +450,50 @@ function runAutocomplete_house_names() {
 	autocomplete(document.getElementById("myInput4"), ACCOUNT_HOUSE);
 	}
 function generateTable(data, Value) {
-  const entries = Object.entries(data).filter(([key, value]) => !isNaN(key) && Array.isArray(value));
-  entries.sort((a,b) => Number(b[1][Value]) - Number(a[1][Value]));
-
-  let html = `<table class='popup_table'>`;
-  html += `<thead><tr><th colspan="3"><h2>${Account_data_fieldNames[Value]} Leaderboard</h2></th></tr></thead><tbody>`;
-  html += `<thead><tr><td><u><b>House</b></u></td><td><u><b>Name</b></u></td><td><u><b>${Account_data_fieldNames[Value]}</b></u></td></tr></thead><tbody>`;
-
-  for (const [index, accountArray] of entries) {
-    html += `<tr><td>${ACCOUNT_HOUSE[index]}</td><td>${ACCOUNT_NAME[index]}</td><td align="right">${formatNumberWithDots(accountArray[Value])}</td></tr>`;
-  }
-
-  html += `</tbody></table>`;
-  return html;
-}
+	const entries = Object.entries(data).filter(([key, value]) => !isNaN(key) && Array.isArray(value));
+	entries.sort((a,b) => Number(b[1][Value]) - Number(a[1][Value]));
+	let html = `<table class='popup_table'>`;
+	html += `<thead><tr><th colspan="3"><h2>${Account_data_fieldNames[Value]} Leaderboard</h2></th></tr></thead><tbody>`;
+	html += `<thead><tr><td><u><b>House</b></u></td><td><u><b>Name</b></u></td><td><u><b>${Account_data_fieldNames[Value]}</b></u></td></tr></thead><tbody>`;
+	for (const [index, accountArray] of entries) {
+		html += `<tr><td>${ACCOUNT_HOUSE[index]}</td><td>${ACCOUNT_NAME[index]}</td><td align="right">${formatNumberWithDots(accountArray[Value])}</td></tr>`;
+		}
+	html += `</tbody></table>`;
+	return html;
+	}
 
 function formatNumberWithDots(numberStr) {
-  return numberStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+	return numberStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	}
 
 function parseDate(str) {
-      const [date, time] = str.split('_');
-      const [year, month, day] = date.split('/').map(Number);
-      const [hour, minute] = time.split(':').map(Number);
-      return new Date(Date.UTC(year, month - 1, day, hour, minute));
-  }
+	const [date, time] = str.split('_');
+	const [year, month, day] = date.split('/').map(Number);
+	const [hour, minute] = time.split(':').map(Number);
+	return new Date(Date.UTC(year, month - 1, day, hour, minute));
+	}
   
 function update_tick_timer() {
-      const now = new Date();
-      let diff = target - now; // ms difference
-      diff = Math.abs(diff);
-      const totalSeconds = Math.floor(diff / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-      timerEl.textContent =
-        `Last update ${hours}h ${minutes}m ${seconds}s ago`;
-  }
-  
+	const now = new Date();
+	let diff = target - now; // ms difference
+	diff = Math.abs(diff);
+	const totalSeconds = Math.floor(diff / 1000);
+	const hours = Math.floor(totalSeconds / 3600);
+	const minutes = Math.floor((totalSeconds % 3600) / 60);
+	const seconds = totalSeconds % 60;
+	timerEl.textContent =`Last update ${hours}h ${minutes}m ${seconds}s ago`;
+	}
 </script>
 <script>
-
 var map = L.map('map', {
-    crs: L.CRS.Simple,
-    minZoom: -5,
-    maxZoom: 3,
-    maxBoundsViscosity: 0.1,
-    zoomControl: false, // i have it after attribution
-    inertia: false,
-    zoomAnimation: false,
-    fadeAnimation: false,
+	crs: L.CRS.Simple,
+	minZoom: -5,
+	maxZoom: 3,
+	maxBoundsViscosity: 0.1,
+	zoomControl: false, // i have it after attribution
+	inertia: false,
+	zoomAnimation: false,
+	fadeAnimation: false,
 });
 
 var SearchMarker = L.marker()
@@ -482,47 +501,49 @@ var SearchMarker = L.marker()
 //<!-- Pulsing Marker -->
 // Define an icon called cssIcon
 var cssIcon = L.divIcon({
-  // Specify a class name we can refer to in CSS.
-  className: 'css-icon',
-  html: '<div class="gps_ring"></div>'
-  // Set marker width and height
-  ,iconSize: [22,22]
-  // ,iconAnchor: [11,11]
+	// Specify a class name we can refer to in CSS.
+	className: 'css-icon',
+	html: '<div class="gps_ring"></div>'
+	// Set marker width and height
+	,iconSize: [22,22]
+	// ,iconAnchor: [11,11]
 });
 //<!-- Pulsing Marker -->
 
 //<!-- xy to yx to L.latLng -->
 var yx = L.latLng;
 var xy = function(x, y) {
-    if (Array.isArray(x)) {    // When doing xy([x, y]);
-        return yx(x[1], x[0]);
-    }
-    return yx(y, x);  // When doing xy(x, y);
+	if (Array.isArray(x)) {    // When doing xy([x, y]);
+		return yx(x[1], x[0]);
+		}
+	return yx(y, x);  // When doing xy(x, y);
 };
 //<!-- xy to yx to L.latLng -->
 
 //<!--https://github.com/ablakey/Leaflet.SimpleGraticule --> 
-var options = {interval: 20,
-               showOriginLabel: true,
-               redraw: 'move',
-               zoomIntervals: [
-                {start: -5, end: -4, interval: 2048},
-                {start: -3, end: -3, interval: 1024},
-                {start: -2, end: -2, interval: 512},
-                {start: -1, end: -1, interval: 256},
-                {start: 0, end: 1, interval: 128},
-                {start: 2, end: 3, interval: 64}
-            ]};
+var options = {
+	interval: 20,
+	showOriginLabel: true,
+	redraw: 'move',
+	zoomIntervals: [
+		{start: -5, end: -4, interval: 2048},
+		{start: -3, end: -3, interval: 1024},
+		{start: -2, end: -2, interval: 512},
+		{start: -1, end: -1, interval: 256},
+		{start: 0, end: 1, interval: 128},
+		{start: 2, end: 3, interval: 64}
+	]
+};
 L.simpleGraticule(options).addTo(map);
 //<!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
 map.setMaxBounds([[-55102,-55102], [55102,55102]]);
-const all_flags = ["1","2","3","4","5","9","10","12","13","14","15","18","19","23","25","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","79","80","81","82","83","84","103","108","109","111","113","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","172","173","174","175","186","187","188","189","190","191","192","193","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","253","254","255","256","257","258","259","260","261","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569","570","571","572",] 
-const account_ids = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37",] 
-const ACCOUNT_NAME = ["","Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsengaard treasury","Meloun","L","Romer","Syksy","Rucknium","Avatar I","Avatar II grey","Avatar III fat","PotR","PotR jr","Avatar test","badjabber","A16","TFQuests","Avatar 4","Avatar V","Avatar 6","Avatar 7","Avatar 11","avatar 8","yaoxi","Island treasury","Avatar 12","Avatar 13","preland","Pauleheister","jdawg420","redcathode","jdawg42","njkdcskjnds sdfsdf dffse errerw treasury","ABC123 treasury","Happy Cook","Town treasury",]
-const ACCOUNT_HOUSE = ["","Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsengaard treasury","Meloun","L","Romer","Syksy","Rucknium","Avatar I","Avatar II grey","Avatar III fat","PotR","PotR jr","Avatar test","badjabber","A16","TFQuests","Avatar 4","Avatar V","Avatar 6","Avatar 7","Avatar 11","avatar 8","yaoxi","Island treasury","Avatar 12","Avatar 13","preland","Pauleheister","jdawg420","redcathode","jdawg42","njkdcskjnds sdfsdf dffse errerw treasury","ABC123 treasury","Happy Cook","Town treasury",]
+const all_flags = ["1","2","3","4","5","9","10","12","13","14","15","18","19","23","25","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","79","80","81","82","83","84","103","108","109","111","113","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","172","173","174","175","186","187","188","189","190","191","192","193","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","253","254","255","256","257","258","259","260","261","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569","570","571","572","573",] 
+const account_ids = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38",] 
+const ACCOUNT_NAME = ["","Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsengaard treasury","Meloun","L","Romer","Syksy","Rucknium","Avatar I","Avatar II grey","Avatar III fat","PotR","PotR jr","Avatar test","badjabber","A16","TFQuests","Avatar 4","Avatar V","Avatar 6","Avatar 7","Avatar 11","avatar 8","yaoxi","Island treasury","Avatar 12","Avatar 13","preland","Pauleheister","jdawg420","redcathode","jdawg42","njkdcskjnds sdfsdf dffse errerw treasury","ABC123 treasury","Happy Cook","Town treasury","avatar 9999",]
+const ACCOUNT_HOUSE = ["","Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsengaard treasury","Meloun","L","Romer","Syksy","Rucknium","Avatar I","Avatar II grey","Avatar III fat","PotR","PotR jr","Avatar test","badjabber","A16","TFQuests","Avatar 4","Avatar V","Avatar 6","Avatar 7","Avatar 11","avatar 8","yaoxi","Island treasury","Avatar 12","Avatar 13","preland","Pauleheister","jdawg420","redcathode","jdawg42","njkdcskjnds sdfsdf dffse errerw treasury","ABC123 treasury","Happy Cook","Town treasury","avatar 9999",]
 const city_names = ["Helsengaard","Island","njkdcskjnds sdfsdf dffse errerw","ABC123","Town",]
 const FLAG_ROLE_NAME = ["","agricultural","craft","industrial","commercial","basic residential","affluent residential","luxury residential","military","cultural","stonecutter","sawmill","kiln","smelter","workforce","road","research","fishery",]
-const flag_names = ["Helsengaard town square","Tower","North Road","farm","Agricultural Field","Chop Chop on the Beach","East Street I","Cityside Gardens","Fishing Pier","Cityside Longhaus","Hare house","Icecrack Shack","Ugly Field","North side road","Syyskuunian Crafts","Western Road I","Helsengaard Park","Syysstad Imports & Exports","South-East Alleyway","East Street II","House by the Sea","Nice field","Big House","Work Bunks","Downtown Pad","Seaside Road II","Seaside Road I","Boat Builders","Seaside Road III","Syyskuunian Docks","Oats are good for you","Cow Paradise","Bad sawmill","Weird Table","Island town square","cfgvbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv","House 2","house2","Syysstad Embassy","Syystadt Embassy Gardens","Tuorla, Helsengaard Observatory","njkdcskjnds sdfsdf dffse errerw town square","ABC123 town square","dfg","sdf","retert","fdgdfg","dsfsd","dsfgs","sdfsfd","erterter","dgfg","sdfsdf","aweawed","sdfsdfsdf","fdgdgf","ztutzutz","fgfg","59549459","59595959595959","Town town square",]
+const flag_names = ["Helsengaard town square","Tower","North Road","farm","Agricultural Field","Chop Chop on the Beach","East Street I","Cityside Gardens","Fishing Pier","Cityside Longhaus","Hare house","Icecrack Shack","Ugly Field","North side road","Syyskuunian Crafts","Western Road I","Helsengaard Park","Syysstad Imports & Exports","South-East Alleyway","East Street II","House by the Sea","Nice field","Big House","Work Bunks","Downtown Pad","Seaside Road II","Seaside Road I","Boat Builders","Seaside Road III","Syyskuunian Docks","Oats are good for you","Cow Paradise","Bad sawmill","Weird Table","Island town square","cfgvbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv","House 2","house2","Syysstad Embassy","Syystadt Embassy Gardens","Tuorla, Helsengaard Observatory","njkdcskjnds sdfsdf dffse errerw town square","ABC123 town square","dfg","sdf","retert","fdgdfg","dsfsd","dsfgs","sdfsfd","erterter","dgfg","sdfsdf","aweawed","sdfsdfsdf","fdgdgf","ztutzutz","fgfg","59549459","59595959595959","Town town square","BIG HOUSE",]
 
 const BaseLayer_GeoJSON_City_0 = L.geoJson([]).addTo(map);
 const Layer_img_inactive_flags0 = L.featureGroup([]).addTo(BaseLayer_GeoJSON_City_0);
@@ -537,6 +558,10 @@ const GeoJSON_Flags_Repair_City_0 = L.geoJson(Flags_city0, {
 	})
 const GeoJSON_Flags_Owner_City_0 = L.geoJson(Flags_city0, {
 		style: Style_Owner,
+		onEachFeature
+	})
+const GeoJSON_Flags_EcoPow_City_0 = L.geoJson(Flags_city0, {
+		style: Style_Economic_Power,
 		onEachFeature
 	})
 
@@ -556,6 +581,10 @@ const GeoJSON_Flags_Owner_City_1 = L.geoJson(Flags_city1, {
 		style: Style_Owner,
 		onEachFeature
 	})
+const GeoJSON_Flags_EcoPow_City_1 = L.geoJson(Flags_city1, {
+		style: Style_Economic_Power,
+		onEachFeature
+	})
 
 
 const BaseLayer_GeoJSON_City_2 = L.geoJson([])
@@ -571,6 +600,10 @@ const GeoJSON_Flags_Repair_City_2 = L.geoJson(Flags_city2, {
 	})
 const GeoJSON_Flags_Owner_City_2 = L.geoJson(Flags_city2, {
 		style: Style_Owner,
+		onEachFeature
+	})
+const GeoJSON_Flags_EcoPow_City_2 = L.geoJson(Flags_city2, {
+		style: Style_Economic_Power,
 		onEachFeature
 	})
 
@@ -590,6 +623,10 @@ const GeoJSON_Flags_Owner_City_3 = L.geoJson(Flags_city3, {
 		style: Style_Owner,
 		onEachFeature
 	})
+const GeoJSON_Flags_EcoPow_City_3 = L.geoJson(Flags_city3, {
+		style: Style_Economic_Power,
+		onEachFeature
+	})
 
 
 const BaseLayer_GeoJSON_City_4 = L.geoJson([])
@@ -607,6 +644,10 @@ const GeoJSON_Flags_Owner_City_4 = L.geoJson(Flags_city4, {
 		style: Style_Owner,
 		onEachFeature
 	})
+const GeoJSON_Flags_EcoPow_City_4 = L.geoJson(Flags_city4, {
+		style: Style_Economic_Power,
+		onEachFeature
+	})
 
 const featureGroup_firefighting = L.featureGroup([]);
 const featureGroup_tax_break_points = L.featureGroup([]);
@@ -614,6 +655,7 @@ const featureGroup_role_images = L.featureGroup([]).addTo(map);
 const featureGroup_role = L.featureGroup([]).addTo(map);
 const featureGroup_repair = L.featureGroup([]);
 const featureGroup_owner = L.featureGroup([]);
+const featureGroup_EcoPow = L.featureGroup([]);
 const Layer_firefighting_city_0 = L.layerGroup([]).addTo(featureGroup_firefighting);
 const Layer_tax_break_points_city_0 = L.layerGroup([]).addTo(featureGroup_tax_break_points);
 BaseLayer_GeoJSON_City_0.on('add',(e)=>{
@@ -635,6 +677,8 @@ featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_0.addTo(BaseLayer_G
 featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_0.removeFrom(BaseLayer_GeoJSON_City_0);legend_repair.remove()});
 featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();legend_owner.addTo(map)});
 featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_0.removeFrom(BaseLayer_GeoJSON_City_0);legend_owner.remove()});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();legend_EcoPow.addTo(map)});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_0.removeFrom(BaseLayer_GeoJSON_City_0);legend_EcoPow.remove()});
 const Layer_firefighting_city_1 = L.layerGroup([]);
 const Layer_tax_break_points_city_1 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_1.on('add',(e)=>{
@@ -656,6 +700,8 @@ featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_1.addTo(BaseLayer_G
 featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_1.removeFrom(BaseLayer_GeoJSON_City_1);legend_repair.remove()});
 featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();legend_owner.addTo(map)});
 featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_1.removeFrom(BaseLayer_GeoJSON_City_1);legend_owner.remove()});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();legend_EcoPow.addTo(map)});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_1.removeFrom(BaseLayer_GeoJSON_City_1);legend_EcoPow.remove()});
 const Layer_firefighting_city_2 = L.layerGroup([]);
 const Layer_tax_break_points_city_2 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_2.on('add',(e)=>{
@@ -677,6 +723,8 @@ featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_2.addTo(BaseLayer_G
 featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_2.removeFrom(BaseLayer_GeoJSON_City_2);legend_repair.remove()});
 featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();legend_owner.addTo(map)});
 featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_2.removeFrom(BaseLayer_GeoJSON_City_2);legend_owner.remove()});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();legend_EcoPow.addTo(map)});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_2.removeFrom(BaseLayer_GeoJSON_City_2);legend_EcoPow.remove()});
 const Layer_firefighting_city_3 = L.layerGroup([]);
 const Layer_tax_break_points_city_3 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_3.on('add',(e)=>{
@@ -698,6 +746,8 @@ featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_3.addTo(BaseLayer_G
 featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_3.removeFrom(BaseLayer_GeoJSON_City_3);legend_repair.remove()});
 featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();legend_owner.addTo(map)});
 featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_3.removeFrom(BaseLayer_GeoJSON_City_3);legend_owner.remove()});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();legend_EcoPow.addTo(map)});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_3.removeFrom(BaseLayer_GeoJSON_City_3);legend_EcoPow.remove()});
 const Layer_firefighting_city_4 = L.layerGroup([]);
 const Layer_tax_break_points_city_4 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_4.on('add',(e)=>{
@@ -719,48 +769,49 @@ featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_4.addTo(BaseLayer_G
 featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_4.removeFrom(BaseLayer_GeoJSON_City_4);legend_repair.remove()});
 featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();legend_owner.addTo(map)});
 featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_4.removeFrom(BaseLayer_GeoJSON_City_4);legend_owner.remove()});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();legend_EcoPow.addTo(map)});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_4.removeFrom(BaseLayer_GeoJSON_City_4);legend_EcoPow.remove()});
 const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
 const Img_role = []
-      Img_role[0] = './dist/inactive.svg'
-      Img_role[1] = './dist/farm.svg'
-      Img_role[2] = './dist/anvil.svg'
-      Img_role[3] = ''
-      Img_role[4] = './dist/shop.svg'
-      Img_role[5] = './dist/tent.svg'
-      Img_role[6] = './dist/longhouse.svg'
-      Img_role[7] = './dist/castle.svg'
-      Img_role[8] = './dist/sword.svg'
-      Img_role[9] = './dist/beer.svg'
-      Img_role[10] = './dist/stone.svg'
-      Img_role[11] = './dist/tree.svg'
-      Img_role[13] = ''
-      Img_role[14] = './dist/slave.svg'
-      Img_role[15] = ''
-      Img_role[16] = './dist/research.svg'
-      Img_role[17] = './dist/ship.svg'
+	Img_role[0] = './dist/inactive.svg'
+	Img_role[1] = './dist/farm.svg'
+	Img_role[2] = './dist/anvil.svg'
+	Img_role[3] = ''
+	Img_role[4] = './dist/shop.svg'
+	Img_role[5] = './dist/tent.svg'
+	Img_role[6] = './dist/longhouse.svg'
+	Img_role[7] = './dist/castle.svg'
+	Img_role[8] = './dist/sword.svg'
+	Img_role[9] = './dist/beer.svg'
+	Img_role[10] = './dist/stone.svg'
+	Img_role[11] = './dist/tree.svg'
+	Img_role[13] = ''
+	Img_role[14] = './dist/slave.svg'
+	Img_role[15] = ''
+	Img_role[16] = './dist/research.svg'
+	Img_role[17] = './dist/ship.svg'
 const ti_city = [];
-      ti_city[0] = Layer_img_inactive_flags0
-      ti_city[1] = Layer_img_inactive_flags1
-      ti_city[2] = Layer_img_inactive_flags2
-      ti_city[3] = Layer_img_inactive_flags3
-      ti_city[4] = Layer_img_inactive_flags4
+	ti_city[0] = Layer_img_inactive_flags0
+	ti_city[1] = Layer_img_inactive_flags1
+	ti_city[2] = Layer_img_inactive_flags2
+	ti_city[3] = Layer_img_inactive_flags3
+	ti_city[4] = Layer_img_inactive_flags4
 const Generation_of_inactive_images = L.geoJson(allFlagsCities, {
-        onEachFeature: function(feature, layer){
-            if ( feature.properties.active == 'false' && feature.properties.role != 0 ) {
-                L.imageOverlay(Img_role[0], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(ti_city[feature.properties.city])
-    }}})
+		onEachFeature: function(feature, layer){
+			if ( feature.properties.active == 'false' && feature.properties.role != 0 ) {
+				L.imageOverlay(Img_role[0], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(ti_city[feature.properties.city])
+	}}})
 const t_city = [];
-      t_city[0] = Layer_img_role_flags0
-      t_city[1] = Layer_img_role_flags1
-      t_city[2] = Layer_img_role_flags2
-      t_city[3] = Layer_img_role_flags3
-      t_city[4] = Layer_img_role_flags4
+	t_city[0] = Layer_img_role_flags0
+	t_city[1] = Layer_img_role_flags1
+	t_city[2] = Layer_img_role_flags2
+	t_city[3] = Layer_img_role_flags3
+	t_city[4] = Layer_img_role_flags4
 const Generation_of_role_images = L.geoJson(allFlagsCities, {
-        onEachFeature: function(feature, layer){
-            if ( feature.properties.active == 'true' && Img_role[feature.properties.role] != '' ) {
-                L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(t_city[feature.properties.city])
-            }
-    }})
+		onEachFeature: function(feature, layer){
+			if ( feature.properties.active == 'true' && Img_role[feature.properties.role] != '' ) {
+				L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(t_city[feature.properties.city])
+	}}})
 
 L.rectangle([xy([-1115, -2008]),xy([1459, 581])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 L.rectangle([xy([-4170, -5829]),xy([7019, 5360])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
@@ -803,8 +854,8 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/04_12:23 UTC | Blockchain height: 1,303,575 | <abbr id="timer">Loading...</abbr>')
-const givenStr = "2025/08/04_12:23"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/04_18:08 UTC | Blockchain height: 1,304,652 | <abbr id="timer">Loading...</abbr>')
+const givenStr = "2025/08/04_18:08"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -840,6 +891,15 @@ legend_owner.onAdd = function (map) {
 	div.innerHTML = legend_owner_text;
 	return div;
 };
+
+const legend_EcoPow_text="<div style=\"background-color:#0AF51A\" class=\"circle_EP\">= 300%</div><br><div style=\"background-color:#23AC1F\" class=\"circle_EP\">> 250%</div><br><div style=\"background-color:#22681B\" class=\"circle_EP\">> 200%</div><br><div style=\"background-color:#F58F0A\" class=\"circle_EP\">> 150%</div><br><div style=\"background-color:#AD6614\" class=\"circle_EP\">> 100%</div><br><div style=\"background-color:#694014\" class=\"circle_EP\">= 100%</div>"
+const legend_EcoPow = L.control({position: 'bottomright'});
+legend_EcoPow.onAdd = function (map) {
+	const div = L.DomUtil.create('div', 'info legend');
+	
+	div.innerHTML = legend_EcoPow_text;
+	return div;
+};
 var baseMaps = {
 'Helsengaard': BaseLayer_GeoJSON_City_0,
 'Island': BaseLayer_GeoJSON_City_1,
@@ -856,6 +916,7 @@ var overlays = {
 'Role': featureGroup_role,
 'Repair': featureGroup_repair,
 'Owner': featureGroup_owner,
+'E.Power': featureGroup_EcoPow,
 };
 var overlays_overlays = {};
 var layerControl = L.control.layers(baseMaps,baseMaps_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
@@ -910,7 +971,7 @@ L.control.burgerMenu({
     onClick: () => {
         var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
         .setLatLng(xy([0, 0]))
-        .setContent("    <table class='popup_table'>    <tr><td>Name:</td><td><b>Helsengaard</b></td></tr>    <tr><td>ID:</td><td>0</td></tr>    <tr><td>Level (max):</td><td>6 (6)</td></tr>    <tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>    <tr><td>Citizens:</td><td>12</td></tr>    <tr><td>Flags:</td><td>437</td></tr>    <tr><td>Flags Inactive:</td><td>68</td></tr>    <tr><td>Flags Empty:</td><td>63</td></tr>    </table>"    )
+        .setContent("    <table class='popup_table'>    <tr><td>Name:</td><td><b>Helsengaard</b></td></tr>    <tr><td>ID:</td><td>0</td></tr>    <tr><td>Level (max):</td><td>6 (6)</td></tr>    <tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>    <tr><td>Citizens:</td><td>12</td></tr>    <tr><td>Flags:</td><td>438</td></tr>    <tr><td>Flags Inactive:</td><td>69</td></tr>    <tr><td>Flags Empty:</td><td>63</td></tr>    </table>"    )
         .openOn(map);
         },
     },
