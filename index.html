@@ -491,17 +491,17 @@ var map = L.map('map', {
 	maxZoom: 3,
 	maxBoundsViscosity: 0.1,
 	zoomControl: false, // i have it after attribution
-	inertia: false,
+	inertia: true,
+	inertiaMaxSpeed: 1000,
 	zoomAnimation: false,
 	fadeAnimation: false,
 });
+map.getRenderer(map).options.padding = 100; // How much to extend the clip area around the map view (relative to its size) e.g. 0.1 would be 10% of map view in each direction
 
 var SearchMarker = L.marker()
 
 //<!-- Pulsing Marker -->
-// Define an icon called cssIcon
 var cssIcon = L.divIcon({
-	// Specify a class name we can refer to in CSS.
 	className: 'css-icon',
 	html: '<div class="gps_ring"></div>'
 	// Set marker width and height
@@ -854,8 +854,8 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/05_06:18 UTC | Blockchain height: 1,306,830 | <abbr id="timer">Loading...</abbr>')
-const givenStr = "2025/08/05_06:18"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/05_07:15 UTC | Blockchain height: 1,306,997 | <abbr id="timer">Loading...</abbr>')
+const givenStr = "2025/08/05_07:15"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -871,23 +871,21 @@ legend_repair.onAdd = function (map) {
 };
 
 const legend_role_text="<div style=\"background-color:    white \" class=\"circle_role\">none                </div><br><div style=\"background-color:LawnGreen \" class=\"circle_role\">agricultural        </div><br><div style=\"background-color:Cyan \" class=\"circle_role\">craft               </div><br><div style=\"background-color:SaddleBrown \" class=\"circle_role\">industrial          </div><br><div style=\"background-color:Magenta \" class=\"circle_role\">commercial          </div><br><div style=\"background-color:Orange \" class=\"circle_role\">basic residential   </div><br><div style=\"background-color:DarkOrange \" class=\"circle_role\">affluent residential</div><br><div style=\"background-color:OrangeRed \" class=\"circle_role\">luxury residential  </div><br><div style=\"background-color:DarkSlateGray \" class=\"circle_role\">military            </div><br><div style=\"background-color:MediumSlateBlue \" class=\"circle_role\">cultural            </div><br><div style=\"background-color:Silver\" class=\"circle_role\">stonecutter         </div><br><div style=\"background-color:ForestGreen\" class=\"circle_role\">sawmill             </div><br><div style=\"background-color:SandyBrown\" class=\"circle_role\">kiln                </div><br><div style=\"background-color:Tan\" class=\"circle_role\">smelter             </div><br><div style=\"background-color:NavajoWhite\" class=\"circle_role\">workforce           </div><br><div style=\"background-color:DimGray\" class=\"circle_role\">road                </div><br><div style=\"background-color:RebeccaPurple\" class=\"circle_role\">research            </div><br><div style=\"background-color:RoyalBlue\" class=\"circle_role\">fishery             </div>"
-           
-const legend_role = L.control({position: 'bottomright'});    
-legend_role.onAdd = function (map) {        
-	const div = L.DomUtil.create('div', 'info legend');          
-	        
-	div.innerHTML = legend_role_text;    
-	return div;    
+
+const legend_role = L.control({position: 'bottomright'});
+legend_role.onAdd = function (map) {
+	const div = L.DomUtil.create('div', 'info legend');
+	div.innerHTML = legend_role_text;
+	return div;
 };       
-//default view      
-legend_role.addTo(map);         
+//default view
+legend_role.addTo(map);
         
 const legend_owner_text="Colors are generated from account name"
 
 const legend_owner = L.control({position: 'bottomright'});
 legend_owner.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
-	
 	div.innerHTML = legend_owner_text;
 	return div;
 };
@@ -896,7 +894,6 @@ const legend_EcoPow_text="<div style=\"background-color:#0AF51A\" class=\"circle
 const legend_EcoPow = L.control({position: 'bottomright'});
 legend_EcoPow.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
-	
 	div.innerHTML = legend_EcoPow_text;
 	return div;
 };
