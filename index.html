@@ -112,7 +112,31 @@
 	cursor: pointer;
 }
 /*<!-- Home Button -->*/
-
+/*<!-- Edit Button -->*/
+#EditButton{
+	display: flex;
+	align-items: center;
+	position: absolute;
+	bottom: 27px;
+	left: 80px;
+	width: 70px;
+	height: 32px;
+	background-color: white;
+	border-radius: 5px;
+	border-color: gray;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	opacity: 0.8;
+	text-align: center;
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
+}
+#EditButton:hover{
+	opacity: 1;
+	cursor: pointer;
+}
+/*<!-- Edit Button -->*/
 tr:nth-child(even) {
 	/*Use an rgba() color to specify the transparency of the color:*/
 	background-color: rgba(117, 117, 117, 0.1);
@@ -128,9 +152,37 @@ tr:nth-child(even) {
 	<img src="./dist/home.svg" style="width:20px;"></img>
 	</button>
 	<!-- Home Button -->
+	<!-- Edit Button -->
+	<button id="EditButton" title='' 
+		onclick='
+			if (map.hasLayer(featureGroup_Legend) == 0) {
+				document.getElementById("EditButton").style.background="Lime";
+				document.getElementById("EditButton").style.border="2px solid Green";
+				featureGroup_Legend.addTo(map).clearLayers();
+				legend_edit.addTo(map);
+				legend_role.remove();
+				legend_repair.remove();
+				legend_owner.remove();
+				legend_EcoPow.remove();
+				}
+			else if (map.hasLayer(featureGroup_Legend) == 1) {
+				document.getElementById("EditButton").style.background="White";
+				document.getElementById("EditButton").style.border="1px solid Gray";
+				featureGroup_Legend.remove();
+				legend_edit.remove();
+				if (map.hasLayer(featureGroup_role) == 1) {legend_role.addTo(map)};
+				if (map.hasLayer(featureGroup_repair) == 1) {legend_repair.addTo(map)};
+				if (map.hasLayer(featureGroup_owner) == 1) {legend_owner.addTo(map)};
+				if (map.hasLayer(featureGroup_EcoPow) == 1) {legend_EcoPow.addTo(map)};
+				}
+			'>
+	Influence Calculator 
+	</button>
+	<!-- Edit Button -->
 </div>
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
 <script type="text/javascript" src="Account_data.js"></script>
+<script type="text/javascript" src="./dist/mine_calculate_flag_influence.js"></script>
 <script>
 function getColor_role(d) {
 	return  d == 0  ? "white"  :
@@ -483,6 +535,43 @@ function update_tick_timer() {
 	const seconds = totalSeconds % 60;
 	timerEl.textContent =`Last update ${hours}h ${minutes}m ${seconds}s ago`;
 	}
+
+function function_select_first_marker(e) {
+		L.DomEvent.addListener(map, 'click', this.function_select_first_marker_enterAddMarkerMode.bind(this));
+}
+
+function function_select_first_marker_enterAddMarkerMode () {
+	this.map._container.style.cursor = 'crosshair';
+	this.map.addEventListener('click', this.function_select_first_marker_onMapClickAddMarker.bind(this));
+}
+
+function function_select_first_marker_onMapClickAddMarker (e) {
+		"use strict";
+		this.map.removeEventListener('click');
+		this.map._container.style.cursor = 'auto';
+		marker_first.remove()
+		marker_first = L.marker(e.latlng, {draggable: true})
+		marker_first.addTo(featureGroup_Legend);
+	}
+	
+function function_select_second_marker(e) {
+		L.DomEvent.addListener(map, 'click', this.function_select_second_marker_enterAddMarkerMode.bind(this));
+}
+
+function function_select_second_marker_enterAddMarkerMode () {
+	this.map._container.style.cursor = 'crosshair';
+	this.map.addEventListener('click', this.function_select_second_marker_onMapClickAddMarker.bind(this));
+}
+
+function function_select_second_marker_onMapClickAddMarker (e) {
+		"use strict";
+		this.map.removeEventListener('click');
+		this.map._container.style.cursor = 'auto';
+		marker_second.remove()
+		marker_second = L.marker(e.latlng, {draggable: true})
+		marker_second.addTo(featureGroup_Legend);
+}
+
 </script>
 <script>
 var map = L.map('map', {
@@ -656,6 +745,15 @@ const featureGroup_role = L.featureGroup([]).addTo(map);
 const featureGroup_repair = L.featureGroup([]);
 const featureGroup_owner = L.featureGroup([]);
 const featureGroup_EcoPow = L.featureGroup([]);
+const featureGroup_Legend = L.featureGroup([]);
+featureGroup_role.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_role.addTo(map)}});
+featureGroup_role.on('remove',(e)=>{legend_role.remove()});
+featureGroup_repair.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_repair.addTo(map)}});
+featureGroup_repair.on('remove',(e)=>{legend_repair.remove()});
+featureGroup_owner.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_owner.addTo(map)}});
+featureGroup_owner.on('remove',(e)=>{legend_owner.remove()});
+featureGroup_EcoPow.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_EcoPow.addTo(map)}});
+featureGroup_EcoPow.on('remove',(e)=>{legend_EcoPow.remove()});
 const Layer_firefighting_city_0 = L.layerGroup([]).addTo(featureGroup_firefighting);
 const Layer_tax_break_points_city_0 = L.layerGroup([]).addTo(featureGroup_tax_break_points);
 BaseLayer_GeoJSON_City_0.on('add',(e)=>{
@@ -670,15 +768,15 @@ BaseLayer_GeoJSON_City_0.on('remove',(e)=>{
 	Layer_img_role_flags0.removeFrom(featureGroup_role_images);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();legend_role.addTo(map)});
+featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();});
 GeoJSON_Flags_Role_City_0.addTo(BaseLayer_GeoJSON_City_0)
-featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_0.removeFrom(BaseLayer_GeoJSON_City_0);legend_role.remove()});
-featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();legend_repair.addTo(map)});
-featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_0.removeFrom(BaseLayer_GeoJSON_City_0);legend_repair.remove()});
-featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();legend_owner.addTo(map)});
-featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_0.removeFrom(BaseLayer_GeoJSON_City_0);legend_owner.remove()});
-featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();legend_EcoPow.addTo(map)});
-featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_0.removeFrom(BaseLayer_GeoJSON_City_0);legend_EcoPow.remove()});
+featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_0.removeFrom(BaseLayer_GeoJSON_City_0);});
+featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();});
+featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_0.removeFrom(BaseLayer_GeoJSON_City_0);});
+featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();});
+featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_0.removeFrom(BaseLayer_GeoJSON_City_0);});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_0.addTo(BaseLayer_GeoJSON_City_0).bringToBack();});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_0.removeFrom(BaseLayer_GeoJSON_City_0);});
 const Layer_firefighting_city_1 = L.layerGroup([]);
 const Layer_tax_break_points_city_1 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_1.on('add',(e)=>{
@@ -693,15 +791,15 @@ BaseLayer_GeoJSON_City_1.on('remove',(e)=>{
 	Layer_img_role_flags1.removeFrom(featureGroup_role_images);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();legend_role.addTo(map)});
+featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();});
 GeoJSON_Flags_Role_City_1.addTo(BaseLayer_GeoJSON_City_1)
-featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_1.removeFrom(BaseLayer_GeoJSON_City_1);legend_role.remove()});
-featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();legend_repair.addTo(map)});
-featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_1.removeFrom(BaseLayer_GeoJSON_City_1);legend_repair.remove()});
-featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();legend_owner.addTo(map)});
-featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_1.removeFrom(BaseLayer_GeoJSON_City_1);legend_owner.remove()});
-featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();legend_EcoPow.addTo(map)});
-featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_1.removeFrom(BaseLayer_GeoJSON_City_1);legend_EcoPow.remove()});
+featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_1.removeFrom(BaseLayer_GeoJSON_City_1);});
+featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();});
+featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_1.removeFrom(BaseLayer_GeoJSON_City_1);});
+featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();});
+featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_1.removeFrom(BaseLayer_GeoJSON_City_1);});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_1.addTo(BaseLayer_GeoJSON_City_1).bringToBack();});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_1.removeFrom(BaseLayer_GeoJSON_City_1);});
 const Layer_firefighting_city_2 = L.layerGroup([]);
 const Layer_tax_break_points_city_2 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_2.on('add',(e)=>{
@@ -716,15 +814,15 @@ BaseLayer_GeoJSON_City_2.on('remove',(e)=>{
 	Layer_img_role_flags2.removeFrom(featureGroup_role_images);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();legend_role.addTo(map)});
+featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();});
 GeoJSON_Flags_Role_City_2.addTo(BaseLayer_GeoJSON_City_2)
-featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_2.removeFrom(BaseLayer_GeoJSON_City_2);legend_role.remove()});
-featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();legend_repair.addTo(map)});
-featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_2.removeFrom(BaseLayer_GeoJSON_City_2);legend_repair.remove()});
-featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();legend_owner.addTo(map)});
-featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_2.removeFrom(BaseLayer_GeoJSON_City_2);legend_owner.remove()});
-featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();legend_EcoPow.addTo(map)});
-featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_2.removeFrom(BaseLayer_GeoJSON_City_2);legend_EcoPow.remove()});
+featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_2.removeFrom(BaseLayer_GeoJSON_City_2);});
+featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();});
+featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_2.removeFrom(BaseLayer_GeoJSON_City_2);});
+featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();});
+featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_2.removeFrom(BaseLayer_GeoJSON_City_2);});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_2.addTo(BaseLayer_GeoJSON_City_2).bringToBack();});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_2.removeFrom(BaseLayer_GeoJSON_City_2);});
 const Layer_firefighting_city_3 = L.layerGroup([]);
 const Layer_tax_break_points_city_3 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_3.on('add',(e)=>{
@@ -739,15 +837,15 @@ BaseLayer_GeoJSON_City_3.on('remove',(e)=>{
 	Layer_img_role_flags3.removeFrom(featureGroup_role_images);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();legend_role.addTo(map)});
+featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();});
 GeoJSON_Flags_Role_City_3.addTo(BaseLayer_GeoJSON_City_3)
-featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_3.removeFrom(BaseLayer_GeoJSON_City_3);legend_role.remove()});
-featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();legend_repair.addTo(map)});
-featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_3.removeFrom(BaseLayer_GeoJSON_City_3);legend_repair.remove()});
-featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();legend_owner.addTo(map)});
-featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_3.removeFrom(BaseLayer_GeoJSON_City_3);legend_owner.remove()});
-featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();legend_EcoPow.addTo(map)});
-featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_3.removeFrom(BaseLayer_GeoJSON_City_3);legend_EcoPow.remove()});
+featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_3.removeFrom(BaseLayer_GeoJSON_City_3);});
+featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();});
+featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_3.removeFrom(BaseLayer_GeoJSON_City_3);});
+featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();});
+featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_3.removeFrom(BaseLayer_GeoJSON_City_3);});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_3.addTo(BaseLayer_GeoJSON_City_3).bringToBack();});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_3.removeFrom(BaseLayer_GeoJSON_City_3);});
 const Layer_firefighting_city_4 = L.layerGroup([]);
 const Layer_tax_break_points_city_4 = L.layerGroup([]);
 BaseLayer_GeoJSON_City_4.on('add',(e)=>{
@@ -762,15 +860,15 @@ BaseLayer_GeoJSON_City_4.on('remove',(e)=>{
 	Layer_img_role_flags4.removeFrom(featureGroup_role_images);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();legend_role.addTo(map)});
+featureGroup_role.on('add',(e)=>{GeoJSON_Flags_Role_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();});
 GeoJSON_Flags_Role_City_4.addTo(BaseLayer_GeoJSON_City_4)
-featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_4.removeFrom(BaseLayer_GeoJSON_City_4);legend_role.remove()});
-featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();legend_repair.addTo(map)});
-featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_4.removeFrom(BaseLayer_GeoJSON_City_4);legend_repair.remove()});
-featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();legend_owner.addTo(map)});
-featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_4.removeFrom(BaseLayer_GeoJSON_City_4);legend_owner.remove()});
-featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();legend_EcoPow.addTo(map)});
-featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_4.removeFrom(BaseLayer_GeoJSON_City_4);legend_EcoPow.remove()});
+featureGroup_role.on('remove',(e)=>{GeoJSON_Flags_Role_City_4.removeFrom(BaseLayer_GeoJSON_City_4);});
+featureGroup_repair.on('add',(e)=>{GeoJSON_Flags_Repair_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();});
+featureGroup_repair.on('remove',(e)=>{GeoJSON_Flags_Repair_City_4.removeFrom(BaseLayer_GeoJSON_City_4);});
+featureGroup_owner.on('add',(e)=>{GeoJSON_Flags_Owner_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();});
+featureGroup_owner.on('remove',(e)=>{GeoJSON_Flags_Owner_City_4.removeFrom(BaseLayer_GeoJSON_City_4);});
+featureGroup_EcoPow.on('add',(e)=>{GeoJSON_Flags_EcoPow_City_4.addTo(BaseLayer_GeoJSON_City_4).bringToBack();});
+featureGroup_EcoPow.on('remove',(e)=>{GeoJSON_Flags_EcoPow_City_4.removeFrom(BaseLayer_GeoJSON_City_4);});
 const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
 const Img_role = []
 	Img_role[0] = './dist/inactive.svg'
@@ -854,8 +952,8 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/06_11:29 UTC | Blockchain height: 1,312,224 | <abbr id="timer">Loading...</abbr>')
-const givenStr = "2025/08/06_11:29"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/06_17:34 UTC | Blockchain height: 1,313,301 | <abbr id="timer">Loading...</abbr>')
+const givenStr = "2025/08/06_17:34"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -897,6 +995,15 @@ legend_EcoPow.onAdd = function (map) {
 	div.innerHTML = legend_EcoPow_text;
 	return div;
 };
+
+const legend_edit_text="<b>Influence Calculator</b><ol><li><button onclick='function_select_first_marker()'>Select first corner</button><li><button onclick='function_select_second_marker()'>Select second corner</button><li><button onclick='function_get_selection_influence()'>Calculate influence</button></ol>"
+const legend_edit = L.control({position: 'bottomright'});
+legend_edit.onAdd = function (map) {
+	const div = L.DomUtil.create('div', 'info legend');
+	div.innerHTML = legend_edit_text;
+	return div;
+};
+
 var baseMaps = {
 'Helsengaard': BaseLayer_GeoJSON_City_0,
 'Island': BaseLayer_GeoJSON_City_1,
