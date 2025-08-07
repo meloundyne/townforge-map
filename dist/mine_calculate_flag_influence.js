@@ -136,7 +136,7 @@ function function_get_selection_influence () {
 <tr><td>${FLAG_ROLE_NAME[15]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[15])+50)/100)}</td></tr>
 <tr><td>${FLAG_ROLE_NAME[16]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[16])+50)/100)}</td></tr>
 <tr><td>${FLAG_ROLE_NAME[17]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[17])+50)/100)}</td></tr>
-<tr><td colspan="3"><a target="_blank" href="https://townforge.net/manual/">townforge.net/manual/</a> Chapter: Influence</td></tr>
+<tr><td colspan="3"><a target="_blank" href="https://townforge.net/manual/">townforge.net/manual/</a>  Influence</td></tr>
 </tbody>
 </table>
 `;
