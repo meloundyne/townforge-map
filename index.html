@@ -46,25 +46,28 @@
 
 /*<!-- info legend bottom right-->*/
 .circle_repair {
-	height: 18px;
+	line-height: 22px;
 	width: 45px;
 	border-radius: 15%;
 	white-space: nowrap;
 	text-align: center;
 }
 .circle_role {
-	height: 18px;
+	line-height: 22px;
 	width: 115px;
 	border-radius: 15%;
 	white-space: nowrap;
 	text-align: center;
 }
 .circle_EP {
-	height: 18px;
+	line-height: 22px;
 	width: 55px;
 	border-radius: 15%;
 	white-space: nowrap;
 	text-align: center;
+}
+.br_legend {
+	line-height: 0.2;
 }
 /*<!-- info legend bottom right-->*/
 
@@ -294,7 +297,7 @@ function function_highlightFeature(e) {
 		layer.setStyle({
 			weight: 7,
 			dashArray: '',
-			fillOpacity: 1
+			fillOpacity: 0.8
 		});
 		layer.bringToFront();
 		info.update(layer.feature);
@@ -613,6 +616,7 @@ map.getRenderer(map).options.padding = 100; // How much to extend the clip area 
 
 var SearchMarker = L.marker()
 var Select_Ignore_interactive_map_Rectangle = L.rectangle([[-10000000, -10000000],[10000000, 10000000]], {color: "gray", weight: 0, fillOpacity: 0, interactive: true});
+
 //<!-- Pulsing Marker -->
 var cssIcon = L.divIcon({
 	className: 'css-icon',
@@ -969,21 +973,21 @@ info.onAdd = function (map) {
 	};
 
 info.update = function (f) {
-		const contents = f ? `<table><tr><td>Name:</td><td><b>${f.properties.name}</b></td></tr><tr><td>Owner:</td><td>${ACCOUNT_NAME[f.properties.owner]}</td></tr><tr><td>Role:</td><td>${FLAG_ROLE_NAME[f.properties.role]}</td></tr><tr><td>Active:</td><td>${f.properties.active}</td></tr><tr><td>Flag ID:</td><td> ${f.id}</td></tr></table>` : 'Hover over a Flag'; // props is properties in geojson data
+		const contents = f ? `<table><tr><td>Name:</td><td><b>${f.properties.name}</b></td></tr><tr><td>Owner:</td><td>${ACCOUNT_NAME[f.properties.owner]}</td></tr><tr><td>Flag ID:</td><td> ${f.id}</td></tr></table>` : 'Hover over a Flag'; // props is properties in geojson data
 		this._div.innerHTML = `<h4>Flag Info</h4>${contents}`;
 	};
 
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/07_11:59 UTC | Blockchain height: 1,316,534 | <abbr id="timer">Loading...</abbr>')
-const givenStr = "2025/08/07_11:59"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/07_18:24 UTC | Blockchain height: 1,317,622 | <abbr id="timer">Loading...</abbr>')
+const givenStr = "2025/08/07_18:24"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
 setInterval(update_tick_timer, 1000);// attribution tick timer
 L.control.zoom({position:'bottomleft'}).addTo(map)
-const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"circle_repair\">> 70%</div>   <br><div style=\"background-color:LightSalmon\" class=\"circle_repair\">> 60%</div>  <br><div style=\"background-color:Coral\" class=\"circle_repair\">> 50%</div>        <br><div style=\"background-color:Tomato\" class=\"circle_repair\">> 40%</div>       <br><div style=\"background-color:OrangeRed\" class=\"circle_repair\">> 30%</div>    <br><div style=\"background-color:MediumPurple\" class=\"circle_repair\">> 20%</div> <br><div style=\"background-color:RebeccaPurple\" class=\"circle_repair\">> 00%</div><br><div style=\"background-color:white\" class=\"circle_repair\">= 00%</div>        "                                                                                    
+const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"circle_repair\">> 70%</div>   <br class='br_legend'><div style=\"background-color:LightSalmon\" class=\"circle_repair\">> 60%</div>  <br class='br_legend'><div style=\"background-color:Coral\" class=\"circle_repair\">> 50%</div>        <br class='br_legend'><div style=\"background-color:Tomato\" class=\"circle_repair\">> 40%</div>       <br class='br_legend'><div style=\"background-color:OrangeRed\" class=\"circle_repair\">> 30%</div>    <br class='br_legend'><div style=\"background-color:MediumPurple\" class=\"circle_repair\">> 20%</div> <br class='br_legend'><div style=\"background-color:RebeccaPurple\" class=\"circle_repair\">> 00%</div><br class='br_legend'><div style=\"background-color:white\" class=\"circle_repair\">= 00%</div>        "                                                                                    
 const legend_repair = L.control({position: 'bottomright'});                          
 legend_repair.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -992,7 +996,7 @@ legend_repair.onAdd = function (map) {
 	return div;
 };
 
-const legend_role_text="<div style=\"background-color:    white \" class=\"circle_role\">none                </div><br><div style=\"background-color:LawnGreen \" class=\"circle_role\">agricultural        </div><br><div style=\"background-color:Cyan \" class=\"circle_role\">craft               </div><br><div style=\"background-color:SaddleBrown \" class=\"circle_role\">industrial          </div><br><div style=\"background-color:Magenta \" class=\"circle_role\">commercial          </div><br><div style=\"background-color:Orange \" class=\"circle_role\">basic residential   </div><br><div style=\"background-color:DarkOrange \" class=\"circle_role\">affluent residential</div><br><div style=\"background-color:OrangeRed \" class=\"circle_role\">luxury residential  </div><br><div style=\"background-color:DarkSlateGray \" class=\"circle_role\">military            </div><br><div style=\"background-color:MediumSlateBlue \" class=\"circle_role\">cultural            </div><br><div style=\"background-color:Silver\" class=\"circle_role\">stonecutter         </div><br><div style=\"background-color:ForestGreen\" class=\"circle_role\">sawmill             </div><br><div style=\"background-color:SandyBrown\" class=\"circle_role\">kiln                </div><br><div style=\"background-color:Tan\" class=\"circle_role\">smelter             </div><br><div style=\"background-color:NavajoWhite\" class=\"circle_role\">workforce           </div><br><div style=\"background-color:DimGray\" class=\"circle_role\">road                </div><br><div style=\"background-color:RebeccaPurple\" class=\"circle_role\">research            </div><br><div style=\"background-color:RoyalBlue\" class=\"circle_role\">fishery             </div>"
+const legend_role_text="<div style=\"background-color:    white \" class=\"circle_role\">none                </div><br class='br_legend'><div style=\"background-color:LawnGreen \" class=\"circle_role\">agricultural        </div><br class='br_legend'><div style=\"background-color:Cyan \" class=\"circle_role\">craft               </div><br class='br_legend'><div style=\"background-color:SaddleBrown \" class=\"circle_role\">industrial          </div><br class='br_legend'><div style=\"background-color:Magenta \" class=\"circle_role\">commercial          </div><br class='br_legend'><div style=\"background-color:Orange \" class=\"circle_role\">basic residential   </div><br class='br_legend'><div style=\"background-color:DarkOrange \" class=\"circle_role\">affluent residential</div><br class='br_legend'><div style=\"background-color:OrangeRed \" class=\"circle_role\">luxury residential  </div><br class='br_legend'><div style=\"background-color:DarkSlateGray \" class=\"circle_role\">military            </div><br class='br_legend'><div style=\"background-color:MediumSlateBlue \" class=\"circle_role\">cultural            </div><br class='br_legend'><div style=\"background-color:Silver\" class=\"circle_role\">stonecutter         </div><br class='br_legend'><div style=\"background-color:ForestGreen\" class=\"circle_role\">sawmill             </div><br class='br_legend'><div style=\"background-color:SandyBrown\" class=\"circle_role\">kiln                </div><br class='br_legend'><div style=\"background-color:Tan\" class=\"circle_role\">smelter             </div><br class='br_legend'><div style=\"background-color:NavajoWhite\" class=\"circle_role\">workforce           </div><br class='br_legend'><div style=\"background-color:DimGray\" class=\"circle_role\">road                </div><br class='br_legend'><div style=\"background-color:RebeccaPurple\" class=\"circle_role\">research            </div><br class='br_legend'><div style=\"background-color:RoyalBlue\" class=\"circle_role\">fishery             </div>"
 
 const legend_role = L.control({position: 'bottomright'});
 legend_role.onAdd = function (map) {
@@ -1012,7 +1016,7 @@ legend_owner.onAdd = function (map) {
 	return div;
 };
 
-const legend_EcoPow_text="<div style=\"background-color:#0AF51A\" class=\"circle_EP\">= 300%</div><br><div style=\"background-color:#23AC1F\" class=\"circle_EP\">> 250%</div><br><div style=\"background-color:#22681B\" class=\"circle_EP\">> 200%</div><br><div style=\"background-color:#F58F0A\" class=\"circle_EP\">> 150%</div><br><div style=\"background-color:#AD6614\" class=\"circle_EP\">> 100%</div><br><div style=\"background-color:#694014\" class=\"circle_EP\">= 100%</div>"
+const legend_EcoPow_text="<div style=\"background-color:#0AF51A\" class=\"circle_EP\">= 300%</div><br class='br_legend'><div style=\"background-color:#23AC1F\" class=\"circle_EP\">> 250%</div><br class='br_legend'><div style=\"background-color:#22681B\" class=\"circle_EP\">> 200%</div><br class='br_legend'><div style=\"background-color:#F58F0A\" class=\"circle_EP\">> 150%</div><br class='br_legend'><div style=\"background-color:#AD6614\" class=\"circle_EP\">> 100%</div><br class='br_legend'><div style=\"background-color:#694014\" class=\"circle_EP\">= 100%</div>"
 const legend_EcoPow = L.control({position: 'bottomright'});
 legend_EcoPow.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');

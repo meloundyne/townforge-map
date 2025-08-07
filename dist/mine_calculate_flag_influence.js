@@ -5,8 +5,8 @@ let Selection_y0 = 0
 let Selection_x1 = 0 
 let Selection_y1 = 0
 let Selection_city = 0
-var marker_first = L.marker()
-var marker_second = L.marker()
+var marker_first = L.marker([0,0])
+var marker_second = L.marker([0,0])
 var rectangle_from_markers
 
 function function_get_selection_influence () {
@@ -18,16 +18,21 @@ function function_get_selection_influence () {
 	Selection_y0 = Math.min(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
 	Selection_x1 = Math.max(marker_first.getLatLng().lng, marker_second.getLatLng().lng) // Longitude
 	Selection_y1 = Math.max(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
-	console.log(Selection_x0)
-	console.log(Selection_y0)
-	console.log(Selection_x1)
-	console.log(Selection_y1)
+	//console.log(Selection_x0)
+	//console.log(Selection_y0)
+	//console.log(Selection_x1)
+	//console.log(Selection_y1)
+	if (map.hasLayer(BaseLayer_GeoJSON_City_0) == 1) { Selection_city = 0 }
+	if (map.hasLayer(BaseLayer_GeoJSON_City_1) == 1) { Selection_city = 1 }
+	if (map.hasLayer(BaseLayer_GeoJSON_City_2) == 1) { Selection_city = 2 }
+	if (map.hasLayer(BaseLayer_GeoJSON_City_3) == 1) { Selection_city = 3 }
+	if (map.hasLayer(BaseLayer_GeoJSON_City_4) == 1) { Selection_city = 4 }
 	const temp1 = marker_first.getLatLng()
 	const temp2 = marker_second.getLatLng()
 	featureGroup_Legend.clearLayers();
 	marker_first = L.marker(temp1, {draggable: true}).addTo(featureGroup_Legend);
 	marker_second = L.marker(temp2, {draggable: true}).addTo(featureGroup_Legend);
-	rectangle_from_markers = L.rectangle([xy([Selection_x0, Selection_y0]),xy([Selection_x1, Selection_y1])], {color: 'Blue',fillColor: 'Pink', weight: 3, fillOpacity: 0.9, interactive: false}).addTo(featureGroup_Legend);
+	rectangle_from_markers = L.rectangle([xy([Selection_x0, Selection_y0]),xy([Selection_x1, Selection_y1])], {color: 'Blue',fillColor: 'SkyBlue', weight: 3, fillOpacity: 0.9, interactive: false}).addTo(featureGroup_Legend);
 	var run = L.geoJson(allFlagsCities, {
 		onEachFeature: function(feature, layer){
 			let uz_je_tam_flag = 0
@@ -48,8 +53,8 @@ function function_get_selection_influence () {
 				if ( uz_je_tam_flag == 4 ) {
 					Selection_Flag_pres_sebe_msq = (Dx1 - Dx0) * (Dy1 - Dy0)
 					Selection_is_empty = 'no'
-					console.log(`Selection_Flag_pres_sebe_msq: ${Selection_Flag_pres_sebe_msq}`)
-					console.log(`Selection_is_empty: ${Selection_is_empty}`)
+					//console.log(`Selection_Flag_pres_sebe_msq: ${Selection_Flag_pres_sebe_msq}`)
+					//console.log(`Selection_is_empty: ${Selection_is_empty}`)
 				}
 			}
 			//console.log(`Selection_Flag_pres_sebe_msq: ${Selection_Flag_pres_sebe_msq}`)
@@ -81,7 +86,7 @@ function function_get_selection_influence () {
 				influencing += 1
 				Influence_from_role[feature.properties.role] += 1
 				Influence_from_role_percent[feature.properties.role] += ( Dsqm / Selection_msq * 100 ) // influence in percent
-				showlog = 1
+				//showlog = 1
 				}
         	
 				if ( showlog == 1 ) {
