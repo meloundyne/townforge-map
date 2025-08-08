@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Townforge | Map</title>
+	<title>Townforge | Map</title>
 	<link rel="stylesheet" href="./dist/leaflet.css"/>
 <!-- Make sure you put this AFTER Leaflet's CSS -->
 	<script src="./dist/leaflet.js"></script>
@@ -25,7 +25,6 @@
 	var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
 	-->
 <!-- Autocomplete on forms --> 
-
 <style>
 #map {
 	height: 100%;
@@ -89,7 +88,6 @@
 	100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
 /*<!-- Pulsing Marker -->*/
-
 /*<!-- Home Button -->*/
 #HomeButton{
 	display: flex;
@@ -301,6 +299,22 @@ function function_highlightFeature(e) {
 		});
 		layer.bringToFront();
 		info.update(layer.feature);
+		
+		if (featureGroup_InfluenceMouseOver_ON == true) {
+			if (layer.feature.properties.role != 0) {
+				const influence = Number(layer.feature.properties.influence)
+				const coordinates = [
+					[
+						xy((layer.feature.geometry.coordinates[0][0][0]) - influence,(layer.feature.geometry.coordinates[0][0][1]) - influence),
+						xy((layer.feature.geometry.coordinates[0][1][0]) + influence,(layer.feature.geometry.coordinates[0][1][1]) - influence),
+						xy((layer.feature.geometry.coordinates[0][2][0]) + influence,(layer.feature.geometry.coordinates[0][2][1]) + influence),
+						xy((layer.feature.geometry.coordinates[0][3][0]) - influence,(layer.feature.geometry.coordinates[0][3][1]) + influence),
+					],
+					[xy(layer.feature.geometry.coordinates[0][0]),xy(layer.feature.geometry.coordinates[0][1]),xy(layer.feature.geometry.coordinates[0][2]),xy(layer.feature.geometry.coordinates[0][3])]
+				]
+				Influence_Rectangle_MouseOver = L.polygon( coordinates, {weight: 0, fillColor: 'LimeGreen', fillOpacity: 0.4, interactive: false}).addTo(featureGroup_InfluenceMouseOver);
+			}
+		}
 	}	
 	
 function function_resetHighlight(e) {
@@ -313,6 +327,10 @@ function function_resetHighlight(e) {
 		});
 		layer.bringToBack();
 		info.update();
+		
+		if (featureGroup_InfluenceMouseOver_ON == true) {
+			Influence_Rectangle_MouseOver.removeFrom(featureGroup_InfluenceMouseOver)
+		}
 	}
   
 function onEachFeature(feature, layer) {	
@@ -616,6 +634,8 @@ map.getRenderer(map).options.padding = 100; // How much to extend the clip area 
 
 var SearchMarker = L.marker()
 var Select_Ignore_interactive_map_Rectangle = L.rectangle([[-10000000, -10000000],[10000000, 10000000]], {color: "gray", weight: 0, fillOpacity: 0, interactive: true});
+var Influence_Rectangle_MouseOver
+let featureGroup_InfluenceMouseOver_ON = false
 
 //<!-- Pulsing Marker -->
 var cssIcon = L.divIcon({
@@ -774,6 +794,7 @@ const featureGroup_repair = L.featureGroup([]);
 const featureGroup_owner = L.featureGroup([]);
 const featureGroup_EcoPow = L.featureGroup([]);
 const featureGroup_Legend = L.featureGroup([]);
+const featureGroup_InfluenceMouseOver = L.featureGroup([]);
 featureGroup_role.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_role.addTo(map)}});
 featureGroup_role.on('remove',(e)=>{legend_role.remove()});
 featureGroup_repair.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_repair.addTo(map)}});
@@ -782,6 +803,8 @@ featureGroup_owner.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {l
 featureGroup_owner.on('remove',(e)=>{legend_owner.remove()});
 featureGroup_EcoPow.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_EcoPow.addTo(map)}});
 featureGroup_EcoPow.on('remove',(e)=>{legend_EcoPow.remove()});
+featureGroup_InfluenceMouseOver.on('add',(e)=>{featureGroup_InfluenceMouseOver_ON = true});
+featureGroup_InfluenceMouseOver.on('remove',(e)=>{featureGroup_InfluenceMouseOver_ON = false});
 const Layer_firefighting_city_0 = L.layerGroup([]).addTo(featureGroup_firefighting);
 const Layer_tax_break_points_city_0 = L.layerGroup([]).addTo(featureGroup_tax_break_points);
 BaseLayer_GeoJSON_City_0.on('add',(e)=>{
@@ -980,8 +1003,8 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/08_06:19 UTC | Blockchain height: 1,319,784 | <abbr id="timer">Loading...</abbr>')
-const givenStr = "2025/08/08_06:19"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/08_12:19 UTC | Blockchain height: 1,320,855 | <abbr id="timer">Loading...</abbr>')
+const givenStr = "2025/08/08_12:19"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -1043,6 +1066,7 @@ var baseMaps_overlays = {
 'Firefighting range': featureGroup_firefighting,
 'Tax break points': featureGroup_tax_break_points,
 'Role images': featureGroup_role_images,
+'Flag influence': featureGroup_InfluenceMouseOver,
 };
 var overlays = {
 'Role': featureGroup_role,
@@ -1055,139 +1079,139 @@ var layerControl = L.control.layers(baseMaps,baseMaps_overlays,{ collapsed:false
 var layerControl = L.control.layers(overlays,overlays_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
 //<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 L.control.burgerMenu({
-  title: "Search Menu",
-  menuIcon: "<img src='./dist/search.svg' style='width:20px;'>" ,
-  menuItems: [
-    {title: "Search Flag ID", onClick: () => { 
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
-            .setLatLng(xy([0, 0]))
-            .setContent("                        <!--Make sure the form has the autocomplete function switched off:-->                        <form id='search_form_1' autocomplete='off' >                        <div class='autocomplete' style='width:300px;'>                        <b>Flag ID:</b> <input onclick='runAutocomplete_flag_id()' id='myInput1' type='text' placeholder='1'>                        </div></form>						<button  onclick='sendToConsole1()'>Search</button>                        <p id='search_form_result1'></p>                        <button  onclick='goToFlag1()' disabled='true' id='button01'>Go To Flag</button>                        ")
-            .openOn(map);
-        map.setView( [0, 0]);},
-        },
-	{title: "Search Flag Name", onClick: () => { 
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
-            .setLatLng(xy([0, 0]))
-            .setContent("                        <!--Make sure the form has the autocomplete function switched off:-->                        <form id='search_form_2' autocomplete='off' >                        <div class='autocomplete' style='width:300px;'>                        <b>Flag name:</b> <input onclick='runAutocomplete_flag_names()' id='myInput2' type='text' placeholder='Helsengaard town square'>                        </div></form>                        <button  onclick='sendToConsole2()'>Search</button>                        <p id='search_form_result2'></p>						<button  onclick='goToFlag2()' disabled='true' id='button02'>Go To Flag</button>                        ")
-            .openOn(map);
-        map.setView( [0, 0]);},
-        },
-	{title: "Search Name", onClick: () => { 
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
-            .setLatLng(xy([0, 0]))
-            .setContent("                        <!--Make sure the form has the autocomplete function switched off:-->                        <form id='search_form_3' autocomplete='off' >                        <div class='autocomplete' style='width:300px;'>                        <b>Owner name:</b> <input onclick='runAutocomplete_account_names()' id='myInput3' type='text' placeholder='Sigrid Sigrúnarsdóttir'>                        </div>                        <p id='search_form_result3'></p>                        </form>                        <button  onclick='sendToConsole3()'>Search</button>                        ")
-            .openOn(map);
-        map.setView( [0, 0]);},
-        },
-	{title: "Search House", onClick: () => { 
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
-            .setLatLng(xy([0, 0]))
-            .setContent("                        <!--Make sure the form has the autocomplete function switched off:-->                        <form id='search_form_4' autocomplete='off' >                        <div class='autocomplete' style='width:300px;'>                        <b>House name:</b> <input onclick='runAutocomplete_house_names()' id='myInput4' type='text' placeholder='Sigrún'>                        </div>                        <p id='search_form_result4'></p>                        </form>                        <button  onclick='sendToConsole4()'>Search</button>                        ")
-            .openOn(map);
-        map.setView( [0, 0]);},
-        },
-  ],
+	title: "Search Menu",
+	menuIcon: "<img src='./dist/search.svg' style='width:20px;'>" ,
+	menuItems: [
+		{title: "Search Flag ID", onClick: () => { 
+			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
+				.setLatLng(xy([0, 0]))
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_1' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Flag ID:</b> <input onclick='runAutocomplete_flag_id()' id='myInput1' type='text' placeholder='1'>					</div></form>					<button  onclick='sendToConsole1()'>Search</button>					<p id='search_form_result1'></p>					<button  onclick='goToFlag1()' disabled='true' id='button01'>Go To Flag</button>					")
+				.openOn(map);
+			map.setView( [0, 0]);},
+		},
+		{title: "Search Flag Name", onClick: () => { 
+			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
+				.setLatLng(xy([0, 0]))
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_2' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Flag name:</b> <input onclick='runAutocomplete_flag_names()' id='myInput2' type='text' placeholder='Helsengaard town square'>					</div></form>					<button  onclick='sendToConsole2()'>Search</button>					<p id='search_form_result2'></p>					<button  onclick='goToFlag2()' disabled='true' id='button02'>Go To Flag</button>					")
+				.openOn(map);
+			map.setView( [0, 0]);},
+		},
+		{title: "Search Name", onClick: () => { 
+			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
+				.setLatLng(xy([0, 0]))
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_3' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Owner name:</b> <input onclick='runAutocomplete_account_names()' id='myInput3' type='text' placeholder='Sigrid Sigrúnarsdóttir'>					</div>					<p id='search_form_result3'></p>					</form>					<button  onclick='sendToConsole3()'>Search</button>					")
+				.openOn(map);
+			map.setView( [0, 0]);},
+		},
+		{title: "Search House", onClick: () => { 
+			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
+				.setLatLng(xy([0, 0]))
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_4' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>House name:</b> <input onclick='runAutocomplete_house_names()' id='myInput4' type='text' placeholder='Sigrún'>					</div>					<p id='search_form_result4'></p>					</form>					<button  onclick='sendToConsole4()'>Search</button>					")
+				.openOn(map);
+			map.setView( [0, 0]);},
+		},
+	],
 }).addTo(map);
 //<!-- https://github.com/BenPortner/leaflet-burgermenu -->
 //<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 L.control.burgerMenu({
-  title: "Info Menu",
-  menuIcon: "<img src='./dist/info.svg' style='width:20px;'>" ,
-  menuItems: [
-    { 
-      title: "City info",
-      menuItems: [
-          
-    {
-    title: "Helsengaard",
-    onClick: () => {
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
-        .setLatLng(xy([0, 0]))
-        .setContent("    <table class='popup_table'>    <tr><td>Name:</td><td><b>Helsengaard</b></td></tr>    <tr><td>ID:</td><td>0</td></tr>    <tr><td>Level (max):</td><td>6 (6)</td></tr>    <tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>    <tr><td>Citizens:</td><td>12</td></tr>    <tr><td>Flags:</td><td>441</td></tr>    <tr><td>Flags Inactive:</td><td>70</td></tr>    <tr><td>Flags Empty:</td><td>63</td></tr>    </table>"    )
-        .openOn(map);
-        },
-    },
-    {
-    title: "Island",
-    onClick: () => {
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
-        .setLatLng(xy([0, 0]))
-        .setContent("    <table class='popup_table'>    <tr><td>Name:</td><td><b>Island</b></td></tr>    <tr><td>ID:</td><td>1</td></tr>    <tr><td>Level (max):</td><td>5 (5)</td></tr>    <tr><td>Mayor</td><td>Meloun</td></tr>    <tr><td>Citizens:</td><td>2</td></tr>    <tr><td>Flags:</td><td>33</td></tr>    <tr><td>Flags Inactive:</td><td>4</td></tr>    <tr><td>Flags Empty:</td><td>3</td></tr>    </table>"    )
-        .openOn(map);
-        },
-    },
-    {
-    title: "njkdcskjnds sdfsdf dffse errerw",
-    onClick: () => {
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
-        .setLatLng(xy([0, 0]))
-        .setContent("    <table class='popup_table'>    <tr><td>Name:</td><td><b>njkdcskjnds sdfsdf dffse errerw</b></td></tr>    <tr><td>ID:</td><td>2</td></tr>    <tr><td>Level (max):</td><td>0 (0)</td></tr>    <tr><td>Mayor</td><td>Meloun</td></tr>    <tr><td>Citizens:</td><td>1</td></tr>    <tr><td>Flags:</td><td>1</td></tr>    <tr><td>Flags Inactive:</td><td>0</td></tr>    <tr><td>Flags Empty:</td><td>0</td></tr>    </table>"    )
-        .openOn(map);
-        },
-    },
-    {
-    title: "ABC123",
-    onClick: () => {
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
-        .setLatLng(xy([0, 0]))
-        .setContent("    <table class='popup_table'>    <tr><td>Name:</td><td><b>ABC123</b></td></tr>    <tr><td>ID:</td><td>3</td></tr>    <tr><td>Level (max):</td><td>0 (0)</td></tr>    <tr><td>Mayor</td><td>Meloun</td></tr>    <tr><td>Citizens:</td><td>1</td></tr>    <tr><td>Flags:</td><td>1</td></tr>    <tr><td>Flags Inactive:</td><td>0</td></tr>    <tr><td>Flags Empty:</td><td>0</td></tr>    </table>"    )
-        .openOn(map);
-        },
-    },
-    {
-    title: "Town",
-    onClick: () => {
-        var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
-        .setLatLng(xy([0, 0]))
-        .setContent("    <table class='popup_table'>    <tr><td>Name:</td><td><b>Town</b></td></tr>    <tr><td>ID:</td><td>4</td></tr>    <tr><td>Level (max):</td><td>0 (0)</td></tr>    <tr><td>Mayor</td><td>Meloun</td></tr>    <tr><td>Citizens:</td><td>1</td></tr>    <tr><td>Flags:</td><td>1</td></tr>    <tr><td>Flags Inactive:</td><td>0</td></tr>    <tr><td>Flags Empty:</td><td>0</td></tr>    </table>"    )
-        .openOn(map);
-        },
-    },
-      ],
-    },
-    { 
-      title: "Leaderboards",
-      menuItems: [
-                  {title: "Gold",
-                  menuItems: [
-                       {title: "Balance",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 0)).openOn(map);},},
-                       {title: "Demonetized coins",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 4)).openOn(map);},},
-                       {title: "Gold smelted",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 6)).openOn(map);},},
-                       {title: "Tax paid",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 17)).openOn(map);},},
-                  ],},
-                  {title: "Food",
-                  menuItems: [
-                       {title: "Food consumed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 5)).openOn(map);},},
-                       {title: "Grain harvested",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 7)).openOn(map);},},
-                       {title: "Vegetables harvested",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 18)).openOn(map);},},
-                  ],},
-                  {title: "Food - Animals",
-                  menuItems: [
-                       {title: "Moose killed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 1)).openOn(map);},},
-                       {title: "Bears killed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 2)).openOn(map);},},
-                       {title: "Fish fished",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 3)).openOn(map);},},
-                  ],},
-                  {title: "Other",
-                  menuItems: [
-                       {title: "Level",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 8)).openOn(map);},},
-                       {title: "Auctions created",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 9)).openOn(map);},},
-                       {title: "Buildings demolished",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 10)).openOn(map);},},
-                       {title: "Discoveries",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 11)).openOn(map);},},
-                       {title: "Fires put out",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 12)).openOn(map);},},
-                       {title: "Pearls found",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 13)).openOn(map);},},
-                       {title: "Trades",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 14)).openOn(map);},},
-                       {title: "POS Blocks found",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 15)).openOn(map);},},
-                       {title: "Prestige",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 16)).openOn(map);},},
-                  ],},
-                  {title: "Sustained",
-                  menuItems: [
-                       {title: "Sustained blocks",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 19)).openOn(map);},},
-                       {title: "Sustained food",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 20)).openOn(map);},},
-                       {title: "Sustained gold",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 21)).openOn(map);},},
-                  ],},
-      ],
-    },
-  ],
+	title: "Info Menu",
+	menuIcon: "<img src='./dist/info.svg' style='width:20px;'>" ,
+	menuItems: [
+	{ 
+		title: "City info",
+		menuItems: [
+			
+	{
+	title: "Helsengaard",
+	onClick: () => {
+		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
+		.setLatLng(xy([0, 0]))
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>12</td></tr>	<tr><td>Flags:</td><td>441</td></tr>	<tr><td>Flags Inactive:</td><td>70</td></tr>	<tr><td>Flags Empty:</td><td>63</td></tr>	</table>"	)
+		.openOn(map);
+		},
+	},
+	{
+	title: "Island",
+	onClick: () => {
+		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
+		.setLatLng(xy([0, 0]))
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Island</b></td></tr>	<tr><td>ID:</td><td>1</td></tr>	<tr><td>Level (max):</td><td>5 (5)</td></tr>	<tr><td>Mayor</td><td>Meloun</td></tr>	<tr><td>Citizens:</td><td>2</td></tr>	<tr><td>Flags:</td><td>33</td></tr>	<tr><td>Flags Inactive:</td><td>4</td></tr>	<tr><td>Flags Empty:</td><td>3</td></tr>	</table>"	)
+		.openOn(map);
+		},
+	},
+	{
+	title: "njkdcskjnds sdfsdf dffse errerw",
+	onClick: () => {
+		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
+		.setLatLng(xy([0, 0]))
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>njkdcskjnds sdfsdf dffse errerw</b></td></tr>	<tr><td>ID:</td><td>2</td></tr>	<tr><td>Level (max):</td><td>0 (0)</td></tr>	<tr><td>Mayor</td><td>Meloun</td></tr>	<tr><td>Citizens:</td><td>1</td></tr>	<tr><td>Flags:</td><td>1</td></tr>	<tr><td>Flags Inactive:</td><td>0</td></tr>	<tr><td>Flags Empty:</td><td>0</td></tr>	</table>"	)
+		.openOn(map);
+		},
+	},
+	{
+	title: "ABC123",
+	onClick: () => {
+		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
+		.setLatLng(xy([0, 0]))
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>ABC123</b></td></tr>	<tr><td>ID:</td><td>3</td></tr>	<tr><td>Level (max):</td><td>0 (0)</td></tr>	<tr><td>Mayor</td><td>Meloun</td></tr>	<tr><td>Citizens:</td><td>1</td></tr>	<tr><td>Flags:</td><td>1</td></tr>	<tr><td>Flags Inactive:</td><td>0</td></tr>	<tr><td>Flags Empty:</td><td>0</td></tr>	</table>"	)
+		.openOn(map);
+		},
+	},
+	{
+	title: "Town",
+	onClick: () => {
+		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
+		.setLatLng(xy([0, 0]))
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Town</b></td></tr>	<tr><td>ID:</td><td>4</td></tr>	<tr><td>Level (max):</td><td>0 (0)</td></tr>	<tr><td>Mayor</td><td>Meloun</td></tr>	<tr><td>Citizens:</td><td>1</td></tr>	<tr><td>Flags:</td><td>1</td></tr>	<tr><td>Flags Inactive:</td><td>0</td></tr>	<tr><td>Flags Empty:</td><td>0</td></tr>	</table>"	)
+		.openOn(map);
+		},
+	},
+		],
+	},
+	{ 
+		title: "Leaderboards",
+		menuItems: [
+			{title: "Gold",
+			menuItems: [
+				{title: "Balance",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 0)).openOn(map);},},
+				{title: "Demonetized coins",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 4)).openOn(map);},},
+				{title: "Gold smelted",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 6)).openOn(map);},},
+				{title: "Tax paid",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 17)).openOn(map);},},
+			],},
+			{title: "Food",
+			menuItems: [
+				{title: "Food consumed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 5)).openOn(map);},},
+				{title: "Grain harvested",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 7)).openOn(map);},},
+				{title: "Vegetables harvested",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 18)).openOn(map);},},
+			],},
+			{title: "Food - Animals",
+			menuItems: [
+				{title: "Moose killed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 1)).openOn(map);},},
+				{title: "Bears killed",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 2)).openOn(map);},},
+				{title: "Fish fished",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 3)).openOn(map);},},
+			],},
+			{title: "Other",
+			menuItems: [
+				{title: "Level",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 8)).openOn(map);},},
+				{title: "Auctions created",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 9)).openOn(map);},},
+				{title: "Buildings demolished",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 10)).openOn(map);},},
+				{title: "Discoveries",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 11)).openOn(map);},},
+				{title: "Fires put out",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 12)).openOn(map);},},
+				{title: "Pearls found",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 13)).openOn(map);},},
+				{title: "Trades",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 14)).openOn(map);},},
+				{title: "POS Blocks found",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 15)).openOn(map);},},
+				{title: "Prestige",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 16)).openOn(map);},},
+			],},
+			{title: "Sustained",
+			menuItems: [
+				{title: "Sustained blocks",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 19)).openOn(map);},},
+				{title: "Sustained food",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 20)).openOn(map);},},
+				{title: "Sustained gold",onClick: () => {var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'}).setLatLng(xy([0, 0])).setContent(generateTable(Account_data, 21)).openOn(map);},},
+			],},
+		],
+	},
+	],
 }).addTo(map);
 //<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 map.setView( [0, 0], -1)
