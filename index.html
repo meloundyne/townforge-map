@@ -1003,8 +1003,8 @@ info.update = function (f) {
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/09_06:24 UTC / Blockchain height: 1,324,100 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const givenStr = "2025/08/09_06:24"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/09_12:19 UTC / Blockchain height: 1,325,176 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const givenStr = "2025/08/09_12:19"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -1127,7 +1127,7 @@ L.control.burgerMenu({
 	onClick: () => {
 		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
 		.setLatLng(xy([0, 0]))
-		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>12</td></tr>	<tr><td>Flags:</td><td>442</td></tr>	<tr><td>Flags Inactive:</td><td>71</td></tr>	<tr><td>Flags Empty:</td><td>63</td></tr>	</table>"	)
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>12</td></tr>	<tr><td>Flags:</td><td>442</td></tr>	<tr><td>Flags Inactive:</td><td>70</td></tr>	<tr><td>Flags Empty:</td><td>63</td></tr>	</table>"	)
 		.openOn(map);
 		},
 	},
