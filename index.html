@@ -126,7 +126,7 @@
 	border-radius: 5px;
 	border-color: gray;
 	border-style: solid;
-	border-width: 1px 1px 1px 1px;
+	border-width: 1px;
 	opacity: 0.8;
 	text-align: center;
 	z-index: 1000;
@@ -138,6 +138,31 @@
 	cursor: pointer;
 }
 /*<!-- Edit Button -->*/
+/*<!-- Disable Highlighted Flags Button -->*/
+#Disable_Highlight_Button{
+	display: none;
+	align-items: center;
+	position: absolute;
+	top: 5%;
+	left: 50%;
+	width: 200px;
+	height: 50px;
+	background-color: Lime;
+	border-radius: 5px;
+	border-color: Green;
+	border-style: solid;
+	border-width: 2px;
+	opacity: 0.8;
+	text-align: center;
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
+}
+#Disable_Highlight_Button:hover{
+	opacity: 1;
+	cursor: pointer;
+}
+/*<!-- Disable Highlighted Flags Button -->*/
 tr:nth-child(even) {
 	/*Use an rgba() color to specify the transparency of the color:*/
 	background-color: rgba(117, 117, 117, 0.1);
@@ -180,6 +205,11 @@ tr:nth-child(even) {
 	Influence Calculator 
 	</button>
 	<!-- Edit Button -->
+	<!-- Disable Highlighted Flags Button -->
+	<button id="Disable_Highlight_Button" title='Disable Highlighted Flags' onclick='Show_only_account_id = 0;Reset_style_of_Geojson_Flags_Layers();document.getElementById("Disable_Highlight_Button").style.display = "none";'>
+	Disable Highlighting Flags
+	</button>
+	<!-- Disable Highlighted Flags Button -->
 </div>
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
 <script type="text/javascript" src="Account_data.js"></script>
@@ -245,49 +275,77 @@ function getColor_Economic_Power(d) {
 			d == 100 ? "#694014"	: "white" ;
 	}
 
-function Style_Normal(feature) {
+function Style_Role(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_role(feature.properties.role)
+	}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_role(feature.properties.role)
+	};
 		return {
 			weight: 1,
 			opacity: 1,
 			color: getColor_active(feature.properties.active),
 			dashArray: '4',
 			fillOpacity: 0.8,
-			fillColor: getColor_role(feature.properties.role)
+			fillColor: color
 		};
 	}
 	
 function Style_Repair(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_repair(feature.properties.repair)
+	}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_repair(feature.properties.repair)
+	};
 		return {
 			weight: 1,
 			opacity: 1,
 			color: getColor_active(feature.properties.active),
 			dashArray: '4',
 			fillOpacity: 0.8,
-			fillColor: getColor_repair(feature.properties.repair)
-	};
-}
+			fillColor: color
+		};
+	}
 
 function Style_Owner(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_owner(ACCOUNT_NAME[feature.properties.owner])
+	}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_owner(ACCOUNT_NAME[feature.properties.owner])
+	};
 		return {
 			weight: 1,
 			opacity: 1,
 			color: getColor_active(feature.properties.active),
 			dashArray: '4',
 			fillOpacity: 0.8,
-			fillColor: getColor_owner(ACCOUNT_NAME[feature.properties.owner])
-	};
-}
+			fillColor: color
+		};
+	}
 
 function Style_Economic_Power(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_Economic_Power(feature.properties.economic_power)
+	}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_Economic_Power(feature.properties.economic_power)
+	};
 		return {
 			weight: 1,
 			opacity: 1,
 			color: getColor_active(feature.properties.active),
 			dashArray: '4',
 			fillOpacity: 0.8,
-			fillColor: getColor_Economic_Power(feature.properties.economic_power)
-	};
-}
+			fillColor: color
+		};
+	}
 
 function function_highlightFeature(e) {
 		const layer = e.target;
@@ -451,7 +509,7 @@ function Jump_to_Flag_from_ID(value) {
 	return null;
 	}
 
-function goToFlag1() {
+function GoToFlag_Button_1() {
 	var x = document.getElementById('search_form_1');
 	var text001 = '';
 	text001 += 'Go To Flag Id: ' + x.elements[0].value
@@ -460,7 +518,7 @@ function goToFlag1() {
 	console.log(log_message0001);
 	}
 
-function goToFlag2() {
+function GoToFlag_Button_2() {
 	var x = document.getElementById('search_form_2');
 	var text001 = '';
 	text001 += 'Go To Flag Name: ' + x.elements[0].value
@@ -469,7 +527,7 @@ function goToFlag2() {
 	console.log(log_message0001);
 	}
 
-function sendToConsole1() {                                 
+function Search_Button_1() {                                 
 	var x = document.getElementById('search_form_1');              
 	var text = '<b>Results:</b>';                                                            
 	text += getFlagInfoFromID(x.elements[0].value) + '<br>';
@@ -478,7 +536,7 @@ function sendToConsole1() {
 	console.log(x.elements[0].value);                                                     
 	}
 
-function sendToConsole2() {                                 
+function Search_Button_2() {                                 
 	var x = document.getElementById('search_form_2');
 	console.log(x.elements[0].value);
 	var text = '<b>Results:</b>';                                                            
@@ -487,20 +545,73 @@ function sendToConsole2() {
 	document.getElementById("button02").disabled = false;
 	}
 
-function sendToConsole3() {                                 
-	var x = document.getElementById('search_form_3');              
-	var text = '<b>Owned Flags:</b><br>';                                                            
+function Search_Button_3() {
+	let x = document.getElementById('search_form_3');
+	let text = ''
+	text += '<b>House:</b><br>'
+	text += ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value)] + '<br>'
+	text += '<b>Current Descendant:</b><br>'
+	text += ACCOUNT_NAME[ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value)] + '<br>'
+	text += '<b>Account ID:</b><br>'
+	text += ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value) + '<br>'
+	text += '<b>Owned Flags:</b><br>';
 	text += getAccountFromName(x.elements[0].value) + '<br>';
 	document.getElementById("search_form_result3").innerHTML = text;
-	console.log(x.elements[0].value);                                                   
+	console.log(x.elements[0].value);
+	document.getElementById("button03").disabled = false;
 	}
 
-function sendToConsole4() {                                 
-	var x = document.getElementById('search_form_4');              
-	var text = '<b>Owned Flags:</b><br>';                                                            
+function Search_Button_4() {
+	let x = document.getElementById('search_form_4');
+	let text = ''
+	text += '<b>House:</b><br>'
+	text += ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(document.getElementById('search_form_4').elements[0].value)] + '<br>'
+	text += '<b>Current Descendant:</b><br>'
+	text += ACCOUNT_NAME[ACCOUNT_NAME.indexOf(document.getElementById('search_form_4').elements[0].value)] + '<br>'
+	text += '<b>Account ID:</b><br>'
+	text += ACCOUNT_NAME.indexOf(document.getElementById('search_form_4').elements[0].value) + '<br>'
+	text += '<b>Owned Flags:</b><br>';
 	text += getAccountFromName(x.elements[0].value) + '<br>';
 	document.getElementById("search_form_result4").innerHTML = text;
-	console.log(x.elements[0].value);                                                   
+	console.log(x.elements[0].value);
+	document.getElementById("button04").disabled = false;
+	}
+
+function Show_only_account_id_3() {
+	Show_only_account_id = ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value);
+	Reset_style_of_Geojson_Flags_Layers();
+	document.getElementById("Disable_Highlight_Button").style.display = "flex";
+	document.getElementById("button03").disabled = true;
+	}
+
+function Show_only_account_id_4() {
+	Show_only_account_id = ACCOUNT_HOUSE.indexOf(document.getElementById('search_form_4').elements[0].value);
+	Reset_style_of_Geojson_Flags_Layers();
+	document.getElementById("Disable_Highlight_Button").style.display = "flex";
+	document.getElementById("button04").disabled = true;
+	}
+
+function Reset_style_of_Geojson_Flags_Layers() {
+	GeoJSON_Flags_Role_City_0.resetStyle()
+	GeoJSON_Flags_Repair_City_0.resetStyle()
+	GeoJSON_Flags_Owner_City_0.resetStyle()
+	GeoJSON_Flags_EcoPow_City_0.resetStyle()
+	GeoJSON_Flags_Role_City_1.resetStyle()
+	GeoJSON_Flags_Repair_City_1.resetStyle()
+	GeoJSON_Flags_Owner_City_1.resetStyle()
+	GeoJSON_Flags_EcoPow_City_1.resetStyle()
+	GeoJSON_Flags_Role_City_2.resetStyle()
+	GeoJSON_Flags_Repair_City_2.resetStyle()
+	GeoJSON_Flags_Owner_City_2.resetStyle()
+	GeoJSON_Flags_EcoPow_City_2.resetStyle()
+	GeoJSON_Flags_Role_City_3.resetStyle()
+	GeoJSON_Flags_Repair_City_3.resetStyle()
+	GeoJSON_Flags_Owner_City_3.resetStyle()
+	GeoJSON_Flags_EcoPow_City_3.resetStyle()
+	GeoJSON_Flags_Role_City_4.resetStyle()
+	GeoJSON_Flags_Repair_City_4.resetStyle()
+	GeoJSON_Flags_Owner_City_4.resetStyle()
+	GeoJSON_Flags_EcoPow_City_4.resetStyle()
 	}
 
 function runAutocomplete_flag_id() {
@@ -636,7 +747,7 @@ var SearchMarker = L.marker()
 var Select_Ignore_interactive_map_Rectangle = L.rectangle([[-10000000, -10000000],[10000000, 10000000]], {color: "gray", weight: 0, fillOpacity: 0, interactive: true});
 var Influence_Rectangle_MouseOver
 let featureGroup_InfluenceMouseOver_ON = false
-
+let Show_only_account_id = 0
 //<!-- Pulsing Marker -->
 var cssIcon = L.divIcon({
 	className: 'css-icon',
@@ -686,7 +797,7 @@ const BaseLayer_GeoJSON_City_0 = L.geoJson([]).addTo(map);
 const Layer_img_inactive_flags0 = L.featureGroup([]).addTo(BaseLayer_GeoJSON_City_0);
 const Layer_img_role_flags0 = L.featureGroup([]);
 const GeoJSON_Flags_Role_City_0 = L.geoJson(Flags_city0, {
-		style: Style_Normal,
+		style: Style_Role,
 		onEachFeature
 	})
 const GeoJSON_Flags_Repair_City_0 = L.geoJson(Flags_city0, {
@@ -707,7 +818,7 @@ const BaseLayer_GeoJSON_City_1 = L.geoJson([])
 const Layer_img_inactive_flags1 = L.featureGroup([]).addTo(BaseLayer_GeoJSON_City_1);
 const Layer_img_role_flags1 = L.featureGroup([]);
 const GeoJSON_Flags_Role_City_1 = L.geoJson(Flags_city1, {
-		style: Style_Normal,
+		style: Style_Role,
 		onEachFeature
 	})
 const GeoJSON_Flags_Repair_City_1 = L.geoJson(Flags_city1, {
@@ -728,7 +839,7 @@ const BaseLayer_GeoJSON_City_2 = L.geoJson([])
 const Layer_img_inactive_flags2 = L.featureGroup([]).addTo(BaseLayer_GeoJSON_City_2);
 const Layer_img_role_flags2 = L.featureGroup([]);
 const GeoJSON_Flags_Role_City_2 = L.geoJson(Flags_city2, {
-		style: Style_Normal,
+		style: Style_Role,
 		onEachFeature
 	})
 const GeoJSON_Flags_Repair_City_2 = L.geoJson(Flags_city2, {
@@ -749,7 +860,7 @@ const BaseLayer_GeoJSON_City_3 = L.geoJson([])
 const Layer_img_inactive_flags3 = L.featureGroup([]).addTo(BaseLayer_GeoJSON_City_3);
 const Layer_img_role_flags3 = L.featureGroup([]);
 const GeoJSON_Flags_Role_City_3 = L.geoJson(Flags_city3, {
-		style: Style_Normal,
+		style: Style_Role,
 		onEachFeature
 	})
 const GeoJSON_Flags_Repair_City_3 = L.geoJson(Flags_city3, {
@@ -770,7 +881,7 @@ const BaseLayer_GeoJSON_City_4 = L.geoJson([])
 const Layer_img_inactive_flags4 = L.featureGroup([]).addTo(BaseLayer_GeoJSON_City_4);
 const Layer_img_role_flags4 = L.featureGroup([]);
 const GeoJSON_Flags_Role_City_4 = L.geoJson(Flags_city4, {
-		style: Style_Normal,
+		style: Style_Role,
 		onEachFeature
 	})
 const GeoJSON_Flags_Repair_City_4 = L.geoJson(Flags_city4, {
@@ -1000,12 +1111,12 @@ info.update = function (f) {
 		this._div.innerHTML = `<h4 align='right'>Flag Info</h4>${contents}`;
 	};
 
-info.addTo(map);	
+info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/09_12:19 UTC / Blockchain height: 1,325,176 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const givenStr = "2025/08/09_12:19"// attribution tick timer
-const target = parseDate(givenStr);// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/09_18:24 UTC / Blockchain height: 1,326,260 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/09_18:24"// attribution tick timer
+const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
 setInterval(update_tick_timer, 1000);// attribution tick timer
@@ -1085,28 +1196,28 @@ L.control.burgerMenu({
 		{title: "Search Flag ID", onClick: () => { 
 			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
 				.setLatLng(xy([0, 0]))
-				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_1' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Flag ID:</b> <input onclick='runAutocomplete_flag_id()' id='myInput1' type='text' placeholder='1'>					</div></form>					<button  onclick='sendToConsole1()'>Search</button>					<p id='search_form_result1'></p>					<button  onclick='goToFlag1()' disabled='true' id='button01'>Go To Flag</button>					")
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_1' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Flag ID:</b> <input onclick='runAutocomplete_flag_id()' id='myInput1' type='text' placeholder='1'>					</div></form>					<button  onclick='Search_Button_1()'>Search</button>					<p id='search_form_result1'></p>					<button  onclick='GoToFlag_Button_1()' disabled='true' id='button01'>Go To Flag</button>					")
 				.openOn(map);
 			map.setView( [0, 0]);},
 		},
 		{title: "Search Flag Name", onClick: () => { 
 			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
 				.setLatLng(xy([0, 0]))
-				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_2' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Flag name:</b> <input onclick='runAutocomplete_flag_names()' id='myInput2' type='text' placeholder='Helsengaard town square'>					</div></form>					<button  onclick='sendToConsole2()'>Search</button>					<p id='search_form_result2'></p>					<button  onclick='goToFlag2()' disabled='true' id='button02'>Go To Flag</button>					")
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_2' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Flag name:</b> <input onclick='runAutocomplete_flag_names()' id='myInput2' type='text' placeholder='Helsengaard town square'>					</div></form>					<button  onclick='Search_Button_2()'>Search</button>					<p id='search_form_result2'></p>					<button  onclick='GoToFlag_Button_2()' disabled='true' id='button02'>Go To Flag</button>					")
 				.openOn(map);
 			map.setView( [0, 0]);},
 		},
 		{title: "Search Name", onClick: () => { 
 			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
 				.setLatLng(xy([0, 0]))
-				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_3' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Owner name:</b> <input onclick='runAutocomplete_account_names()' id='myInput3' type='text' placeholder='Sigrid Sigrúnarsdóttir'>					</div>					<p id='search_form_result3'></p>					</form>					<button  onclick='sendToConsole3()'>Search</button>					")
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_3' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>Owner name:</b> <input onclick='runAutocomplete_account_names()' id='myInput3' type='text' placeholder='Sigrid Sigrúnarsdóttir'>					</div>					</form>					<button  onclick='Search_Button_3()'>Search</button>					<p id='search_form_result3'></p>					<button  onclick='Show_only_account_id_3()' disabled='true' id='button03'>Highlight these flags</button>					")
 				.openOn(map);
 			map.setView( [0, 0]);},
 		},
 		{title: "Search House", onClick: () => { 
 			var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
 				.setLatLng(xy([0, 0]))
-				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_4' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>House name:</b> <input onclick='runAutocomplete_house_names()' id='myInput4' type='text' placeholder='Sigrún'>					</div>					<p id='search_form_result4'></p>					</form>					<button  onclick='sendToConsole4()'>Search</button>					")
+				.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_4' autocomplete='off' >					<div class='autocomplete' style='width:300px;'>					<b>House name:</b> <input onclick='runAutocomplete_house_names()' id='myInput4' type='text' placeholder='Sigrún'>					</div>					</form>					<button  onclick='Search_Button_4()'>Search</button>					<p id='search_form_result4'></p>					<button  onclick='Show_only_account_id_4()' disabled='true' id='button04'>Highlight these flags</button>					")
 				.openOn(map);
 			map.setView( [0, 0]);},
 		},
@@ -1127,7 +1238,7 @@ L.control.burgerMenu({
 	onClick: () => {
 		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
 		.setLatLng(xy([0, 0]))
-		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>12</td></tr>	<tr><td>Flags:</td><td>442</td></tr>	<tr><td>Flags Inactive:</td><td>70</td></tr>	<tr><td>Flags Empty:</td><td>63</td></tr>	</table>"	)
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>12</td></tr>	<tr><td>Flags:</td><td>442</td></tr>	<tr><td>Flags Inactive:</td><td>69</td></tr>	<tr><td>Flags Empty:</td><td>63</td></tr>	</table>"	)
 		.openOn(map);
 		},
 	},
