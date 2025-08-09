@@ -996,15 +996,15 @@ info.onAdd = function (map) {
 	};
 
 info.update = function (f) {
-		const contents = f ? `<table><tr><td>Name:</td><td><b>${f.properties.name}</b></td></tr><tr><td>Owner:</td><td>${ACCOUNT_NAME[f.properties.owner]}</td></tr><tr><td>Flag ID:</td><td> ${f.id}</td></tr></table>` : 'Hover over a Flag'; // props is properties in geojson data
-		this._div.innerHTML = `<h4>Flag Info</h4>${contents}`;
+		const contents = f ? `<table><tr><td align='right'><u>Flag ID</u></td></tr><tr><td align='right'> ${f.id}</td></tr><tr><td align='right'><u>Owner</u></td></tr><tr><td align='right'>${ACCOUNT_NAME[f.properties.owner]}</td></tr><tr><td align='right'><u>Flag Name</td></u></tr><tr><td align='right'>${f.properties.name}</td></tr></table>` : 'Hover over a Flag';
+		this._div.innerHTML = `<h4 align='right'>Flag Info</h4>${contents}`;
 	};
 
 info.addTo(map);	
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | 0.36.6.4-release | Generated at 2025/08/08_18:19 UTC | Blockchain height: 1,321,933 | <abbr id="timer">Loading...</abbr>')
-const givenStr = "2025/08/08_18:19"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/09_00:14 UTC / Blockchain height: 1,323,020 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const givenStr = "2025/08/09_00:14"// attribution tick timer
 const target = parseDate(givenStr);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
