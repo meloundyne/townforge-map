@@ -1200,9 +1200,6 @@ const Generation_of_role_images = L.geoJson(allFlagsCities, {
 				L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(t_city[feature.properties.city])
 	}}})
 
-L.rectangle([xy([-1115, -2008]),xy([1459, 581])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
-L.rectangle([xy([-4170, -5829]),xy([7019, 5360])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
-L.rectangle([xy([72, -50]),xy([507, 387])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 
 L.marker(xy([0, 0])).addTo(Layer_tax_break_points_city_0);
 L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer_tax_break_points_city_0);
@@ -1240,8 +1237,8 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/10_14:26 UTC / Blockchain height: 1,329,488 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/10_14:26"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/10_20:40 UTC / Blockchain height: 1,330,564 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/10_20:40"// attribution tick timer
 const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -1364,7 +1361,7 @@ L.control.burgerMenu({
 	onClick: () => {
 		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
 		.setLatLng(xy([0, 0]))
-		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>13</td></tr>	<tr><td>Flags:</td><td>443</td></tr>	<tr><td>Flags Inactive:</td><td>69</td></tr>	<tr><td>Flags Empty:</td><td>64</td></tr>	</table>"	)
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>3 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>13</td></tr>	<tr><td>Flags:</td><td>443</td></tr>	<tr><td>Flags Inactive:</td><td>220</td></tr>	<tr><td>Flags Empty:</td><td>65</td></tr>	</table>"	)
 		.openOn(map);
 		},
 	},
@@ -1373,7 +1370,7 @@ L.control.burgerMenu({
 	onClick: () => {
 		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
 		.setLatLng(xy([0, 0]))
-		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Island</b></td></tr>	<tr><td>ID:</td><td>1</td></tr>	<tr><td>Level (max):</td><td>5 (5)</td></tr>	<tr><td>Mayor</td><td>Meloun</td></tr>	<tr><td>Citizens:</td><td>2</td></tr>	<tr><td>Flags:</td><td>33</td></tr>	<tr><td>Flags Inactive:</td><td>9</td></tr>	<tr><td>Flags Empty:</td><td>3</td></tr>	</table>"	)
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Island</b></td></tr>	<tr><td>ID:</td><td>1</td></tr>	<tr><td>Level (max):</td><td>3 (5)</td></tr>	<tr><td>Mayor</td><td>Meloun</td></tr>	<tr><td>Citizens:</td><td>2</td></tr>	<tr><td>Flags:</td><td>33</td></tr>	<tr><td>Flags Inactive:</td><td>20</td></tr>	<tr><td>Flags Empty:</td><td>3</td></tr>	</table>"	)
 		.openOn(map);
 		},
 	},
