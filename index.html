@@ -913,7 +913,7 @@ const ACCOUNT_NAME = ["","Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsen
 const ACCOUNT_HOUSE = ["","Sigrid Sigrúnarsdóttir","Game","Foreclosure","Helsengaard treasury","Meloun","L","Romer","Syksy","Rucknium","Avatar I","Avatar II grey","Avatar III fat","PotR","PotR jr","Avatar test","badjabber","A16","TFQuests","Avatar 4","Avatar V","Avatar 6","Avatar 7","Avatar 11","avatar 8","yaoxi","Island treasury","Avatar 12","Avatar 13","preland","Pauleheister","jdawg420","redcathode","jdawg42","njkdcskjnds sdfsdf dffse errerw treasury","ABC123 treasury","Happy Cook","Town treasury","avatar 9999","ammortel","SyksyII",]
 const CITY_NAME = ["Helsengaard","Island","njkdcskjnds sdfsdf dffse errerw","ABC123","Town",]
 const FLAG_ROLE_NAME = ["","agricultural","craft","industrial","commercial","basic residential","affluent residential","luxury residential","military","cultural","stonecutter","sawmill","kiln","smelter","workforce","road","research","fishery",]
-const flag_names = ["Helsengaard town square","Tower","North Road","farm","Agricultural Field","Chop Chop on the Beach","East Street I","Cityside Gardens","Fishing Pier","Cityside Longhaus","Hare house","Icecrack Shack","Ugly Field","North side road","Syyskuunian Crafts","Western Road I","Helsengaard Park","Syysstad Imports & Exports","South-East Alleyway","East Street II","House by the Sea","Nice field","Big House","Work Bunks","Downtown Pad","Seaside Road II","Seaside Road I","Boat Builders","Seaside Road III","Syyskuunian Docks","Oats are good for you","Cow Paradise","Bad sawmill","Weird Table","Island town square","cfgvbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv","House 2","house2","Syysstad Embassy","Syystadt Embassy Gardens","Tuorla, Helsengaard Observatory","njkdcskjnds sdfsdf dffse errerw town square","ABC123 town square","dfg","sdf","retert","fdgdfg","dsfsd","sdfsfd","erterter","dgfg","sdfsdf","aweawed","sdfsdfsdf","fdgdgf","ztutzutz","fgfg","59549459","59595959595959","Town town square","BIG HOUSE","pauleheister agricultur","pauleheister craft","pauleheister fish1","pauleheister fish2","Mia campagna","pauleheister basic residental","SyksyII's meager Helsengaard townhouse","SyksyII's meager Helsengaardian gardens","Highly Prestigious Southern Road",]
+const flag_names = ["Helsengaard town square","Tower","North Road","farm","Agricultural Field","Chop Chop on the Beach","East Street I","Cityside Gardens","Fishing Pier","Cityside Longhaus","Hare house","Icecrack Shack","Ugly Field","North side road","Syyskuunian Crafts","Western Road I","Helsengaard Park","Syysstad Imports & Exports","South-East Alleyway","East Street II","House by the Sea","Nice field","Big House","Work Bunks","Downtown Pad","Seaside Road II","Seaside Road I","Boat Builders","Seaside Road III","Syyskuunian Docks","Oats are good for you","Cow Paradise","Bad sawmill","Weird Table","Island town square","cfgvbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv","House 2","house2","Syysstad Embassy","Syystadt Embassy Gardens","Tuorla, Helsengaard Observatory","njkdcskjnds sdfsdf dffse errerw town square","ABC123 town square","dfg","sdf","retert","fdgdfg","dsfsd","sdfsfd","erterter","dgfg","sdfsdf","aweawed","sdfsdfsdf","fdgdgf","ztutzutz","fgfg","59549459","59595959595959","Town town square","BIG HOUSE","pauleheister agricultur","pauleheister craft","Mia campagna","pauleheister saw","pauleheister basic residental","SyksyII's meager Helsengaard townhouse","SyksyII's meager Helsengaardian gardens","Highly Prestigious Southern Road","pauleheister stone",]
 
 const BaseLayer_GeoJSON_City_0 = L.geoJson([]).addTo(map);
 const Layer_img_inactive_flags0 = L.featureGroup([]).addTo(BaseLayer_GeoJSON_City_0);
@@ -1235,8 +1235,8 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/12_10:03 UTC / Blockchain height: 1,337,116 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/12_10:03"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/12_13:35 UTC / Blockchain height: 1,337,320 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/12_13:35"// attribution tick timer
 const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -1359,7 +1359,7 @@ L.control.burgerMenu({
 	onClick: () => {
 		var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip'})
 		.setLatLng(xy([0, 0]))
-		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>14</td></tr>	<tr><td>Flags:</td><td>453</td></tr>	<tr><td>Flags Inactive:</td><td>72</td></tr>	<tr><td>Flags Empty:</td><td>67</td></tr>	</table>"	)
+		.setContent("	<table class='popup_table'>	<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>	<tr><td>ID:</td><td>0</td></tr>	<tr><td>Level (max):</td><td>6 (6)</td></tr>	<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>	<tr><td>Citizens:</td><td>14</td></tr>	<tr><td>Flags:</td><td>453</td></tr>	<tr><td>Flags Inactive:</td><td>72</td></tr>	<tr><td>Flags Empty:</td><td>68</td></tr>	</table>"	)
 		.openOn(map);
 		},
 	},
