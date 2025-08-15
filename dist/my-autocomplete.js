@@ -25,7 +25,11 @@ function autocomplete(inp, arr) {
           b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
           b.innerHTML += arr[i].substr(val.length);
           /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          
+          /* QUOTES EDIT SO I CAN USE " IN FLAG NAME + in generate bash by using \ before " */
+          // Using global regex to replace all occurrences of double quotes
+          const replaced_quotes = arr[i].replace(/"/g, '&quot;');
+          b.innerHTML += `<input type='hidden' value="` + replaced_quotes + `">`;
           /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
