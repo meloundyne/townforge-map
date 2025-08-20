@@ -228,47 +228,47 @@ tr:nth-child(even) {
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
 <script type="text/javascript" src="Account_data.js"></script>
 <script>
-function getColor_role(d) {
-	return  d == 0  ? "white"  :
-			d == 1  ? "LawnGreen"  :
-			d == 2  ? "Cyan"  :
-			d == 3  ? "SaddleBrown"  :
-			d == 4  ? "Magenta"  :
-			d == 5  ? "Orange"  :
-			d == 6  ? "DarkOrange"  :
-			d == 7  ? "OrangeRed"  :
-			d == 8  ? "DarkSlateGray"  :
-			d == 9  ? "MediumSlateBlue"  :
-			d == 10 ? "Silver" :
-			d == 11 ? "ForestGreen" :
-			d == 12 ? "SandyBrown" :
-			d == 13 ? "Tan" :
-			d == 14 ? "NavajoWhite" :
-			d == 15 ? "DimGray" :
-			d == 16 ? "RebeccaPurple" :
-			d == 17 ? "RoyalBlue" : "white" ;
+function getColor_role(FlagRole) {
+	return  FlagRole == 0  ? "white"  :
+			FlagRole == 1  ? "LawnGreen"  :
+			FlagRole == 2  ? "Cyan"  :
+			FlagRole == 3  ? "SaddleBrown"  :
+			FlagRole == 4  ? "Magenta"  :
+			FlagRole == 5  ? "Orange"  :
+			FlagRole == 6  ? "DarkOrange"  :
+			FlagRole == 7  ? "OrangeRed"  :
+			FlagRole == 8  ? "DarkSlateGray"  :
+			FlagRole == 9  ? "MediumSlateBlue"  :
+			FlagRole == 10 ? "Silver" :
+			FlagRole == 11 ? "ForestGreen" :
+			FlagRole == 12 ? "SandyBrown" :
+			FlagRole == 13 ? "Tan" :
+			FlagRole == 14 ? "NavajoWhite" :
+			FlagRole == 15 ? "DimGray" :
+			FlagRole == 16 ? "RebeccaPurple" :
+			FlagRole == 17 ? "RoyalBlue" : "white" ;
 	}
 
-function getColor_active(d) {
-	return  d == "true"  ? "Green"	:
-			d == "false" ? "Red"	: "white" ;
+function getColor_active(FlagActive) {
+	return  FlagActive == "true"  ? "Green"	:
+			FlagActive == "false" ? "Red"	: "white" ;
 	}
                         
-function getColor_repair(d) {
-	return  d > 70 ? "Chartreuse"		:
-			d > 60 ? "LightSalmon"		:
-			d > 50 ? "Coral"			:
-			d > 40 ? "Tomato"			:
-			d > 30 ? "OrangeRed"		:
-			d > 20 ? "MediumPurple" 	:
-			d >  0 ? "RebeccaPurple"	:
-			d == 0 ? "white"			: "white" ;
+function getColor_repair(FlagRepair) {
+	return  FlagRepair > 70 ? "Chartreuse"		:
+			FlagRepair > 60 ? "LightSalmon"		:
+			FlagRepair > 50 ? "Coral"			:
+			FlagRepair > 40 ? "Tomato"			:
+			FlagRepair > 30 ? "OrangeRed"		:
+			FlagRepair > 20 ? "MediumPurple" 	:
+			FlagRepair >  0 ? "RebeccaPurple"	:
+			FlagRepair == 0 ? "white"			: "white" ;
 	}
                         
-function getColor_owner(str) {
+function getColor_owner(AccountHouseName) {
 	let sum = 0;
-	for (let i = 0; i < str.length; i++) {
-		sum += str.charCodeAt(i);
+	for (let i = 0; i < AccountHouseName.length; i++) {
+		sum += AccountHouseName.charCodeAt(i);
 		}
 	const r = (sum * 7) % 256; // change number in "sum * 7" to get different color, it must be prime number 
 	const g = (sum * 41) % 256; // prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
@@ -278,13 +278,13 @@ function getColor_owner(str) {
 	.join('')}`;
 	}
 
-function getColor_Economic_Power(d) {
-	return  d == 300 ? "#0AF51A"	:
-			d >  250 ? "#23AC1F"	:
-			d >  200 ? "#22681B"	:
-			d >  150 ? "#F58F0A"	:
-			d >  100 ? "#AD6614"	:
-			d == 100 ? "#694014"	: "white" ;
+function getColor_Economic_Power(FlagEconomicPower) {
+	return  FlagEconomicPower == 300 ? "#0AF51A"	:
+			FlagEconomicPower >  250 ? "#23AC1F"	:
+			FlagEconomicPower >  200 ? "#22681B"	:
+			FlagEconomicPower >  150 ? "#F58F0A"	:
+			FlagEconomicPower >  100 ? "#AD6614"	:
+			FlagEconomicPower == 100 ? "#694014"	: "white" ;
 	}
 
 function Style_Role(feature) {
@@ -326,10 +326,10 @@ function Style_Repair(feature) {
 function Style_Owner(feature) {
 	let color = 'LightGray'
 	if (Show_only_account_id == 0) {
-		color = getColor_owner(ACCOUNT_NAME[feature.properties.owner])
+		color = getColor_owner(ACCOUNT_HOUSE[feature.properties.owner])
 		}
 	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_owner(ACCOUNT_NAME[feature.properties.owner])
+		color = getColor_owner(ACCOUNT_HOUSE[feature.properties.owner])
 		};
 	return {
 		weight: 1,
@@ -412,12 +412,12 @@ function onEachFeature(feature, layer) {
 		layer.bindPopup(popup_text,{maxWidth: 1000,});
 	}
 
-function getFlagIDFromName(value) {
+function getFlagIDFromName(FlagName) {
 	const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
 	for (const cityGeoJSON of allFlagsCities) {
-		const feature = cityGeoJSON.features.find(f => f.properties.name === value);
+		const feature = cityGeoJSON.features.find(f => f.properties.name === FlagName);
 		if (feature) {
-			const log_message000210 = value
+			const log_message000210 = FlagName
 			const log_message000211 = ' : Name | ID : '
 			const log_message000212 = feature.id
 			log_message0002 = log_message000210 + log_message000211 + log_message000212
@@ -428,10 +428,10 @@ function getFlagIDFromName(value) {
 	return null;
 	}
 
-function getFlagInfoFromID(value) {
+function getFlagInfoFromID(FlagID) {
 	const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
 	for (const cityGeoJSON of allFlagsCities) {
-		const feature = cityGeoJSON.features.find(f => f.id === value);
+		const feature = cityGeoJSON.features.find(f => f.id === FlagID);
 		if (feature) {
 			let html =''
 			html += '<table style="white-space: nowrap;width: 100%;"><tr><td>Name:</td><td><b>'
@@ -461,14 +461,14 @@ function getFlagInfoFromID(value) {
 	return null;
 	}
 
-function getAllFlagsForID(value) {
+function getAllFlagsForID(AccountID) {
 	const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
 	const breakAfter = 20;
 	let cityResults = [];
 	allFlagsCities.forEach((cityGeoJSON, index) => {
 		if (!cityGeoJSON || !cityGeoJSON.features) return;
 		const filteredFeatures = cityGeoJSON.features.filter(feature =>
-			ACCOUNT_NAME[feature.properties.owner] === value
+			feature.properties.owner == AccountID
 		);
 		if (filteredFeatures.length === 0) return;
 		const sortedIDs = filteredFeatures
@@ -566,13 +566,13 @@ function Search_Button_3() {
 	let text = '<b>Results:</b>'
 	text += '<table style="white-space: nowrap;"><tr>'
 	text += '<td>House:</td>'
-	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(x.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Current Descendant:</td>'
-	text += '<td>' + ACCOUNT_NAME[ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_NAME[ACCOUNT_NAME.indexOf(x.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Account ID:</td>'
-	text += '<td>' + ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value) + '</td></tr>'
+	text += '<td>' + ACCOUNT_NAME.indexOf(x.elements[0].value) + '</td></tr>'
 	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
-	text += getAllFlagsForID(x.elements[0].value);
+	text += getAllFlagsForID(ACCOUNT_NAME.indexOf(x.elements[0].value));
 	text += '</table>'
 	document.getElementById("search_form_result3").innerHTML = text;
 	console.log(x.elements[0].value);
@@ -584,13 +584,13 @@ function Search_Button_4() {
 	let text = '<b>Results:</b>'
 	text += '<table style="white-space: nowrap;"><tr>'
 	text += '<td>House:</td>'
-	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(document.getElementById('search_form_4').elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_HOUSE.indexOf(x.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Current Descendant:</td>'
-	text += '<td>' + ACCOUNT_NAME[ACCOUNT_NAME.indexOf(document.getElementById('search_form_4').elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_NAME[ACCOUNT_HOUSE.indexOf(x.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Account ID:</td>'
-	text += '<td>' + ACCOUNT_NAME.indexOf(document.getElementById('search_form_4').elements[0].value) + '</td></tr>'
+	text += '<td>' + ACCOUNT_HOUSE.indexOf(x.elements[0].value) + '</td></tr>'
 	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
-	text += getAllFlagsForID(x.elements[0].value);
+	text += getAllFlagsForID(ACCOUNT_HOUSE.indexOf(x.elements[0].value));
 	text += '</table>'
 	document.getElementById("search_form_result4").innerHTML = text;
 	console.log(x.elements[0].value);
@@ -649,25 +649,25 @@ function runAutocomplete_account_names() {
 function runAutocomplete_house_names() {
 	autocomplete(document.getElementById("myInput4"), ACCOUNT_HOUSE);
 	}
-function generateTable(data, Value) {
-	const entries = Object.entries(data).filter(([key, value]) => !isNaN(key) && Array.isArray(value));
-	entries.sort((a,b) => Number(b[1][Value]) - Number(a[1][Value]));
+function generateTable(ArrayWithData, IndexInSubArray) {
+	const entries = Object.entries(ArrayWithData).filter(([key, value]) => !isNaN(key) && Array.isArray(value));
+	entries.sort((a,b) => Number(b[1][IndexInSubArray]) - Number(a[1][IndexInSubArray]));
 	let html = `<table class='popup_table'>`;
-	html += `<thead><tr><th colspan="3"><h2>${Account_data_fieldNames[Value]} Leaderboard</h2></th></tr></thead><tbody>`;
-	html += `<thead><tr><td><u><b>House</b></u></td><td><u><b>Name</b></u></td><td><u><b>${Account_data_fieldNames[Value]}</b></u></td></tr></thead><tbody>`;
+	html += `<thead><tr><th colspan="3"><h2>${Account_data_fieldNames[IndexInSubArray]} Leaderboard</h2></th></tr></thead><tbody>`;
+	html += `<thead><tr><td><u><b>House</b></u></td><td><u><b>Name</b></u></td><td><u><b>${Account_data_fieldNames[IndexInSubArray]}</b></u></td></tr></thead><tbody>`;
 	for (const [index, accountArray] of entries) {
-		html += `<tr><td>${ACCOUNT_HOUSE[index]}</td><td>${ACCOUNT_NAME[index]}</td><td align="right">${formatNumberWithDots(accountArray[Value])}</td></tr>`;
+		html += `<tr><td>${ACCOUNT_HOUSE[index]}</td><td>${ACCOUNT_NAME[index]}</td><td align="right">${formatNumberWithDots(accountArray[IndexInSubArray])}</td></tr>`;
 		}
 	html += `</tbody></table>`;
 	return html;
 	}
 
-function formatNumberWithDots(numberStr) {
-	return numberStr.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+function formatNumberWithDots(NumberWithoutDots) {
+	return NumberWithoutDots.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	}
 
-function parseDate(str) {
-	const [date, time] = str.split('_');
+function parseDate(StringWithGeneratedTime) {
+	const [date, time] = StringWithGeneratedTime.split('_');
 	const [year, month, day] = date.split('/').map(Number);
 	const [hour, minute] = time.split(':').map(Number);
 	return new Date(Date.UTC(year, month - 1, day, hour, minute));
@@ -869,10 +869,10 @@ function function_get_selection_influence () {
 			.openOn(featureGroup_Legend);
 	}
 
-function changeFontSizeForClass(className, fontSize) {
-	const elements = document.querySelectorAll(`.${className}`);
+function changeFontSizeForClass(CssClassName, TargetFontSize) {
+	const elements = document.querySelectorAll(`.${CssClassName}`);
 	elements.forEach(el => {
-		el.style.fontSize = fontSize;
+		el.style.fontSize = TargetFontSize;
 		});
 	}
 
@@ -1348,8 +1348,8 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/20_13:04 UTC / Blockchain height: 1,364,048 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/20_13:04"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/20_19:06 UTC / Blockchain height: 1,365,129 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/20_19:06"// attribution tick timer
 const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -1375,7 +1375,7 @@ legend_role.onAdd = function (map) {
 //default view
 legend_role.addTo(map);
         
-const legend_owner_text="Colors are generated from account name"
+const legend_owner_text="Colors are generated from house name"
 
 const legend_owner = L.control({position: 'bottomright'});
 legend_owner.onAdd = function (map) {
