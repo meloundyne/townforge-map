@@ -18,12 +18,6 @@
 <!-- Autocomplete on forms --> 
 	<link rel="stylesheet" href="./dist/my-autocomplete.css"/>
 	<script src="./dist/my-autocomplete.js"></script>
-	<!-- function runAutocomplete() {
-	/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-	autocomplete(document.getElementById("myInput"), countries); 
-	/*An array containing all the country names in the world:*/
-	var countries = ["Afghanistan","Albania","Yemen","Zambia","Zimbabwe"];
-	-->
 <!-- Autocomplete on forms --> 
 <style>
 #map {
@@ -45,42 +39,40 @@
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } 
 .info h4 { margin: 0 0 5px; color: #777; }
 /*<!-- info box top right-->*/
-/*<!-- info legend bottom right-->*/
-.circle_repair {
+.Legend_text_background_repair {
 	line-height: 22px;
 	width: 45px;
 	border-radius: 15%;
 	white-space: nowrap;
 	text-align: center;
 	}
-.circle_role {
+.Legend_text_background_role {
 	line-height: 22px;
 	width: 115px;
 	border-radius: 15%;
 	white-space: nowrap;
 	text-align: center;
 	}
-.circle_EP {
+.Legend_text_background_Economic_Power {
 	line-height: 22px;
 	width: 55px;
 	border-radius: 15%;
 	white-space: nowrap;
 	text-align: center;
 	}
-.br_legend {
+.Legend_br_height {
 	line-height: 0.2;
 	}
-/*<!-- info legend bottom right-->*/
 /*<!-- Flag sizes -->*/
-.text-labels-x .text-labels-y {
+.Flag_size_x .Flag_size_y {
 	font-size: 10px; /* also inside function*/
 	font-weight: 1;
 	color: black;
 	}
-.text-labels-x {
+.Flag_size_x {
 	writing-mode: horizontal-tb;
 	}
-.text-labels-y {
+.Flag_size_y {
 	writing-mode: vertical-rl;
 	}
 /*<!-- Flag sizes -->*/
@@ -102,7 +94,6 @@
 	100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 	}
 /*<!-- Pulsing Marker -->*/
-/*<!-- Home Button -->*/
 #HomeButton{
 	display: flex;
 	align-items: center;
@@ -126,8 +117,6 @@
 	opacity: 1;
 	cursor: pointer;
 	}
-/*<!-- Home Button -->*/
-/*<!-- Edit Button -->*/
 #Calculate_influence_button{
 	display: flex;
 	align-items: center;
@@ -151,8 +140,6 @@
 	opacity: 1;
 	cursor: pointer;
 	}
-/*<!-- Edit Button -->*/
-/*<!-- Disable Highlighted Flags Button -->*/
 #Disable_Highlight_Button{
 	display: none;
 	align-items: center;
@@ -176,23 +163,18 @@
 	opacity: 1;
 	cursor: pointer;
 	}
-/*<!-- Disable Highlighted Flags Button -->*/
 tr:nth-child(even) {
 	/*Use an rgba() color to specify the transparency of the color:*/
 	background-color: rgba(117, 117, 117, 0.1);
 	}
-
 </style>
 </head>
 
 <body>
 <div id="map">
-	<!-- Home Button -->
 	<button id="HomeButton" title='Reset Map View' onclick='map.setView( [0, 0], -1);'>
-	<img src="./dist/home.svg" style="width:20px;"></img>
-	</button>
-	<!-- Home Button -->
-	<!-- Edit Button -->
+		<img src="./dist/home.svg" style="width:20px;"></img>
+		</button>
 	<button id="Calculate_influence_button" title='Calculate Influence of Flags on Selection' style="line-height: 1;"
 		onclick='
 			if (map.hasLayer(featureGroup_Legend) == 0) {
@@ -216,15 +198,12 @@ tr:nth-child(even) {
 				if (map.hasLayer(featureGroup_EcoPow) == 1) {legend_EcoPow.addTo(map)};
 				}
 			'>
-	Influence Calculator 
-	</button>
-	<!-- Edit Button -->
-	<!-- Disable Highlighted Flags Button -->
+		Influence Calculator 
+		</button>
 	<button id="Disable_Highlight_Button" title='Disable Highlighted Flags' onclick='Show_only_account_id = 0;Reset_style_of_Geojson_Flags_Layers();document.getElementById("Disable_Highlight_Button").style.display = "none";'>
-	Disable Highlighting Flags
-	</button>
-	<!-- Disable Highlighted Flags Button -->
-</div>
+		Disable Highlighting Flags
+		</button>
+	</div>
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
 <script type="text/javascript" src="Account_data.js"></script>
 <script>
@@ -922,7 +901,7 @@ var xy = function(x, y) {
 //<!-- xy to yx to L.latLng -->
 
 //<!--https://github.com/ablakey/Leaflet.SimpleGraticule --> 
-var options = {
+var SimpleGraticuleOptions = {
 	interval: 20,
 	showOriginLabel: true,
 	redraw: 'move',
@@ -935,7 +914,7 @@ var options = {
 		{start: 2, end: 3, interval: 64}
 		]
 	};
-L.simpleGraticule(options).addTo(map);
+L.simpleGraticule(SimpleGraticuleOptions).addTo(map);
 //<!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
 map.setMaxBounds([[-55102,-55102], [55102,55102]]);
 const all_flags = ["1","2","3","4","5","9","10","12","13","14","15","18","19","23","25","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","79","80","81","82","83","84","103","108","109","111","113","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","172","173","174","175","186","187","188","189","190","191","192","193","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","253","254","255","256","257","258","259","260","261","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569","570","571","572","573","574","575","576","577","578","579","580","585","586","588","589","590","591","592","593","594","595","596","597","598","599","600","601","602","603","604","605","606","607","609",] 
@@ -1256,8 +1235,8 @@ const Generation_of_flag_sizes = L.geoJson(allFlagsCities, {
 				const horizontal_position 	=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 2)),	(feature.geometry.coordinates[0][0][1] + (y_size / 5))	])
 				const vertical_position		=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 5)),	(feature.geometry.coordinates[0][0][1] + (y_size / 2))	])
 				
-				L.marker(horizontal_position,	{icon: L.divIcon({className: 'text-labels-x',html: x_size}),zIndexOffset: 1000, interactive: false}).addTo(ts_city[feature.properties.city])
-				L.marker(vertical_position,		{icon: L.divIcon({className: 'text-labels-y',html: y_size}),zIndexOffset: 1000, interactive: false}).addTo(ts_city[feature.properties.city])
+				L.marker(horizontal_position,	{icon: L.divIcon({className: 'Flag_size_x',html: x_size}),zIndexOffset: 1000, interactive: false}).addTo(ts_city[feature.properties.city])
+				L.marker(vertical_position,		{icon: L.divIcon({className: 'Flag_size_y',html: y_size}),zIndexOffset: 1000, interactive: false}).addTo(ts_city[feature.properties.city])
 	}})
 map.on('zoomend', function () {
 	if (featureGroup_Layer_text_size_flags_ON == true) {
@@ -1265,44 +1244,44 @@ map.on('zoomend', function () {
 		console.log('Zoom: ' + zoomLevel)
 		switch (zoomLevel) {
 			case -5:
-				changeFontSizeForClass('text-labels-x', '0px');
-				changeFontSizeForClass('text-labels-y', '0px');
+				changeFontSizeForClass('Flag_size_x', '0px');
+				changeFontSizeForClass('Flag_size_y', '0px');
 				break;
 			case -4:
-				changeFontSizeForClass('text-labels-x', '0px');
-				changeFontSizeForClass('text-labels-y', '0px');
+				changeFontSizeForClass('Flag_size_x', '0px');
+				changeFontSizeForClass('Flag_size_y', '0px');
 				break;
 			case -3:
-				changeFontSizeForClass('text-labels-x', '0px');
-				changeFontSizeForClass('text-labels-y', '0px');
+				changeFontSizeForClass('Flag_size_x', '0px');
+				changeFontSizeForClass('Flag_size_y', '0px');
 				break;
 			case -2:
-				changeFontSizeForClass('text-labels-x', '8px');
-				changeFontSizeForClass('text-labels-y', '8px');
+				changeFontSizeForClass('Flag_size_x', '8px');
+				changeFontSizeForClass('Flag_size_y', '8px');
 				break;
 			case -1:
-				changeFontSizeForClass('text-labels-x', '10px');
-				changeFontSizeForClass('text-labels-y', '10px');
+				changeFontSizeForClass('Flag_size_x', '10px');
+				changeFontSizeForClass('Flag_size_y', '10px');
 				break;
 			case 0:
-				changeFontSizeForClass('text-labels-x', '16px');
-				changeFontSizeForClass('text-labels-y', '16px');
+				changeFontSizeForClass('Flag_size_x', '16px');
+				changeFontSizeForClass('Flag_size_y', '16px');
 				break;
 			case 1:
-				changeFontSizeForClass('text-labels-x', '16px');
-				changeFontSizeForClass('text-labels-y', '16px');
+				changeFontSizeForClass('Flag_size_x', '16px');
+				changeFontSizeForClass('Flag_size_y', '16px');
 				break;
 			case 2:
-				changeFontSizeForClass('text-labels-x', '16px');
-				changeFontSizeForClass('text-labels-y', '16px');
+				changeFontSizeForClass('Flag_size_x', '16px');
+				changeFontSizeForClass('Flag_size_y', '16px');
 				break;
 			case 3:
-				changeFontSizeForClass('text-labels-x', '16px');
-				changeFontSizeForClass('text-labels-y', '16px');
+				changeFontSizeForClass('Flag_size_x', '18px');
+				changeFontSizeForClass('Flag_size_y', '18px');
 				break;
 			default:
-				changeFontSizeForClass('text-labels-x', '10px');
-				changeFontSizeForClass('text-labels-y', '10px');
+				changeFontSizeForClass('Flag_size_x', '10px');
+				changeFontSizeForClass('Flag_size_y', '10px');
 			}
 		}
 	});
@@ -1348,14 +1327,14 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/21_13:01 UTC / Blockchain height: 1,368,367 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/21_13:01"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/21_19:03 UTC / Blockchain height: 1,369,451 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/21_19:03"// attribution tick timer
 const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
 setInterval(update_tick_timer, 1000);// attribution tick timer
 L.control.zoom({position:'bottomleft'}).addTo(map)
-const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"circle_repair\">> 70%</div>   <br class='br_legend'><div style=\"background-color:LightSalmon\" class=\"circle_repair\">> 60%</div>  <br class='br_legend'><div style=\"background-color:Coral\" class=\"circle_repair\">> 50%</div>        <br class='br_legend'><div style=\"background-color:Tomato\" class=\"circle_repair\">> 40%</div>       <br class='br_legend'><div style=\"background-color:OrangeRed\" class=\"circle_repair\">> 30%</div>    <br class='br_legend'><div style=\"background-color:MediumPurple\" class=\"circle_repair\">> 20%</div> <br class='br_legend'><div style=\"background-color:RebeccaPurple\" class=\"circle_repair\">> 00%</div><br class='br_legend'><div style=\"background-color:white\" class=\"circle_repair\">= 00%</div>        "                                                                                    
+const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"Legend_text_background_repair\">> 70%</div>   <br class='Legend_br_height'><div style=\"background-color:LightSalmon\" class=\"Legend_text_background_repair\">> 60%</div>  <br class='Legend_br_height'><div style=\"background-color:Coral\" class=\"Legend_text_background_repair\">> 50%</div>        <br class='Legend_br_height'><div style=\"background-color:Tomato\" class=\"Legend_text_background_repair\">> 40%</div>       <br class='Legend_br_height'><div style=\"background-color:OrangeRed\" class=\"Legend_text_background_repair\">> 30%</div>    <br class='Legend_br_height'><div style=\"background-color:MediumPurple\" class=\"Legend_text_background_repair\">> 20%</div> <br class='Legend_br_height'><div style=\"background-color:RebeccaPurple\" class=\"Legend_text_background_repair\">> 00%</div><br class='Legend_br_height'><div style=\"background-color:white\" class=\"Legend_text_background_repair\">= 00%</div>        "                                                                                    
 const legend_repair = L.control({position: 'bottomright'});                          
 legend_repair.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -1364,7 +1343,7 @@ legend_repair.onAdd = function (map) {
 	return div;
 	};
 
-const legend_role_text="<div style=\"background-color:    white \" class=\"circle_role\">none                </div><br class='br_legend'><div style=\"background-color:LawnGreen \" class=\"circle_role\">agricultural        </div><br class='br_legend'><div style=\"background-color:Cyan \" class=\"circle_role\">craft               </div><br class='br_legend'><div style=\"background-color:SaddleBrown \" class=\"circle_role\">industrial          </div><br class='br_legend'><div style=\"background-color:Magenta \" class=\"circle_role\">commercial          </div><br class='br_legend'><div style=\"background-color:Orange \" class=\"circle_role\">basic residential   </div><br class='br_legend'><div style=\"background-color:DarkOrange \" class=\"circle_role\">affluent residential</div><br class='br_legend'><div style=\"background-color:OrangeRed \" class=\"circle_role\">luxury residential  </div><br class='br_legend'><div style=\"background-color:DarkSlateGray \" class=\"circle_role\">military            </div><br class='br_legend'><div style=\"background-color:MediumSlateBlue \" class=\"circle_role\">cultural            </div><br class='br_legend'><div style=\"background-color:Silver\" class=\"circle_role\">stonecutter         </div><br class='br_legend'><div style=\"background-color:ForestGreen\" class=\"circle_role\">sawmill             </div><br class='br_legend'><div style=\"background-color:SandyBrown\" class=\"circle_role\">kiln                </div><br class='br_legend'><div style=\"background-color:Tan\" class=\"circle_role\">smelter             </div><br class='br_legend'><div style=\"background-color:NavajoWhite\" class=\"circle_role\">workforce           </div><br class='br_legend'><div style=\"background-color:DimGray\" class=\"circle_role\">road                </div><br class='br_legend'><div style=\"background-color:RebeccaPurple\" class=\"circle_role\">research            </div><br class='br_legend'><div style=\"background-color:RoyalBlue\" class=\"circle_role\">fishery             </div>"
+const legend_role_text="<div style=\"background-color:    white \" class=\"Legend_text_background_role\">none                </div><br class='Legend_br_height'><div style=\"background-color:LawnGreen \" class=\"Legend_text_background_role\">agricultural        </div><br class='Legend_br_height'><div style=\"background-color:Cyan \" class=\"Legend_text_background_role\">craft               </div><br class='Legend_br_height'><div style=\"background-color:SaddleBrown \" class=\"Legend_text_background_role\">industrial          </div><br class='Legend_br_height'><div style=\"background-color:Magenta \" class=\"Legend_text_background_role\">commercial          </div><br class='Legend_br_height'><div style=\"background-color:Orange \" class=\"Legend_text_background_role\">basic residential   </div><br class='Legend_br_height'><div style=\"background-color:DarkOrange \" class=\"Legend_text_background_role\">affluent residential</div><br class='Legend_br_height'><div style=\"background-color:OrangeRed \" class=\"Legend_text_background_role\">luxury residential  </div><br class='Legend_br_height'><div style=\"background-color:DarkSlateGray \" class=\"Legend_text_background_role\">military            </div><br class='Legend_br_height'><div style=\"background-color:MediumSlateBlue \" class=\"Legend_text_background_role\">cultural            </div><br class='Legend_br_height'><div style=\"background-color:Silver\" class=\"Legend_text_background_role\">stonecutter         </div><br class='Legend_br_height'><div style=\"background-color:ForestGreen\" class=\"Legend_text_background_role\">sawmill             </div><br class='Legend_br_height'><div style=\"background-color:SandyBrown\" class=\"Legend_text_background_role\">kiln                </div><br class='Legend_br_height'><div style=\"background-color:Tan\" class=\"Legend_text_background_role\">smelter             </div><br class='Legend_br_height'><div style=\"background-color:NavajoWhite\" class=\"Legend_text_background_role\">workforce           </div><br class='Legend_br_height'><div style=\"background-color:DimGray\" class=\"Legend_text_background_role\">road                </div><br class='Legend_br_height'><div style=\"background-color:RebeccaPurple\" class=\"Legend_text_background_role\">research            </div><br class='Legend_br_height'><div style=\"background-color:RoyalBlue\" class=\"Legend_text_background_role\">fishery             </div>"
 
 const legend_role = L.control({position: 'bottomright'});
 legend_role.onAdd = function (map) {
@@ -1384,7 +1363,7 @@ legend_owner.onAdd = function (map) {
 	return div;
 	};
 
-const legend_EcoPow_text="<div style=\"background-color:#0AF51A\" class=\"circle_EP\">= 300%</div><br class='br_legend'><div style=\"background-color:#23AC1F\" class=\"circle_EP\">> 250%</div><br class='br_legend'><div style=\"background-color:#22681B\" class=\"circle_EP\">> 200%</div><br class='br_legend'><div style=\"background-color:#F58F0A\" class=\"circle_EP\">> 150%</div><br class='br_legend'><div style=\"background-color:#AD6614\" class=\"circle_EP\">> 100%</div><br class='br_legend'><div style=\"background-color:#694014\" class=\"circle_EP\">= 100%</div>"
+const legend_EcoPow_text="<div style=\"background-color:#0AF51A\" class=\"Legend_text_background_Economic_Power\">= 300%</div><br class='Legend_br_height'><div style=\"background-color:#23AC1F\" class=\"Legend_text_background_Economic_Power\">> 250%</div><br class='Legend_br_height'><div style=\"background-color:#22681B\" class=\"Legend_text_background_Economic_Power\">> 200%</div><br class='Legend_br_height'><div style=\"background-color:#F58F0A\" class=\"Legend_text_background_Economic_Power\">> 150%</div><br class='Legend_br_height'><div style=\"background-color:#AD6614\" class=\"Legend_text_background_Economic_Power\">> 100%</div><br class='Legend_br_height'><div style=\"background-color:#694014\" class=\"Legend_text_background_Economic_Power\">= 100%</div>"
 const legend_EcoPow = L.control({position: 'bottomright'});
 legend_EcoPow.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -1423,7 +1402,6 @@ var overlays = {
 var overlays_overlays = {};
 var layerControl = L.control.layers(baseMaps,baseMaps_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
 var layerControl = L.control.layers(overlays,overlays_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
-//<!-- https://github.com/BenPortner/leaflet-burgermenu -->
 const Burger_Search_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
 L.control.burgerMenu({
 	title: "Search Menu",
@@ -1451,8 +1429,6 @@ L.control.burgerMenu({
 			},
 		],
 	}).addTo(map);
-//<!-- https://github.com/BenPortner/leaflet-burgermenu -->
-//<!-- https://github.com/BenPortner/leaflet-burgermenu -->
 const Burger_Leaderboard_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
 const Burger_City_Info_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
 L.control.burgerMenu({
@@ -1511,7 +1487,6 @@ L.control.burgerMenu({
 			},
 		],
 	}).addTo(map);
-//<!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 map.setView( [0, 0], -1)
 </script>
 </body>
