@@ -686,7 +686,6 @@ function function_select_first_marker_enterAddMarkerMode () {
 	document.getElementById("InfluenceButton1").disabled = true;
 	document.getElementById("InfluenceButton2").disabled = true;
 	document.getElementById("InfluenceButton3").disabled = true;
-	//this.map._container.style.cursor = 'crosshair';
 	this.map.addEventListener('click', this.function_select_first_marker_onMapClickAddMarker.bind(this));
 	}
 
@@ -699,9 +698,8 @@ function function_select_first_marker_onMapClickAddMarker (e) {
 	document.getElementById("InfluenceButton2").disabled = false;
 	document.getElementById("InfluenceButton3").disabled = false;
 	this.map.removeEventListener('click');
-	//this.map._container.style.cursor = 'auto';
-	marker_first.remove()
-	marker_first = L.marker(e.latlng, {draggable: true})
+	marker_first.remove();
+	marker_first = L.marker(e.latlng, {draggable: true});
 	marker_first.addTo(featureGroup_Legend);
 	}
 
@@ -716,7 +714,6 @@ function function_select_second_marker_enterAddMarkerMode () {
 	document.getElementById("InfluenceButton1").disabled = true;
 	document.getElementById("InfluenceButton2").disabled = true;
 	document.getElementById("InfluenceButton3").disabled = true;
-	//this.map._container.style.cursor = 'crosshair';
 	this.map.addEventListener('click', this.function_select_second_marker_onMapClickAddMarker.bind(this));
 	}
 
@@ -729,9 +726,8 @@ function function_select_second_marker_onMapClickAddMarker (e) {
 	document.getElementById("InfluenceButton2").disabled = false;
 	document.getElementById("InfluenceButton3").disabled = false;
 	this.map.removeEventListener('click');
-	//this.map._container.style.cursor = 'auto';
-	marker_second.remove()
-	marker_second = L.marker(e.latlng, {draggable: true})
+	marker_second.remove();
+	marker_second = L.marker(e.latlng, {draggable: true});
 	marker_second.addTo(featureGroup_Legend);
 	}
 
@@ -748,10 +744,6 @@ function function_get_selection_influence () {
 	Selection_y0 = Math.min(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
 	Selection_x1 = Math.max(marker_first.getLatLng().lng, marker_second.getLatLng().lng) // Longitude
 	Selection_y1 = Math.max(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
-	//console.log(Selection_x0)
-	//console.log(Selection_y0)
-	//console.log(Selection_x1)
-	//console.log(Selection_y1)
 	if (map.hasLayer(BaseLayer_City0) == 1) { Selection_city = 0 }
 	if (map.hasLayer(BaseLayer_City1) == 1) { Selection_city = 1 }
 	if (map.hasLayer(BaseLayer_City2) == 1) { Selection_city = 2 }
@@ -783,77 +775,70 @@ function function_get_selection_influence () {
 				if ( uz_je_tam_flag == 4 ) {
 					Selection_Flag_pres_sebe_msq = (Dx1 - Dx0) * (Dy1 - Dy0)
 					Selection_is_empty = 'no'
+					}
 				}
-			}
 
-			let influence_pres_selection = 0
+			let influence_over_selection = 0
 			if ( Selection_city == feature.properties.city ) {
 				OtherFlag_x0 -= Number(feature.properties.inf)
 				OtherFlag_y0 -= Number(feature.properties.inf)
 				OtherFlag_x1 += Number(feature.properties.inf)
 				OtherFlag_y1 += Number(feature.properties.inf)
-				if (Math.max(Selection_x0, OtherFlag_x0) < Selection_x1) { Dx0 = Math.max(Selection_x0, OtherFlag_x0); influence_pres_selection += 1 }
-				if (Math.max(Selection_y0, OtherFlag_y0) < Selection_y1) { Dy0 = Math.max(Selection_y0, OtherFlag_y0); influence_pres_selection += 1 }
-				if (Math.min(Selection_x1, OtherFlag_x1) > Selection_x0) { Dx1 = Math.min(Selection_x1, OtherFlag_x1); influence_pres_selection += 1 }
-				if (Math.min(Selection_y1, OtherFlag_y1) > Selection_y0) { Dy1 = Math.min(Selection_y1, OtherFlag_y1); influence_pres_selection += 1 }
+				if (Math.max(Selection_x0, OtherFlag_x0) < Selection_x1) { Dx0 = Math.max(Selection_x0, OtherFlag_x0); influence_over_selection += 1 }
+				if (Math.max(Selection_y0, OtherFlag_y0) < Selection_y1) { Dy0 = Math.max(Selection_y0, OtherFlag_y0); influence_over_selection += 1 }
+				if (Math.min(Selection_x1, OtherFlag_x1) > Selection_x0) { Dx1 = Math.min(Selection_x1, OtherFlag_x1); influence_over_selection += 1 }
+				if (Math.min(Selection_y1, OtherFlag_y1) > Selection_y0) { Dy1 = Math.min(Selection_y1, OtherFlag_y1); influence_over_selection += 1 }
 				const Selection_msq = (Selection_x1 - Selection_x0) * (Selection_y1 - Selection_y0)
-				const Influence_msq = (OtherFlag_x1 - OtherFlag_x0)*(OtherFlag_y1 - OtherFlag_y0)
 
 				let Dsqm
-				if ( influence_pres_selection == 4 ){
-				Dsqm = (Dx1 - Dx0) * (Dy1 - Dy0)
-				}
-				let showlog = 0
+				if ( influence_over_selection == 4 ){
+					Dsqm = (Dx1 - Dx0) * (Dy1 - Dy0)
+					}
 				if ( Dsqm > 0 ) { //overlap
-				influencing += 1
-				Influence_from_role_percent[feature.properties.role] += ( Dsqm / Selection_msq * 100 ) // influence in percent
+					influencing += 1
+					Influence_from_role_percent[feature.properties.role] += ( Dsqm / Selection_msq * 100 ) // influence in percent
+					}
 				}
 			}
-		}
 		})
 
-	let text001 = (Selection_x1 - Selection_x0)
-	let text002 = (Selection_y1 - Selection_y0)
-	let text = `${text001} x ${text002}`
+	let SelectionSizeX = (Selection_x1 - Selection_x0)
+	let SelectionSizeY = (Selection_y1 - Selection_y0)
 	let WARNING = ""
-	if (text001 > 256 && text002 < 256){
-		WARNING = "<h1 style='color:red'>Selected x is larger than 256</h1>"
+	if (SelectionSizeX > 256){
+		WARNING += "<h1 style='color: red; line-height: 0.4; white-space: nowrap;'>Selected x is larger than 256</h1>"
 		}
-	if (text001 < 256 && text002 > 256){
-		WARNING = "<h1 style='color:red'>Selected y is larger than 256</h1>"
+	if (SelectionSizeY > 256){
+		WARNING += "<h1 style='color: red; line-height: 0.4; white-space: nowrap;'>Selected y is larger than 256</h1>"
 		}
-	if (text001 > 256 && text002 > 256){
-		WARNING = "<h1 style='color:red'>Selected x and y is larger than 256</h1>"
-		}
-	let WARNING2 = ""
 	if (Selection_is_empty == 'no'){
-		WARNING2 = "<h1 style='color:red'>Flag is already there</h1>"
+		WARNING += "<h1 style='color: red; line-height: 0.4; white-space: nowrap;'>Flag is already there</h1>"
 		}
 	text1=`
-<table class='popup_table'><thead>${WARNING}${WARNING2}</thead><tbody>
-<tr><td>Selection</td><td>${text}</td></tr>
-<tr><td colspan="2"><b>Influence from role</b></td></tr>
-<tr><td>${FLAG_ROLE_NAME[1]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[1])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[2]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[2])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[3]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[3])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[4]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[4])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[5]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[5])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[6]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[6])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[7]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[7])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[8]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[8])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[9]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[9])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[10]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[10])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[11]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[11])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[12]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[12])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[13]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[13])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[14]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[14])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[15]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[15])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[16]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[16])+50)/100)}</td></tr>
-<tr><td>${FLAG_ROLE_NAME[17]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[17])+50)/100)}</td></tr>
-<tr><td colspan="3"><a target="_blank" href="https://townforge.net/manual/">townforge.net/manual/</a>  Influence</td></tr>
-</tbody>
-</table>
-`;
+		<table class='popup_table'><thead>${WARNING}</thead><tbody>
+		<tr><td>Selection</td><td>${SelectionSizeX} x ${SelectionSizeY}</td></tr>
+		<tr><td colspan="2"><b>Influence from role</b></td></tr>
+		<tr><td>${FLAG_ROLE_NAME[1]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[1])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[2]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[2])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[3]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[3])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[4]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[4])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[5]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[5])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[6]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[6])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[7]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[7])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[8]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[8])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[9]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[9])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[10]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[10])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[11]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[11])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[12]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[12])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[13]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[13])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[14]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[14])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[15]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[15])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[16]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[16])+50)/100)}</td></tr>
+		<tr><td>${FLAG_ROLE_NAME[17]}</td><td>${Math.trunc((Math.trunc(Influence_from_role_percent[17])+50)/100)}</td></tr>
+		<tr><td colspan="3"><a target="_blank" href="https://townforge.net/manual/">townforge.net/manual/</a>  Influence</td></tr>
+		</tbody>
+		</table>
+		`;
 	var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
 			.setLatLng(xy([Selection_x1, (Selection_y1 + 60)]))
 			.setContent(text1)
@@ -1344,8 +1329,8 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/23_12:56 UTC / Blockchain height: 1,377,011 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/23_12:56"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/23_19:03 UTC / Blockchain height: 1,378,082 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/23_19:03"// attribution tick timer
 const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
