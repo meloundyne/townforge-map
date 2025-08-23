@@ -934,113 +934,113 @@ const CITY_NAME = ["Helsengaard","Island","njkdcskjnds sdfsdf dffse errerw","ABC
 const FLAG_ROLE_NAME = ["","agricultural","craft","industrial","commercial","basic residential","affluent residential","luxury residential","military","cultural","stonecutter","sawmill","kiln","smelter","workforce","road","research","fishery",]
 const autocomplete_all_flag_names = ["Helsengaard town square","Tower","North Road","farm","Agricultural Field","Chop Chop on the Beach","East Street I","Cityside Gardens","Fishing Pier","Cityside Longhaus","Hare house","Icecrack Shack","Ugly Field","North side road","Syyskuunian Crafts","Western Road I","Helsengaard Park","Syysstad Imports & Exports","South-East Alleyway","East Street II","House by the Sea","Nice field","Big House","Work Bunks","Downtown Pad","Seaside Road II","Seaside Road I","Boat Builders","Seaside Road III","Syyskuunian Docks","Oats are good for you","Cow Paradise","Bad sawmill","Weird Table","Island town square","cfgvbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv","House 2","house2","ORTERSCX\"\"SMCKW''sdkwo,,..fse","AASD``4564156","Syysstad Embassy","Syystadt Embassy Gardens","Tuorla, Helsengaard Observatory","njkdcskjnds sdfsdf dffse errerw town square","ABC123 town square","dfg","sdf","retert","fdgdfg","dsfsd","sdfsfd","erterter","dgfg","sdfsdf","aweawed","sdfsdfsdf","fdgdgf","ztutzutz","fgfg","59549459","59595959595959","Town town square","BIG HOUSE","pauleheister agricultur","pauleheister craft","Mia campagna","pauleheister saw","pauleheister basic residental","SyksyII's meager Helsengaard townhouse","SyksyII's meager Helsengaardian gardens","Highly Prestigious Southern Road","pauleheister stone","pauleheister commercial","pauleheister fish","pauleheister workforce","pauleheister affresi","y'y\"y`y%y^y$y#y@y//y/*y*/y-->y","Mega awesome residential","pauleheister commercial2","pauleheister research","pauleheister military","pauleheister culture","rode1",]
 
-const BaseLayer_City0 = L.geoJson([]).addTo(map);
-const Layer_Image_InactiveFlags_City0 = L.featureGroup([]).addTo(BaseLayer_City0);
-const Layer_Image_RoleFlags_City0 = L.featureGroup([]);
+const BaseLayer_City0 = L.geoJson([]).addTo(map)
+const Layer_Image_InactiveFlags_City0 = L.featureGroup([]).addTo(BaseLayer_City0)
+const Layer_Image_RoleFlags_City0 = L.featureGroup([])
 const Layer_TextFlagSize_City0 = L.featureGroup([])
 const Layer_Flags_ColorByRole_City0 = L.geoJson(Flags_city0, {
-		style: Style_Role,
-		onEachFeature
-	})
+	style: Style_Role,
+	onEachFeature
+	}).addTo(BaseLayer_City0)
 const Layer_Flags_ColorByRepair_City0 = L.geoJson(Flags_city0, {
-		style: Style_Repair,
-		onEachFeature
+	style: Style_Repair,
+	onEachFeature
 	})
 const Layer_Flags_ColorByOwner_City0 = L.geoJson(Flags_city0, {
-		style: Style_Owner,
-		onEachFeature
+	style: Style_Owner,
+	onEachFeature
 	})
 const Layer_Flags_ColorByEcoPow_City0 = L.geoJson(Flags_city0, {
-		style: Style_Economic_Power,
-		onEachFeature
+	style: Style_Economic_Power,
+	onEachFeature
 	})
 
 
 const BaseLayer_City1 = L.geoJson([])
-const Layer_Image_InactiveFlags_City1 = L.featureGroup([]).addTo(BaseLayer_City1);
-const Layer_Image_RoleFlags_City1 = L.featureGroup([]);
+const Layer_Image_InactiveFlags_City1 = L.featureGroup([]).addTo(BaseLayer_City1)
+const Layer_Image_RoleFlags_City1 = L.featureGroup([])
 const Layer_TextFlagSize_City1 = L.featureGroup([])
 const Layer_Flags_ColorByRole_City1 = L.geoJson(Flags_city1, {
-		style: Style_Role,
-		onEachFeature
-	})
+	style: Style_Role,
+	onEachFeature
+	}).addTo(BaseLayer_City1)
 const Layer_Flags_ColorByRepair_City1 = L.geoJson(Flags_city1, {
-		style: Style_Repair,
-		onEachFeature
+	style: Style_Repair,
+	onEachFeature
 	})
 const Layer_Flags_ColorByOwner_City1 = L.geoJson(Flags_city1, {
-		style: Style_Owner,
-		onEachFeature
+	style: Style_Owner,
+	onEachFeature
 	})
 const Layer_Flags_ColorByEcoPow_City1 = L.geoJson(Flags_city1, {
-		style: Style_Economic_Power,
-		onEachFeature
+	style: Style_Economic_Power,
+	onEachFeature
 	})
 
 
 const BaseLayer_City2 = L.geoJson([])
-const Layer_Image_InactiveFlags_City2 = L.featureGroup([]).addTo(BaseLayer_City2);
-const Layer_Image_RoleFlags_City2 = L.featureGroup([]);
+const Layer_Image_InactiveFlags_City2 = L.featureGroup([]).addTo(BaseLayer_City2)
+const Layer_Image_RoleFlags_City2 = L.featureGroup([])
 const Layer_TextFlagSize_City2 = L.featureGroup([])
 const Layer_Flags_ColorByRole_City2 = L.geoJson(Flags_city2, {
-		style: Style_Role,
-		onEachFeature
-	})
+	style: Style_Role,
+	onEachFeature
+	}).addTo(BaseLayer_City2)
 const Layer_Flags_ColorByRepair_City2 = L.geoJson(Flags_city2, {
-		style: Style_Repair,
-		onEachFeature
+	style: Style_Repair,
+	onEachFeature
 	})
 const Layer_Flags_ColorByOwner_City2 = L.geoJson(Flags_city2, {
-		style: Style_Owner,
-		onEachFeature
+	style: Style_Owner,
+	onEachFeature
 	})
 const Layer_Flags_ColorByEcoPow_City2 = L.geoJson(Flags_city2, {
-		style: Style_Economic_Power,
-		onEachFeature
+	style: Style_Economic_Power,
+	onEachFeature
 	})
 
 
 const BaseLayer_City3 = L.geoJson([])
-const Layer_Image_InactiveFlags_City3 = L.featureGroup([]).addTo(BaseLayer_City3);
-const Layer_Image_RoleFlags_City3 = L.featureGroup([]);
+const Layer_Image_InactiveFlags_City3 = L.featureGroup([]).addTo(BaseLayer_City3)
+const Layer_Image_RoleFlags_City3 = L.featureGroup([])
 const Layer_TextFlagSize_City3 = L.featureGroup([])
 const Layer_Flags_ColorByRole_City3 = L.geoJson(Flags_city3, {
-		style: Style_Role,
-		onEachFeature
-	})
+	style: Style_Role,
+	onEachFeature
+	}).addTo(BaseLayer_City3)
 const Layer_Flags_ColorByRepair_City3 = L.geoJson(Flags_city3, {
-		style: Style_Repair,
-		onEachFeature
+	style: Style_Repair,
+	onEachFeature
 	})
 const Layer_Flags_ColorByOwner_City3 = L.geoJson(Flags_city3, {
-		style: Style_Owner,
-		onEachFeature
+	style: Style_Owner,
+	onEachFeature
 	})
 const Layer_Flags_ColorByEcoPow_City3 = L.geoJson(Flags_city3, {
-		style: Style_Economic_Power,
-		onEachFeature
+	style: Style_Economic_Power,
+	onEachFeature
 	})
 
 
 const BaseLayer_City4 = L.geoJson([])
-const Layer_Image_InactiveFlags_City4 = L.featureGroup([]).addTo(BaseLayer_City4);
-const Layer_Image_RoleFlags_City4 = L.featureGroup([]);
+const Layer_Image_InactiveFlags_City4 = L.featureGroup([]).addTo(BaseLayer_City4)
+const Layer_Image_RoleFlags_City4 = L.featureGroup([])
 const Layer_TextFlagSize_City4 = L.featureGroup([])
 const Layer_Flags_ColorByRole_City4 = L.geoJson(Flags_city4, {
-		style: Style_Role,
-		onEachFeature
-	})
+	style: Style_Role,
+	onEachFeature
+	}).addTo(BaseLayer_City4)
 const Layer_Flags_ColorByRepair_City4 = L.geoJson(Flags_city4, {
-		style: Style_Repair,
-		onEachFeature
+	style: Style_Repair,
+	onEachFeature
 	})
 const Layer_Flags_ColorByOwner_City4 = L.geoJson(Flags_city4, {
-		style: Style_Owner,
-		onEachFeature
+	style: Style_Owner,
+	onEachFeature
 	})
 const Layer_Flags_ColorByEcoPow_City4 = L.geoJson(Flags_city4, {
-		style: Style_Economic_Power,
-		onEachFeature
+	style: Style_Economic_Power,
+	onEachFeature
 	})
 
 const LayerOverlay_Firefighting = L.featureGroup([]);
@@ -1142,7 +1142,6 @@ BaseLayer_City0.on('remove',(e)=>{
 	Layer_TextFlagSize_City0.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-Layer_Flags_ColorByRole_City0.addTo(BaseLayer_City0)
 BaseLayer_City1.on('add',(e)=>{
 	Layer_firefighting_city_1.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_1.addTo(LayerOverlay_TaxBreakPoints);
@@ -1157,7 +1156,6 @@ BaseLayer_City1.on('remove',(e)=>{
 	Layer_TextFlagSize_City1.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-Layer_Flags_ColorByRole_City1.addTo(BaseLayer_City1)
 BaseLayer_City2.on('add',(e)=>{
 	Layer_firefighting_city_2.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_2.addTo(LayerOverlay_TaxBreakPoints);
@@ -1172,7 +1170,6 @@ BaseLayer_City2.on('remove',(e)=>{
 	Layer_TextFlagSize_City2.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-Layer_Flags_ColorByRole_City2.addTo(BaseLayer_City2)
 BaseLayer_City3.on('add',(e)=>{
 	Layer_firefighting_city_3.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_3.addTo(LayerOverlay_TaxBreakPoints);
@@ -1187,7 +1184,6 @@ BaseLayer_City3.on('remove',(e)=>{
 	Layer_TextFlagSize_City3.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-Layer_Flags_ColorByRole_City3.addTo(BaseLayer_City3)
 BaseLayer_City4.on('add',(e)=>{
 	Layer_firefighting_city_4.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_4.addTo(LayerOverlay_TaxBreakPoints);
@@ -1202,7 +1198,6 @@ BaseLayer_City4.on('remove',(e)=>{
 	Layer_TextFlagSize_City4.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-Layer_Flags_ColorByRole_City4.addTo(BaseLayer_City4)
 const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
 const Img_role = []
 	Img_role[0] = './dist/inactive.svg'
@@ -1297,12 +1292,12 @@ map.on('zoomend', function () {
 			}
 		}
 	});
-
+// These are pulsing rectangles for firefighning influence of military buildings
 L.rectangle([xy([-1115, -2008]),xy([1459, 581])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 L.rectangle([xy([72, -50]),xy([507, 387])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 L.rectangle([xy([-2772, -2278]),xy([2294, 2795])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_1);
 L.rectangle([xy([-5275, -3407]),xy([5425, 7279])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
-
+// These are pulsing markers for Tax Break Points/Zones
 L.marker(xy([0, 0])).addTo(Layer_tax_break_points_city_0);
 L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer_tax_break_points_city_0);
 L.marker(xy([0, 0])).addTo(Layer_tax_break_points_city_1);
@@ -1317,6 +1312,7 @@ L.marker(xy([0, 0])).addTo(Layer_tax_break_points_city_3);
 L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer_tax_break_points_city_3);
 L.marker(xy([0, 0])).addTo(Layer_tax_break_points_city_4);
 L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer_tax_break_points_city_4);
+// These are orange rectangles for boundary of map
 L.rectangle([xy([-7776, -6265]),xy([11447, 14509])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_City0);
 L.rectangle([xy([-11783, -3748]),xy([51102, 17889])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_City1);
 L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(BaseLayer_City2);
@@ -1348,8 +1344,8 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/23_07:05 UTC / Blockchain height: 1,375,924 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/23_07:05"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/23_12:56 UTC / Blockchain height: 1,377,011 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/23_12:56"// attribution tick timer
 const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
