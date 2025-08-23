@@ -64,7 +64,7 @@
 	line-height: 0.2;
 	}
 /*<!-- Flag sizes -->*/
-.Flag_size_x .Flag_size_y {
+.Flag_size {
 	font-size: 10px; /* also inside function*/
 	font-weight: 1;
 	color: black;
@@ -192,10 +192,10 @@ tr:nth-child(even) {
 				document.getElementById("Calculate_influence_button").style.border="1px solid Gray";
 				featureGroup_Legend.remove();
 				legend_Influence_calculator.remove();
-				if (map.hasLayer(featureGroup_role) == 1) {legend_role.addTo(map)};
-				if (map.hasLayer(featureGroup_repair) == 1) {legend_repair.addTo(map)};
-				if (map.hasLayer(featureGroup_owner) == 1) {legend_owner.addTo(map)};
-				if (map.hasLayer(featureGroup_EcoPow) == 1) {legend_EcoPow.addTo(map)};
+				if (map.hasLayer(LayerStyle_Role) == 1) {legend_role.addTo(map)};
+				if (map.hasLayer(LayerStyle_Repair) == 1) {legend_repair.addTo(map)};
+				if (map.hasLayer(LayerStyle_Owner) == 1) {legend_owner.addTo(map)};
+				if (map.hasLayer(LayerStyle_EconomicPower) == 1) {legend_EcoPow.addTo(map)};
 				}
 			'>
 		Influence Calculator 
@@ -349,7 +349,7 @@ function function_highlightFeature(e) {
 		layer.bringToFront();
 		info.update(layer.feature);
 		
-		if (Enabled_LayerOverlay_InfluenceMouseOver == true) {
+		if (map.hasLayer(LayerOverlay_InfluenceMouseOver) == 1) {
 			if (layer.feature.properties.role != 0) {
 				const influence = Number(layer.feature.properties.inf)
 				const coordinates = [
@@ -376,8 +376,8 @@ function function_resetHighlight(e) {
 			});
 		layer.bringToBack();
 		info.update();
-		
-		if (Enabled_LayerOverlay_InfluenceMouseOver == true) {
+
+		if (map.hasLayer(LayerOverlay_InfluenceMouseOver) == 1) {
 			Influence_Rectangle_MouseOver.removeFrom(LayerOverlay_InfluenceMouseOver)
 			}
 	}
@@ -387,7 +387,19 @@ function onEachFeature(feature, layer) {
 			mouseover: function_highlightFeature,	
 			mouseout: function_resetHighlight,	
 			});
-		var popup_text=(`<table class='popup_table'><tr><td>Name:</td><td><b>${feature.properties.name}</b></td></tr><tr><td>Owner:</td><td>${ACCOUNT_NAME[feature.properties.owner]}</td></tr><tr><td>House:</td><td>${ACCOUNT_HOUSE[feature.properties.owner]}</td></tr><tr><td>Role:</td><td>${FLAG_ROLE_NAME[feature.properties.role]}</td></tr><tr><td>Active:</td><td>${feature.properties.active}</td></tr><tr><td>Flag ID:</td><td>${feature.id}</td></tr><tr><td>Size: </td><td>${feature.properties.size}</td></tr><tr><td>Economic Power: </td><td>${feature.properties.ep} %</td></tr><tr><td>Repair: </td><td>${feature.properties.repair} %</td></tr></table>`)
+		var popup_text=(`
+		<table class='popup_table'>
+		<tr><td>Name:</td>				<td><b>${feature.properties.name}</b></td></tr>
+		<tr><td>Owner:</td>				<td>${ACCOUNT_NAME[feature.properties.owner]}</td></tr>
+		<tr><td>House:</td>				<td>${ACCOUNT_HOUSE[feature.properties.owner]}</td></tr>
+		<tr><td>Role:</td>				<td>${FLAG_ROLE_NAME[feature.properties.role]}</td></tr>
+		<tr><td>Active:</td>			<td>${feature.properties.active}</td></tr>
+		<tr><td>Flag ID:</td>			<td>${feature.id}</td></tr>
+		<tr><td>Size:</td>				<td>${feature.properties.size}</td></tr>
+		<tr><td>Economic Power:</td>	<td>${feature.properties.ep} %</td></tr>
+		<tr><td>Repair:</td>			<td>${feature.properties.repair} %</td></tr>
+		</table>
+		`)
 		layer.bindPopup(popup_text,{maxWidth: 1000,});
 	}
 
@@ -873,8 +885,6 @@ map.getRenderer(map).options.padding = 100; // How much to extend the clip area 
 let SearchMarker = L.marker()
 const Select_Ignore_interactive_map_Rectangle = L.rectangle([[-10000000, -10000000],[10000000, 10000000]], {color: "gray", weight: 0, fillOpacity: 0, interactive: true});
 let Influence_Rectangle_MouseOver
-let Enabled_LayerOverlay_InfluenceMouseOver = false
-let Enabled_LayerOverlay_TextFlagSize = false
 let Show_only_account_id = 0
 let marker_first = L.marker([0,0])
 let marker_second = L.marker([0,0])
@@ -1036,27 +1046,88 @@ const Layer_Flags_ColorByEcoPow_City4 = L.geoJson(Flags_city4, {
 const LayerOverlay_Firefighting = L.featureGroup([]);
 const LayerOverlay_TaxBreakPoints = L.featureGroup([]);
 const LayerOverlay_RoleImages = L.featureGroup([]).addTo(map);
-const featureGroup_role = L.featureGroup([]).addTo(map);
-const featureGroup_repair = L.featureGroup([]);
-const featureGroup_owner = L.featureGroup([]);
-const featureGroup_EcoPow = L.featureGroup([]);
 const featureGroup_Legend = L.featureGroup([]);
 const LayerOverlay_InfluenceMouseOver = L.featureGroup([]);
 const LayerOverlay_TextFlagSize = L.featureGroup([]);
-featureGroup_role.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_role.addTo(map)}});
-featureGroup_role.on('remove',(e)=>{legend_role.remove()});
-featureGroup_repair.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_repair.addTo(map)}});
-featureGroup_repair.on('remove',(e)=>{legend_repair.remove()});
-featureGroup_owner.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_owner.addTo(map)}});
-featureGroup_owner.on('remove',(e)=>{legend_owner.remove()});
-featureGroup_EcoPow.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_EcoPow.addTo(map)}});
-featureGroup_EcoPow.on('remove',(e)=>{legend_EcoPow.remove()});
-LayerOverlay_InfluenceMouseOver.on('add',(e)=>{Enabled_LayerOverlay_InfluenceMouseOver = true});
-LayerOverlay_InfluenceMouseOver.on('remove',(e)=>{Enabled_LayerOverlay_InfluenceMouseOver = false});
-LayerOverlay_TextFlagSize.on('add',(e)=>{Enabled_LayerOverlay_TextFlagSize = true});
-LayerOverlay_TextFlagSize.on('remove',(e)=>{Enabled_LayerOverlay_TextFlagSize = false});
+const LayerStyle_Role = L.featureGroup([])
+	.addTo(map)
+	.on('add',(e)=>{
+		if (map.hasLayer(featureGroup_Legend) == 0) {legend_role.addTo(map)};
+		Layer_Flags_ColorByRole_City0.addTo(BaseLayer_City0).bringToBack();
+		Layer_Flags_ColorByRole_City1.addTo(BaseLayer_City1).bringToBack();
+		Layer_Flags_ColorByRole_City2.addTo(BaseLayer_City2).bringToBack();
+		Layer_Flags_ColorByRole_City3.addTo(BaseLayer_City3).bringToBack();
+		Layer_Flags_ColorByRole_City4.addTo(BaseLayer_City4).bringToBack();
+		})
+	.on('remove',(e)=>{
+		legend_role.remove();
+		Layer_Flags_ColorByRole_City0.removeFrom(BaseLayer_City0);
+		Layer_Flags_ColorByRole_City1.removeFrom(BaseLayer_City1);
+		Layer_Flags_ColorByRole_City2.removeFrom(BaseLayer_City2);
+		Layer_Flags_ColorByRole_City3.removeFrom(BaseLayer_City3);
+		Layer_Flags_ColorByRole_City4.removeFrom(BaseLayer_City4);
+		});
+const LayerStyle_Repair = L.featureGroup([])
+	.on('add',(e)=>{
+		if (map.hasLayer(featureGroup_Legend) == 0) {legend_repair.addTo(map)};
+		Layer_Flags_ColorByRepair_City0.addTo(BaseLayer_City0).bringToBack();
+		Layer_Flags_ColorByRepair_City1.addTo(BaseLayer_City1).bringToBack();
+		Layer_Flags_ColorByRepair_City2.addTo(BaseLayer_City2).bringToBack();
+		Layer_Flags_ColorByRepair_City3.addTo(BaseLayer_City3).bringToBack();
+		Layer_Flags_ColorByRepair_City4.addTo(BaseLayer_City4).bringToBack();
+		})
+	.on('remove',(e)=>{
+		legend_repair.remove();
+		Layer_Flags_ColorByRepair_City0.removeFrom(BaseLayer_City0);
+		Layer_Flags_ColorByRepair_City1.removeFrom(BaseLayer_City1);
+		Layer_Flags_ColorByRepair_City2.removeFrom(BaseLayer_City2);
+		Layer_Flags_ColorByRepair_City3.removeFrom(BaseLayer_City3);
+		Layer_Flags_ColorByRepair_City4.removeFrom(BaseLayer_City4);
+		});
+const LayerStyle_Owner = L.featureGroup([])
+	.on('add',(e)=>{
+		if (map.hasLayer(featureGroup_Legend) == 0) {legend_owner.addTo(map)};
+		Layer_Flags_ColorByOwner_City0.addTo(BaseLayer_City0).bringToBack();
+		Layer_Flags_ColorByOwner_City1.addTo(BaseLayer_City1).bringToBack();
+		Layer_Flags_ColorByOwner_City2.addTo(BaseLayer_City2).bringToBack();
+		Layer_Flags_ColorByOwner_City3.addTo(BaseLayer_City3).bringToBack();
+		Layer_Flags_ColorByOwner_City4.addTo(BaseLayer_City4).bringToBack();
+		})
+	.on('remove',(e)=>{
+		legend_owner.remove();
+		Layer_Flags_ColorByOwner_City0.removeFrom(BaseLayer_City0);
+		Layer_Flags_ColorByOwner_City1.removeFrom(BaseLayer_City1);
+		Layer_Flags_ColorByOwner_City2.removeFrom(BaseLayer_City2);
+		Layer_Flags_ColorByOwner_City3.removeFrom(BaseLayer_City3);
+		Layer_Flags_ColorByOwner_City4.removeFrom(BaseLayer_City4);
+		});
+const LayerStyle_EconomicPower = L.featureGroup([])
+	.on('add',(e)=>{
+		if (map.hasLayer(featureGroup_Legend) == 0) {legend_EcoPow.addTo(map)};
+		Layer_Flags_ColorByEcoPow_City0.addTo(BaseLayer_City0).bringToBack();
+		Layer_Flags_ColorByEcoPow_City1.addTo(BaseLayer_City1).bringToBack();
+		Layer_Flags_ColorByEcoPow_City2.addTo(BaseLayer_City2).bringToBack();
+		Layer_Flags_ColorByEcoPow_City3.addTo(BaseLayer_City3).bringToBack();
+		Layer_Flags_ColorByEcoPow_City4.addTo(BaseLayer_City4).bringToBack();
+		})
+	.on('remove',(e)=>{
+		legend_EcoPow.remove();
+		Layer_Flags_ColorByEcoPow_City0.removeFrom(BaseLayer_City0);
+		Layer_Flags_ColorByEcoPow_City1.removeFrom(BaseLayer_City1);
+		Layer_Flags_ColorByEcoPow_City2.removeFrom(BaseLayer_City2);
+		Layer_Flags_ColorByEcoPow_City3.removeFrom(BaseLayer_City3);
+		Layer_Flags_ColorByEcoPow_City4.removeFrom(BaseLayer_City4);
+		});
 const Layer_firefighting_city_0 = L.layerGroup([]).addTo(LayerOverlay_Firefighting);
+const Layer_firefighting_city_1 = L.layerGroup([]);
+const Layer_firefighting_city_2 = L.layerGroup([]);
+const Layer_firefighting_city_3 = L.layerGroup([]);
+const Layer_firefighting_city_4 = L.layerGroup([]);
 const Layer_tax_break_points_city_0 = L.layerGroup([]).addTo(LayerOverlay_TaxBreakPoints);
+const Layer_tax_break_points_city_1 = L.layerGroup([]);
+const Layer_tax_break_points_city_2 = L.layerGroup([]);
+const Layer_tax_break_points_city_3 = L.layerGroup([]);
+const Layer_tax_break_points_city_4 = L.layerGroup([]);
 BaseLayer_City0.on('add',(e)=>{
 	Layer_firefighting_city_0.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_0.addTo(LayerOverlay_TaxBreakPoints);
@@ -1071,17 +1142,7 @@ BaseLayer_City0.on('remove',(e)=>{
 	Layer_TextFlagSize_City0.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{Layer_Flags_ColorByRole_City0.addTo(BaseLayer_City0).bringToBack();});
 Layer_Flags_ColorByRole_City0.addTo(BaseLayer_City0)
-featureGroup_role.on('remove',(e)=>{Layer_Flags_ColorByRole_City0.removeFrom(BaseLayer_City0);});
-featureGroup_repair.on('add',(e)=>{Layer_Flags_ColorByRepair_City0.addTo(BaseLayer_City0).bringToBack();});
-featureGroup_repair.on('remove',(e)=>{Layer_Flags_ColorByRepair_City0.removeFrom(BaseLayer_City0);});
-featureGroup_owner.on('add',(e)=>{Layer_Flags_ColorByOwner_City0.addTo(BaseLayer_City0).bringToBack();});
-featureGroup_owner.on('remove',(e)=>{Layer_Flags_ColorByOwner_City0.removeFrom(BaseLayer_City0);});
-featureGroup_EcoPow.on('add',(e)=>{Layer_Flags_ColorByEcoPow_City0.addTo(BaseLayer_City0).bringToBack();});
-featureGroup_EcoPow.on('remove',(e)=>{Layer_Flags_ColorByEcoPow_City0.removeFrom(BaseLayer_City0);});
-const Layer_firefighting_city_1 = L.layerGroup([]);
-const Layer_tax_break_points_city_1 = L.layerGroup([]);
 BaseLayer_City1.on('add',(e)=>{
 	Layer_firefighting_city_1.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_1.addTo(LayerOverlay_TaxBreakPoints);
@@ -1096,17 +1157,7 @@ BaseLayer_City1.on('remove',(e)=>{
 	Layer_TextFlagSize_City1.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{Layer_Flags_ColorByRole_City1.addTo(BaseLayer_City1).bringToBack();});
 Layer_Flags_ColorByRole_City1.addTo(BaseLayer_City1)
-featureGroup_role.on('remove',(e)=>{Layer_Flags_ColorByRole_City1.removeFrom(BaseLayer_City1);});
-featureGroup_repair.on('add',(e)=>{Layer_Flags_ColorByRepair_City1.addTo(BaseLayer_City1).bringToBack();});
-featureGroup_repair.on('remove',(e)=>{Layer_Flags_ColorByRepair_City1.removeFrom(BaseLayer_City1);});
-featureGroup_owner.on('add',(e)=>{Layer_Flags_ColorByOwner_City1.addTo(BaseLayer_City1).bringToBack();});
-featureGroup_owner.on('remove',(e)=>{Layer_Flags_ColorByOwner_City1.removeFrom(BaseLayer_City1);});
-featureGroup_EcoPow.on('add',(e)=>{Layer_Flags_ColorByEcoPow_City1.addTo(BaseLayer_City1).bringToBack();});
-featureGroup_EcoPow.on('remove',(e)=>{Layer_Flags_ColorByEcoPow_City1.removeFrom(BaseLayer_City1);});
-const Layer_firefighting_city_2 = L.layerGroup([]);
-const Layer_tax_break_points_city_2 = L.layerGroup([]);
 BaseLayer_City2.on('add',(e)=>{
 	Layer_firefighting_city_2.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_2.addTo(LayerOverlay_TaxBreakPoints);
@@ -1121,17 +1172,7 @@ BaseLayer_City2.on('remove',(e)=>{
 	Layer_TextFlagSize_City2.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{Layer_Flags_ColorByRole_City2.addTo(BaseLayer_City2).bringToBack();});
 Layer_Flags_ColorByRole_City2.addTo(BaseLayer_City2)
-featureGroup_role.on('remove',(e)=>{Layer_Flags_ColorByRole_City2.removeFrom(BaseLayer_City2);});
-featureGroup_repair.on('add',(e)=>{Layer_Flags_ColorByRepair_City2.addTo(BaseLayer_City2).bringToBack();});
-featureGroup_repair.on('remove',(e)=>{Layer_Flags_ColorByRepair_City2.removeFrom(BaseLayer_City2);});
-featureGroup_owner.on('add',(e)=>{Layer_Flags_ColorByOwner_City2.addTo(BaseLayer_City2).bringToBack();});
-featureGroup_owner.on('remove',(e)=>{Layer_Flags_ColorByOwner_City2.removeFrom(BaseLayer_City2);});
-featureGroup_EcoPow.on('add',(e)=>{Layer_Flags_ColorByEcoPow_City2.addTo(BaseLayer_City2).bringToBack();});
-featureGroup_EcoPow.on('remove',(e)=>{Layer_Flags_ColorByEcoPow_City2.removeFrom(BaseLayer_City2);});
-const Layer_firefighting_city_3 = L.layerGroup([]);
-const Layer_tax_break_points_city_3 = L.layerGroup([]);
 BaseLayer_City3.on('add',(e)=>{
 	Layer_firefighting_city_3.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_3.addTo(LayerOverlay_TaxBreakPoints);
@@ -1146,17 +1187,7 @@ BaseLayer_City3.on('remove',(e)=>{
 	Layer_TextFlagSize_City3.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{Layer_Flags_ColorByRole_City3.addTo(BaseLayer_City3).bringToBack();});
 Layer_Flags_ColorByRole_City3.addTo(BaseLayer_City3)
-featureGroup_role.on('remove',(e)=>{Layer_Flags_ColorByRole_City3.removeFrom(BaseLayer_City3);});
-featureGroup_repair.on('add',(e)=>{Layer_Flags_ColorByRepair_City3.addTo(BaseLayer_City3).bringToBack();});
-featureGroup_repair.on('remove',(e)=>{Layer_Flags_ColorByRepair_City3.removeFrom(BaseLayer_City3);});
-featureGroup_owner.on('add',(e)=>{Layer_Flags_ColorByOwner_City3.addTo(BaseLayer_City3).bringToBack();});
-featureGroup_owner.on('remove',(e)=>{Layer_Flags_ColorByOwner_City3.removeFrom(BaseLayer_City3);});
-featureGroup_EcoPow.on('add',(e)=>{Layer_Flags_ColorByEcoPow_City3.addTo(BaseLayer_City3).bringToBack();});
-featureGroup_EcoPow.on('remove',(e)=>{Layer_Flags_ColorByEcoPow_City3.removeFrom(BaseLayer_City3);});
-const Layer_firefighting_city_4 = L.layerGroup([]);
-const Layer_tax_break_points_city_4 = L.layerGroup([]);
 BaseLayer_City4.on('add',(e)=>{
 	Layer_firefighting_city_4.addTo(LayerOverlay_Firefighting);
 	Layer_tax_break_points_city_4.addTo(LayerOverlay_TaxBreakPoints);
@@ -1171,15 +1202,7 @@ BaseLayer_City4.on('remove',(e)=>{
 	Layer_TextFlagSize_City4.removeFrom(LayerOverlay_TextFlagSize);
 	map.removeLayer(SearchMarker);
 	});
-featureGroup_role.on('add',(e)=>{Layer_Flags_ColorByRole_City4.addTo(BaseLayer_City4).bringToBack();});
 Layer_Flags_ColorByRole_City4.addTo(BaseLayer_City4)
-featureGroup_role.on('remove',(e)=>{Layer_Flags_ColorByRole_City4.removeFrom(BaseLayer_City4);});
-featureGroup_repair.on('add',(e)=>{Layer_Flags_ColorByRepair_City4.addTo(BaseLayer_City4).bringToBack();});
-featureGroup_repair.on('remove',(e)=>{Layer_Flags_ColorByRepair_City4.removeFrom(BaseLayer_City4);});
-featureGroup_owner.on('add',(e)=>{Layer_Flags_ColorByOwner_City4.addTo(BaseLayer_City4).bringToBack();});
-featureGroup_owner.on('remove',(e)=>{Layer_Flags_ColorByOwner_City4.removeFrom(BaseLayer_City4);});
-featureGroup_EcoPow.on('add',(e)=>{Layer_Flags_ColorByEcoPow_City4.addTo(BaseLayer_City4).bringToBack();});
-featureGroup_EcoPow.on('remove',(e)=>{Layer_Flags_ColorByEcoPow_City4.removeFrom(BaseLayer_City4);});
 const allFlagsCities = [  Flags_city0, Flags_city1, Flags_city2, Flags_city3, Flags_city4,];
 const Img_role = []
 	Img_role[0] = './dist/inactive.svg'
@@ -1199,34 +1222,34 @@ const Img_role = []
 	Img_role[15] = ''
 	Img_role[16] = './dist/research.svg'
 	Img_role[17] = './dist/ship.svg'
-const ti_city = [];
-	ti_city[0] = Layer_Image_InactiveFlags_City0
-	ti_city[1] = Layer_Image_InactiveFlags_City1
-	ti_city[2] = Layer_Image_InactiveFlags_City2
-	ti_city[3] = Layer_Image_InactiveFlags_City3
-	ti_city[4] = Layer_Image_InactiveFlags_City4
+const LayersForInactiveImages = [];
+	LayersForInactiveImages[0] = Layer_Image_InactiveFlags_City0
+	LayersForInactiveImages[1] = Layer_Image_InactiveFlags_City1
+	LayersForInactiveImages[2] = Layer_Image_InactiveFlags_City2
+	LayersForInactiveImages[3] = Layer_Image_InactiveFlags_City3
+	LayersForInactiveImages[4] = Layer_Image_InactiveFlags_City4
 const Generation_of_inactive_images = L.geoJson(allFlagsCities, {
 		onEachFeature: function(feature, layer){
 			if ( feature.properties.active == 'false' && feature.properties.role != 0 ) {
-				L.imageOverlay(Img_role[0], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(ti_city[feature.properties.city])
+				L.imageOverlay(Img_role[0], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(LayersForInactiveImages[feature.properties.city])
 	}}})
-const t_city = [];
-	t_city[0] = Layer_Image_RoleFlags_City0
-	t_city[1] = Layer_Image_RoleFlags_City1
-	t_city[2] = Layer_Image_RoleFlags_City2
-	t_city[3] = Layer_Image_RoleFlags_City3
-	t_city[4] = Layer_Image_RoleFlags_City4
+const LayersForRoleImages = [];
+	LayersForRoleImages[0] = Layer_Image_RoleFlags_City0
+	LayersForRoleImages[1] = Layer_Image_RoleFlags_City1
+	LayersForRoleImages[2] = Layer_Image_RoleFlags_City2
+	LayersForRoleImages[3] = Layer_Image_RoleFlags_City3
+	LayersForRoleImages[4] = Layer_Image_RoleFlags_City4
 const Generation_of_role_images = L.geoJson(allFlagsCities, {
 		onEachFeature: function(feature, layer){
 			if ( feature.properties.active == 'true' && Img_role[feature.properties.role] != '' ) {
-				L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(t_city[feature.properties.city])
+				L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(LayersForRoleImages[feature.properties.city])
 	}}})
-const ts_city = [];
-	ts_city[0] = Layer_TextFlagSize_City0
-	ts_city[1] = Layer_TextFlagSize_City1
-	ts_city[2] = Layer_TextFlagSize_City2
-	ts_city[3] = Layer_TextFlagSize_City3
-	ts_city[4] = Layer_TextFlagSize_City4
+const LayersForSizeNumbers = [];
+	LayersForSizeNumbers[0] = Layer_TextFlagSize_City0
+	LayersForSizeNumbers[1] = Layer_TextFlagSize_City1
+	LayersForSizeNumbers[2] = Layer_TextFlagSize_City2
+	LayersForSizeNumbers[3] = Layer_TextFlagSize_City3
+	LayersForSizeNumbers[4] = Layer_TextFlagSize_City4
 const Generation_of_flag_sizes = L.geoJson(allFlagsCities, {
 		onEachFeature: function(feature, layer){
 				const x_size = (feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] + 1)
@@ -1234,53 +1257,43 @@ const Generation_of_flag_sizes = L.geoJson(allFlagsCities, {
 				const horizontal_position 	=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 2)),	(feature.geometry.coordinates[0][0][1] + (y_size / 5))	])
 				const vertical_position		=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 5)),	(feature.geometry.coordinates[0][0][1] + (y_size / 2))	])
 				
-				L.marker(horizontal_position,	{icon: L.divIcon({className: 'Flag_size_x',html: x_size}),zIndexOffset: 1000, interactive: false}).addTo(ts_city[feature.properties.city])
-				L.marker(vertical_position,		{icon: L.divIcon({className: 'Flag_size_y',html: y_size}),zIndexOffset: 1000, interactive: false}).addTo(ts_city[feature.properties.city])
+				L.marker(horizontal_position,	{icon: L.divIcon({className: 'Flag_size_x Flag_size',html: x_size}),zIndexOffset: 1000, interactive: false}).addTo(LayersForSizeNumbers[feature.properties.city])
+				L.marker(vertical_position,		{icon: L.divIcon({className: 'Flag_size_y Flag_size',html: y_size}),zIndexOffset: 1000, interactive: false}).addTo(LayersForSizeNumbers[feature.properties.city])
 	}})
 map.on('zoomend', function () {
-	if (Enabled_LayerOverlay_TextFlagSize == true) {
+	if (map.hasLayer(LayerOverlay_TextFlagSize) == 1) {
 		var zoomLevel = map.getZoom();
 		console.log('Zoom: ' + zoomLevel)
 		switch (zoomLevel) {
 			case -5:
-				changeFontSizeForClass('Flag_size_x', '0px');
-				changeFontSizeForClass('Flag_size_y', '0px');
+				changeFontSizeForClass('Flag_size', '0px');
 				break;
 			case -4:
-				changeFontSizeForClass('Flag_size_x', '0px');
-				changeFontSizeForClass('Flag_size_y', '0px');
+				changeFontSizeForClass('Flag_size', '0px');
 				break;
 			case -3:
-				changeFontSizeForClass('Flag_size_x', '0px');
-				changeFontSizeForClass('Flag_size_y', '0px');
+				changeFontSizeForClass('Flag_size', '0px');
 				break;
 			case -2:
-				changeFontSizeForClass('Flag_size_x', '8px');
-				changeFontSizeForClass('Flag_size_y', '8px');
+				changeFontSizeForClass('Flag_size', '8px');
 				break;
 			case -1:
-				changeFontSizeForClass('Flag_size_x', '10px');
-				changeFontSizeForClass('Flag_size_y', '10px');
+				changeFontSizeForClass('Flag_size', '10px');
 				break;
 			case 0:
-				changeFontSizeForClass('Flag_size_x', '16px');
-				changeFontSizeForClass('Flag_size_y', '16px');
+				changeFontSizeForClass('Flag_size', '16px');
 				break;
 			case 1:
-				changeFontSizeForClass('Flag_size_x', '16px');
-				changeFontSizeForClass('Flag_size_y', '16px');
+				changeFontSizeForClass('Flag_size', '16px');
 				break;
 			case 2:
-				changeFontSizeForClass('Flag_size_x', '16px');
-				changeFontSizeForClass('Flag_size_y', '16px');
+				changeFontSizeForClass('Flag_size', '16px');
 				break;
 			case 3:
-				changeFontSizeForClass('Flag_size_x', '18px');
-				changeFontSizeForClass('Flag_size_y', '18px');
+				changeFontSizeForClass('Flag_size', '18px');
 				break;
 			default:
-				changeFontSizeForClass('Flag_size_x', '10px');
-				changeFontSizeForClass('Flag_size_y', '10px');
+				changeFontSizeForClass('Flag_size', '10px');
 			}
 		}
 	});
@@ -1313,27 +1326,45 @@ L.rectangle([xy([-1128, -1152]),xy([1398, 1127])], {color: 'Orange',fill: false,
 const info = L.control();
 
 info.onAdd = function (map) {
-		this._div = L.DomUtil.create('div', 'info');
-		this.update();
-		return this._div;
+	this._div = L.DomUtil.create('div', 'info');
+	this.update();
+	return this._div;
 	};
 
 info.update = function (f) {
-		const contents = f ? `<table><tr><td align='right'><u>Flag ID</u></td></tr><tr><td align='right'> ${f.id}</td></tr><tr><td align='right'><u>Owner</u></td></tr><tr><td align='right'>${ACCOUNT_NAME[f.properties.owner]}</td></tr><tr><td align='right'><u>Flag Name</td></u></tr><tr><td align='right'>${f.properties.name}</td></tr></table>` : 'Hover over a Flag';
-		this._div.innerHTML = `<h4 align='right'>Flag Info</h4>${contents}`;
+	const contents = f ? `
+		<table>
+		<tr><td align='right'><u>Flag ID</u></td></tr>
+		<tr><td align='right'>${f.id}</td></tr>
+		<tr><td align='right'><u>Owner</u></td></tr>
+		<tr><td align='right'>${ACCOUNT_NAME[f.properties.owner]}</td></tr>
+		<tr><td align='right'><u>Flag Name</td></u></tr>
+		<tr><td align='right'>${f.properties.name}</td></tr>
+		</table>
+		` : 'Hover over a Flag';
+	this._div.innerHTML = `<h4 align='right'>Flag Info</h4>${contents}`;
 	};
 
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/23_01:08 UTC / Blockchain height: 1,374,850 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/23_01:08"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/23_07:05 UTC / Blockchain height: 1,375,924 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/23_07:05"// attribution tick timer
 const target = parseDate(Generated_time_string);// attribution tick timer
 const timerEl = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
 setInterval(update_tick_timer, 1000);// attribution tick timer
 L.control.zoom({position:'bottomleft'}).addTo(map)
-const legend_repair_text="<div style=\"background-color:Chartreuse\" class=\"Legend_text_background_repair\">> 70%</div>   <br class='Legend_br_height'><div style=\"background-color:LightSalmon\" class=\"Legend_text_background_repair\">> 60%</div>  <br class='Legend_br_height'><div style=\"background-color:Coral\" class=\"Legend_text_background_repair\">> 50%</div>        <br class='Legend_br_height'><div style=\"background-color:Tomato\" class=\"Legend_text_background_repair\">> 40%</div>       <br class='Legend_br_height'><div style=\"background-color:OrangeRed\" class=\"Legend_text_background_repair\">> 30%</div>    <br class='Legend_br_height'><div style=\"background-color:MediumPurple\" class=\"Legend_text_background_repair\">> 20%</div> <br class='Legend_br_height'><div style=\"background-color:RebeccaPurple\" class=\"Legend_text_background_repair\">> 00%</div><br class='Legend_br_height'><div style=\"background-color:white\" class=\"Legend_text_background_repair\">= 00%</div>        "                                                                                    
+const legend_repair_text=`
+								 <div class="Legend_text_background_repair" style="background-color:Chartreuse"		>> 70%</div>   
+	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:LightSalmon"	>> 60%</div>  
+	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:Coral"			>> 50%</div>        
+	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:Tomato"			>> 40%</div>       
+	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:OrangeRed"		>> 30%</div>    
+	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:MediumPurple"	>> 20%</div> 
+	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:RebeccaPurple"	>> 00%</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:white"			>= 00%</div>        
+	`                                                                                    
 const legend_repair = L.control({position: 'bottomright'});                          
 legend_repair.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -1342,7 +1373,26 @@ legend_repair.onAdd = function (map) {
 	return div;
 	};
 
-const legend_role_text="<div style=\"background-color:    white \" class=\"Legend_text_background_role\">none                </div><br class='Legend_br_height'><div style=\"background-color:LawnGreen \" class=\"Legend_text_background_role\">agricultural        </div><br class='Legend_br_height'><div style=\"background-color:Cyan \" class=\"Legend_text_background_role\">craft               </div><br class='Legend_br_height'><div style=\"background-color:SaddleBrown \" class=\"Legend_text_background_role\">industrial          </div><br class='Legend_br_height'><div style=\"background-color:Magenta \" class=\"Legend_text_background_role\">commercial          </div><br class='Legend_br_height'><div style=\"background-color:Orange \" class=\"Legend_text_background_role\">basic residential   </div><br class='Legend_br_height'><div style=\"background-color:DarkOrange \" class=\"Legend_text_background_role\">affluent residential</div><br class='Legend_br_height'><div style=\"background-color:OrangeRed \" class=\"Legend_text_background_role\">luxury residential  </div><br class='Legend_br_height'><div style=\"background-color:DarkSlateGray \" class=\"Legend_text_background_role\">military            </div><br class='Legend_br_height'><div style=\"background-color:MediumSlateBlue \" class=\"Legend_text_background_role\">cultural            </div><br class='Legend_br_height'><div style=\"background-color:Silver\" class=\"Legend_text_background_role\">stonecutter         </div><br class='Legend_br_height'><div style=\"background-color:ForestGreen\" class=\"Legend_text_background_role\">sawmill             </div><br class='Legend_br_height'><div style=\"background-color:SandyBrown\" class=\"Legend_text_background_role\">kiln                </div><br class='Legend_br_height'><div style=\"background-color:Tan\" class=\"Legend_text_background_role\">smelter             </div><br class='Legend_br_height'><div style=\"background-color:NavajoWhite\" class=\"Legend_text_background_role\">workforce           </div><br class='Legend_br_height'><div style=\"background-color:DimGray\" class=\"Legend_text_background_role\">road                </div><br class='Legend_br_height'><div style=\"background-color:RebeccaPurple\" class=\"Legend_text_background_role\">research            </div><br class='Legend_br_height'><div style=\"background-color:RoyalBlue\" class=\"Legend_text_background_role\">fishery             </div>"
+const legend_role_text=`
+								 <div class="Legend_text_background_role" style="background-color:white ">none                </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:LawnGreen ">agricultural        </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Cyan ">craft               </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:SaddleBrown ">industrial          </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Magenta ">commercial          </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Orange ">basic residential   </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:DarkOrange ">affluent residential</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:OrangeRed ">luxury residential  </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:DarkSlateGray ">military            </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:MediumSlateBlue ">cultural            </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Silver">stonecutter         </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:ForestGreen">sawmill             </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:SandyBrown">kiln                </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Tan">smelter             </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:NavajoWhite">workforce           </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:DimGray">road                </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:RebeccaPurple">research            </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:RoyalBlue">fishery             </div>
+	`
 
 const legend_role = L.control({position: 'bottomright'});
 legend_role.onAdd = function (map) {
@@ -1362,7 +1412,14 @@ legend_owner.onAdd = function (map) {
 	return div;
 	};
 
-const legend_EcoPow_text="<div style=\"background-color:#0AF51A\" class=\"Legend_text_background_Economic_Power\">= 300%</div><br class='Legend_br_height'><div style=\"background-color:#23AC1F\" class=\"Legend_text_background_Economic_Power\">> 250%</div><br class='Legend_br_height'><div style=\"background-color:#22681B\" class=\"Legend_text_background_Economic_Power\">> 200%</div><br class='Legend_br_height'><div style=\"background-color:#F58F0A\" class=\"Legend_text_background_Economic_Power\">> 150%</div><br class='Legend_br_height'><div style=\"background-color:#AD6614\" class=\"Legend_text_background_Economic_Power\">> 100%</div><br class='Legend_br_height'><div style=\"background-color:#694014\" class=\"Legend_text_background_Economic_Power\">= 100%</div>"
+const legend_EcoPow_text=`
+								 <div class="Legend_text_background_Economic_Power" style="background-color:#0AF51A">= 300%</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_Economic_Power" style="background-color:#23AC1F">> 250%</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_Economic_Power" style="background-color:#22681B">> 200%</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_Economic_Power" style="background-color:#F58F0A">> 150%</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_Economic_Power" style="background-color:#AD6614">> 100%</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_Economic_Power" style="background-color:#694014">= 100%</div>
+	`
 const legend_EcoPow = L.control({position: 'bottomright'});
 legend_EcoPow.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -1370,7 +1427,14 @@ legend_EcoPow.onAdd = function (map) {
 	return div;
 	};
 
-const legend_Influence_calculator_text="<b>Influence Calculator</b><ol><li><button id='InfluenceButton1' onclick='function_select_first_marker()'>Select first corner</button><li><button id='InfluenceButton2' onclick='function_select_second_marker()'>Select second corner</button><li><button id='InfluenceButton3' onclick='function_get_selection_influence()'>Calculate influence</button></ol>"
+const legend_Influence_calculator_text=`
+	<b>Influence Calculator</b>
+	<ol>
+		<li><button id='InfluenceButton1' onclick='function_select_first_marker()'>Select first corner</button>
+		<li><button id='InfluenceButton2' onclick='function_select_second_marker()'>Select second corner</button>
+		<li><button id='InfluenceButton3' onclick='function_get_selection_influence()'>Calculate influence</button>
+		</ol>
+	`
 const legend_Influence_calculator = L.control({position: 'bottomright'});
 legend_Influence_calculator.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -1393,10 +1457,10 @@ var baseMaps_overlays = {
 	'Flag size': LayerOverlay_TextFlagSize,
 	};
 var overlays = {
-	'Role': featureGroup_role,
-	'Repair': featureGroup_repair,
-	'Owner': featureGroup_owner,
-	'E.Power': featureGroup_EcoPow,
+	'Role': LayerStyle_Role,
+	'Repair': LayerStyle_Repair,
+	'Owner': LayerStyle_Owner,
+	'E.Power': LayerStyle_EconomicPower,
 	};
 var overlays_overlays = {};
 var layerControl = L.control.layers(baseMaps,baseMaps_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
@@ -1407,25 +1471,65 @@ L.control.burgerMenu({
 	menuIcon: "<img src='./dist/search.svg' style='width:20px;'>" ,
 	menuItems: [
 		{title: "Search Flag ID", onClick: () => { 
-			Burger_Search_popup.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_1' autocomplete='off' >					<div class='autocomplete' style='min-width:300px;width:100%'>					<b>Flag ID:</b> <input onclick='runAutocomplete_flag_id()' id='myInput1' type='text' placeholder='1'>					</div></form>					<button  onclick='Search_Button_1()'>Search</button>					<p id='search_form_result1'></p>					<button  onclick='GoToFlag_Button_1()' disabled='true' id='button01'>Go To Flag</button>					")
+			Burger_Search_popup.setContent(`
+					<!--Make sure the form has the autocomplete function switched off:-->
+					<form id='search_form_1' autocomplete='off' >
+						<div class='autocomplete' style='min-width:300px;width:100%'>
+							<b>Flag ID:</b>
+							<input onclick='runAutocomplete_flag_id()' id='myInput1' type='text' placeholder='1'>
+							</div></form>
+					<button  onclick='Search_Button_1()'>Search</button>
+					<p id='search_form_result1'></p>
+					<button  onclick='GoToFlag_Button_1()' disabled='true' id='button01'>Go To Flag</button>
+					`)
 				.openOn(map);
-			map.setView( [0, 0]);},
-			},
+			map.setView([0, 0]);
+			}},
 		{title: "Search Flag Name", onClick: () => { 
-			Burger_Search_popup.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_2' autocomplete='off' >					<div class='autocomplete' style='min-width:300px;width:100%'>					<b>Flag name:</b> <input onclick='runAutocomplete_flag_names()' id='myInput2' type='text' placeholder='Helsengaard town square'>					</div></form>					<button  onclick='Search_Button_2()'>Search</button>					<p id='search_form_result2'></p>					<button  onclick='GoToFlag_Button_2()' disabled='true' id='button02'>Go To Flag</button>					")
+			Burger_Search_popup.setContent(`
+					<!--Make sure the form has the autocomplete function switched off:-->
+					<form id='search_form_2' autocomplete='off' >
+						<div class='autocomplete' style='min-width:300px;width:100%'>
+							<b>Flag name:</b>
+							<input onclick='runAutocomplete_flag_names()' id='myInput2' type='text' placeholder='Helsengaard town square'>
+							</div></form>
+					<button  onclick='Search_Button_2()'>Search</button>
+					<p id='search_form_result2'></p>
+					<button  onclick='GoToFlag_Button_2()' disabled='true' id='button02'>Go To Flag</button>
+					`)
 				.openOn(map);
-			map.setView( [0, 0]);},
-			},
+			map.setView([0, 0]);
+			}},
 		{title: "Search Name", onClick: () => { 
-			Burger_Search_popup.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_3' autocomplete='off' >					<div class='autocomplete' style='min-width:300px;width:100%'>					<b>Descendant name:</b> <input onclick='runAutocomplete_account_names()' id='myInput3' type='text' placeholder='Sigrid Sigrúnarsdóttir'>					</div>					</form>					<button  onclick='Search_Button_3()'>Search</button>					<p id='search_form_result3'></p>					<button  onclick='Show_only_account_id_3()' disabled='true' id='button03'>Highlight these flags</button>					")
+			Burger_Search_popup.setContent(`
+					<!--Make sure the form has the autocomplete function switched off:-->
+					<form id='search_form_3' autocomplete='off' >
+						<div class='autocomplete' style='min-width:300px;width:100%'>
+							<b>Descendant name:</b>
+							<input onclick='runAutocomplete_account_names()' id='myInput3' type='text' placeholder='Sigrid Sigrúnarsdóttir'>
+							</div></form>
+					<button  onclick='Search_Button_3()'>Search</button>
+					<p id='search_form_result3'></p>
+					<button  onclick='Show_only_account_id_3()' disabled='true' id='button03'>Highlight these flags</button>
+					`)
 				.openOn(map);
-			map.setView( [0, 0]);},
-			},
+			map.setView([0, 0]);
+			}},
 		{title: "Search House", onClick: () => { 
-			Burger_Search_popup.setContent("					<!--Make sure the form has the autocomplete function switched off:-->					<form id='search_form_4' autocomplete='off' >					<div class='autocomplete' style='min-width:300px;width:100%'>					<b>House name:</b> <input onclick='runAutocomplete_house_names()' id='myInput4' type='text' placeholder='Sigrún'>					</div>					</form>					<button  onclick='Search_Button_4()'>Search</button>					<p id='search_form_result4'></p>					<button  onclick='Show_only_account_id_4()' disabled='true' id='button04'>Highlight these flags</button>					")
+			Burger_Search_popup.setContent(`
+					<!--Make sure the form has the autocomplete function switched off:-->
+					<form id='search_form_4' autocomplete='off' >
+						<div class='autocomplete' style='min-width:300px;width:100%'>
+							<b>House name:</b>
+							<input onclick='runAutocomplete_house_names()' id='myInput4' type='text' placeholder='Sigrún'>
+							</div></form>
+					<button  onclick='Search_Button_4()'>Search</button>
+					<p id='search_form_result4'></p>
+					<button  onclick='Show_only_account_id_4()' disabled='true' id='button04'>Highlight these flags</button>
+					`)
 				.openOn(map);
-			map.setView( [0, 0]);},
-			},
+			map.setView([0, 0]);
+			}},
 		],
 	}).addTo(map);
 const Burger_Leaderboard_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
@@ -1436,11 +1540,66 @@ L.control.burgerMenu({
 	menuItems: [
 		{title: "City info",
 			menuItems: [
-				{title: "Helsengaard",onClick: () => {Burger_City_Info_popup.setContent("<table class='popup_table'><tr><td>Name:</td><td><b>Helsengaard</b></td></tr><tr><td>ID:</td><td>0</td></tr><tr><td>Level (max):</td><td>6 (6)</td></tr><tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr><tr><td>Citizens:</td><td>15</td></tr><tr><td>Flags:</td><td>469</td></tr><tr><td>Flags Inactive:</td><td>75</td></tr><tr><td>Flags Empty:</td><td>73</td></tr></table>").openOn(map);},},
-				{title: "Island",onClick: () => {Burger_City_Info_popup.setContent("<table class='popup_table'><tr><td>Name:</td><td><b>Island</b></td></tr><tr><td>ID:</td><td>1</td></tr><tr><td>Level (max):</td><td>5 (5)</td></tr><tr><td>Mayor</td><td>Meloun</td></tr><tr><td>Citizens:</td><td>2</td></tr><tr><td>Flags:</td><td>33</td></tr><tr><td>Flags Inactive:</td><td>4</td></tr><tr><td>Flags Empty:</td><td>3</td></tr></table>").openOn(map);},},
-				{title: "njkdcskjnds sdfsdf dffse errerw",onClick: () => {Burger_City_Info_popup.setContent("<table class='popup_table'><tr><td>Name:</td><td><b>njkdcskjnds sdfsdf dffse errerw</b></td></tr><tr><td>ID:</td><td>2</td></tr><tr><td>Level (max):</td><td>0 (0)</td></tr><tr><td>Mayor</td><td>Meloun</td></tr><tr><td>Citizens:</td><td>1</td></tr><tr><td>Flags:</td><td>1</td></tr><tr><td>Flags Inactive:</td><td>0</td></tr><tr><td>Flags Empty:</td><td>0</td></tr></table>").openOn(map);},},
-				{title: "ABC123",onClick: () => {Burger_City_Info_popup.setContent("<table class='popup_table'><tr><td>Name:</td><td><b>ABC123</b></td></tr><tr><td>ID:</td><td>3</td></tr><tr><td>Level (max):</td><td>0 (0)</td></tr><tr><td>Mayor</td><td>Meloun</td></tr><tr><td>Citizens:</td><td>1</td></tr><tr><td>Flags:</td><td>1</td></tr><tr><td>Flags Inactive:</td><td>0</td></tr><tr><td>Flags Empty:</td><td>0</td></tr></table>").openOn(map);},},
-				{title: "Town",onClick: () => {Burger_City_Info_popup.setContent("<table class='popup_table'><tr><td>Name:</td><td><b>Town</b></td></tr><tr><td>ID:</td><td>4</td></tr><tr><td>Level (max):</td><td>1 (1)</td></tr><tr><td>Mayor</td><td>Meloun</td></tr><tr><td>Citizens:</td><td>2</td></tr><tr><td>Flags:</td><td>2</td></tr><tr><td>Flags Inactive:</td><td>0</td></tr><tr><td>Flags Empty:</td><td>0</td></tr></table>").openOn(map);},},
+				{title: "Helsengaard",onClick: () => {Burger_City_Info_popup.setContent(`
+					<table class='popup_table'>
+					<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>
+					<tr><td>ID:</td><td>0</td></tr>
+					<tr><td>Level (max):</td><td>6 (6)</td></tr>
+					<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>
+					<tr><td>Citizens:</td><td>15</td></tr>
+					<tr><td>Flags:</td><td>469</td></tr>
+					<tr><td>Flags Inactive:</td><td>75</td></tr>
+					<tr><td>Flags Empty:</td><td>73</td></tr>
+					</table>`
+					).openOn(map);},},
+				{title: "Island",onClick: () => {Burger_City_Info_popup.setContent(`
+					<table class='popup_table'>
+					<tr><td>Name:</td><td><b>Island</b></td></tr>
+					<tr><td>ID:</td><td>1</td></tr>
+					<tr><td>Level (max):</td><td>5 (5)</td></tr>
+					<tr><td>Mayor</td><td>Meloun</td></tr>
+					<tr><td>Citizens:</td><td>2</td></tr>
+					<tr><td>Flags:</td><td>33</td></tr>
+					<tr><td>Flags Inactive:</td><td>4</td></tr>
+					<tr><td>Flags Empty:</td><td>3</td></tr>
+					</table>`
+					).openOn(map);},},
+				{title: "njkdcskjnds sdfsdf dffse errerw",onClick: () => {Burger_City_Info_popup.setContent(`
+					<table class='popup_table'>
+					<tr><td>Name:</td><td><b>njkdcskjnds sdfsdf dffse errerw</b></td></tr>
+					<tr><td>ID:</td><td>2</td></tr>
+					<tr><td>Level (max):</td><td>0 (0)</td></tr>
+					<tr><td>Mayor</td><td>Meloun</td></tr>
+					<tr><td>Citizens:</td><td>1</td></tr>
+					<tr><td>Flags:</td><td>1</td></tr>
+					<tr><td>Flags Inactive:</td><td>0</td></tr>
+					<tr><td>Flags Empty:</td><td>0</td></tr>
+					</table>`
+					).openOn(map);},},
+				{title: "ABC123",onClick: () => {Burger_City_Info_popup.setContent(`
+					<table class='popup_table'>
+					<tr><td>Name:</td><td><b>ABC123</b></td></tr>
+					<tr><td>ID:</td><td>3</td></tr>
+					<tr><td>Level (max):</td><td>0 (0)</td></tr>
+					<tr><td>Mayor</td><td>Meloun</td></tr>
+					<tr><td>Citizens:</td><td>1</td></tr>
+					<tr><td>Flags:</td><td>1</td></tr>
+					<tr><td>Flags Inactive:</td><td>0</td></tr>
+					<tr><td>Flags Empty:</td><td>0</td></tr>
+					</table>`
+					).openOn(map);},},
+				{title: "Town",onClick: () => {Burger_City_Info_popup.setContent(`
+					<table class='popup_table'>
+					<tr><td>Name:</td><td><b>Town</b></td></tr>
+					<tr><td>ID:</td><td>4</td></tr>
+					<tr><td>Level (max):</td><td>1 (1)</td></tr>
+					<tr><td>Mayor</td><td>Meloun</td></tr>
+					<tr><td>Citizens:</td><td>2</td></tr>
+					<tr><td>Flags:</td><td>2</td></tr>
+					<tr><td>Flags Inactive:</td><td>0</td></tr>
+					<tr><td>Flags Empty:</td><td>0</td></tr>
+					</table>`
+					).openOn(map);},},
 			],
 			},
 		{title: "Leaderboards",
