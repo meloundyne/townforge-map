@@ -408,11 +408,7 @@ function getFlagIDFromName(FlagName) {
 	for (const cityGeoJSON of allFlagsCities) {
 		const feature = cityGeoJSON.features.find(f => f.properties.name === FlagName);
 		if (feature) {
-			const log_message000210 = FlagName
-			const log_message000211 = ' : Name | ID : '
-			const log_message000212 = feature.id
-			log_message0002 = log_message000210 + log_message000211 + log_message000212
-			console.log(log_message0002)
+			console.log('Flag Name To ID: "' + FlagName + '" = ' + feature.id)
 			return feature.id
 			}
 		}
@@ -485,8 +481,6 @@ function Jump_to_Flag_from_ID(value) {
 		// Use Array.prototype.find to locate the feature with the matching name property
 		const feature = cityGeoJSON.features.find(f => f.id === value);
 		if (feature) {
-			var text = ""
-			text += 'Jumped to Flag Id:' + value
 			// If found, return the id, else return null or undefined
 			const x = ( feature.geometry.coordinates[0][0][0] + ( ( feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] ) / 2 ));
 			const y = ( feature.geometry.coordinates[0][0][1] + ( ( feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] ) / 2 ));
@@ -509,7 +503,8 @@ function Jump_to_Flag_from_ID(value) {
 			text1 += '<abbr style="white-space: nowrap;">Flag ID: ' + value + '</abbr>'
 			SearchMarker.bindPopup(text1).openPopup();
 			map.setView( xy([x, y]));
-			return feature ? text : null;
+			console.log('Jumped to Flag Id: ' + value);
+			return null;
 			}
 		}
 	// If not found in any cities
@@ -517,74 +512,68 @@ function Jump_to_Flag_from_ID(value) {
 	}
 
 function GoToFlag_Button_1() {
-	var x = document.getElementById('search_form_1');
-	var text001 = '';
-	text001 += 'Go To Flag Id: ' + x.elements[0].value
-	console.log(text001);
-	const log_message0001 = Jump_to_Flag_from_ID(x.elements[0].value);
-	console.log(log_message0001);
+	const SearchForm = document.getElementById('search_form_1');
+	console.log('Go To Flag Id: ' + SearchForm.elements[0].value);
+	Jump_to_Flag_from_ID(SearchForm.elements[0].value);
 	}
 
 function GoToFlag_Button_2() {
-	var x = document.getElementById('search_form_2');
-	var text001 = '';
-	text001 += 'Go To Flag Name: ' + x.elements[0].value
-	console.log(text001);
-	const log_message0001 = Jump_to_Flag_from_ID(getFlagIDFromName(x.elements[0].value));
-	console.log(log_message0001);
+	const SearchForm = document.getElementById('search_form_2');
+	console.log('Go To Flag Name: ' + SearchForm.elements[0].value);
+	Jump_to_Flag_from_ID(getFlagIDFromName(SearchForm.elements[0].value));
 	}
 
 function Search_Button_1() {                                 
-	var x = document.getElementById('search_form_1');              
-	var text = '<b>Results:</b>';                                                            
-	text += getFlagInfoFromID(x.elements[0].value) + '<br>';
+	const SearchForm = document.getElementById('search_form_1');
+	console.log('Search: ' + SearchForm.elements[0].value);  
+	let text = '<b>Results:</b>';                                                            
+	text += getFlagInfoFromID(SearchForm.elements[0].value) + '<br>';
 	document.getElementById("search_form_result1").innerHTML = text;
 	document.getElementById("button01").disabled = false;
-	console.log(x.elements[0].value);                                                     
 	}
 
 function Search_Button_2() {                                 
-	var x = document.getElementById('search_form_2');
-	console.log(x.elements[0].value);
-	var text = '<b>Results:</b>';                                                            
-	text += getFlagInfoFromID(getFlagIDFromName(x.elements[0].value)) + '<br>';
+	const SearchForm = document.getElementById('search_form_2');
+	console.log('Search: ' + SearchForm.elements[0].value);
+	let text = '<b>Results:</b>';                                                            
+	text += getFlagInfoFromID(getFlagIDFromName(SearchForm.elements[0].value)) + '<br>';
 	document.getElementById("search_form_result2").innerHTML = text;
 	document.getElementById("button02").disabled = false;
 	}
 
 function Search_Button_3() {
-	let x = document.getElementById('search_form_3');
+	const SearchForm = document.getElementById('search_form_3');
+	console.log('Search: ' + SearchForm.elements[0].value);
 	let text = '<b>Results:</b>'
 	text += '<table style="white-space: nowrap;"><tr>'
 	text += '<td>House:</td>'
-	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(x.elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Current Descendant:</td>'
-	text += '<td>' + ACCOUNT_NAME[ACCOUNT_NAME.indexOf(x.elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_NAME[ACCOUNT_NAME.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Account ID:</td>'
-	text += '<td>' + ACCOUNT_NAME.indexOf(x.elements[0].value) + '</td></tr>'
+	text += '<td>' + ACCOUNT_NAME.indexOf(SearchForm.elements[0].value) + '</td></tr>'
 	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
-	text += getAllFlagsForID(ACCOUNT_NAME.indexOf(x.elements[0].value));
+	text += getAllFlagsForID(ACCOUNT_NAME.indexOf(SearchForm.elements[0].value));
 	text += '</table>'
 	document.getElementById("search_form_result3").innerHTML = text;
-	console.log(x.elements[0].value);
 	document.getElementById("button03").disabled = false;
 	}
 
 function Search_Button_4() {
-	let x = document.getElementById('search_form_4');
+	const SearchForm = document.getElementById('search_form_4');
+	console.log('Search: ' + SearchForm.elements[0].value);
 	let text = '<b>Results:</b>'
 	text += '<table style="white-space: nowrap;"><tr>'
 	text += '<td>House:</td>'
-	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_HOUSE.indexOf(x.elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Current Descendant:</td>'
-	text += '<td>' + ACCOUNT_NAME[ACCOUNT_HOUSE.indexOf(x.elements[0].value)] + '</td></tr>'
+	text += '<td>' + ACCOUNT_NAME[ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
 	text += '<tr><td>Account ID:</td>'
-	text += '<td>' + ACCOUNT_HOUSE.indexOf(x.elements[0].value) + '</td></tr>'
+	text += '<td>' + ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value) + '</td></tr>'
 	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
-	text += getAllFlagsForID(ACCOUNT_HOUSE.indexOf(x.elements[0].value));
+	text += getAllFlagsForID(ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value));
 	text += '</table>'
 	document.getElementById("search_form_result4").innerHTML = text;
-	console.log(x.elements[0].value);
 	document.getElementById("button04").disabled = false;
 	}
 
@@ -666,13 +655,13 @@ function parseDate(StringWithGeneratedTime) {
   
 function update_tick_timer() {
 	const now = new Date();
-	let diff = target - now; // ms difference
+	let diff = Generated_time_edited - now; // ms difference
 	diff = Math.abs(diff);
 	const totalSeconds = Math.floor(diff / 1000);
 	const hours = Math.floor(totalSeconds / 3600);
 	const minutes = Math.floor((totalSeconds % 3600) / 60);
 	const seconds = totalSeconds % 60;
-	timerEl.textContent =`Last update ${hours}h ${minutes}m ${seconds}s ago`;
+	TimerElement.textContent =`Last update ${hours}h ${minutes}m ${seconds}s ago`;
 	}
 
 function function_select_first_marker(e) {
@@ -1329,10 +1318,10 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/24_07:02 UTC / Blockchain height: 1,380,251 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/24_07:02"// attribution tick timer
-const target = parseDate(Generated_time_string);// attribution tick timer
-const timerEl = document.getElementById('timer');// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/24_12:59 UTC / Blockchain height: 1,381,327 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/24_12:59"// attribution tick timer
+const Generated_time_edited = parseDate(Generated_time_string);// attribution tick timer
+const TimerElement = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
 setInterval(update_tick_timer, 1000);// attribution tick timer
 L.control.zoom({position:'bottomleft'}).addTo(map)
