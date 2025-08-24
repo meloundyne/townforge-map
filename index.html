@@ -229,8 +229,8 @@ function getColor_role(FlagRole) {
 	}
 
 function getColor_active(FlagActive) {
-	return  FlagActive == "true"  ? "Green"	:
-			FlagActive == "false" ? "Red"	: "white" ;
+	return  FlagActive == true  ? "Green"	:
+			FlagActive == false ? "Red"	: "white" ;
 	}
                         
 function getColor_repair(FlagRepair) {
@@ -351,7 +351,7 @@ function function_highlightFeature(e) {
 		
 		if (map.hasLayer(LayerOverlay_InfluenceMouseOver) == 1) {
 			if (layer.feature.properties.role != 0) {
-				const influence = Number(layer.feature.properties.inf)
+				const influence = layer.feature.properties.inf
 				const coordinates = [
 					[
 						xy((layer.feature.geometry.coordinates[0][0][0]) - influence,(layer.feature.geometry.coordinates[0][0][1]) - influence),
@@ -395,7 +395,7 @@ function onEachFeature(feature, layer) {
 		<tr><td>Role:</td>				<td>${FLAG_ROLE_NAME[feature.properties.role]}</td></tr>
 		<tr><td>Active:</td>			<td>${feature.properties.active}</td></tr>
 		<tr><td>Flag ID:</td>			<td>${feature.id}</td></tr>
-		<tr><td>Size:</td>				<td>${feature.properties.size}</td></tr>
+		<tr><td>Size:</td>				<td>${Math.abs(feature.geometry.coordinates[0][0][0] - feature.geometry.coordinates[0][2][0]) + 1} x ${Math.abs(feature.geometry.coordinates[0][0][1] - feature.geometry.coordinates[0][2][1]) + 1}</td></tr>
 		<tr><td>Economic Power:</td>	<td>${feature.properties.ep} %</td></tr>
 		<tr><td>Repair:</td>			<td>${feature.properties.repair} %</td></tr>
 		</table>
@@ -436,7 +436,7 @@ function getFlagInfoFromID(FlagID) {
 			html += '</td></tr><tr><td>Flag ID:</td><td>'
 			html += feature.id
 			html += '</td></tr><tr><td>Size: </td><td>'
-			html += feature.properties.size
+			html += `${Math.abs(feature.geometry.coordinates[0][0][0] - feature.geometry.coordinates[0][2][0]) + 1} x ${Math.abs(feature.geometry.coordinates[0][0][1] - feature.geometry.coordinates[0][2][1]) + 1}`
 			html += '</td></tr><tr><td>Economic Power: </td><td>'
 			html += feature.properties.ep
 			html += ' %</td></tr><tr><td>Repair: </td><td>'
@@ -490,11 +490,11 @@ function Jump_to_Flag_from_ID(value) {
 			BaseLayer_City2.removeFrom(map)
 			BaseLayer_City3.removeFrom(map)
 			BaseLayer_City4.removeFrom(map)
-			if (city === '0') { BaseLayer_City0.addTo(map)}
-			if (city === '1') { BaseLayer_City1.addTo(map)}
-			if (city === '2') { BaseLayer_City2.addTo(map)}
-			if (city === '3') { BaseLayer_City3.addTo(map)}
-			if (city === '4') { BaseLayer_City4.addTo(map)}
+			if (city === 0) { BaseLayer_City0.addTo(map)}
+			if (city === 1) { BaseLayer_City1.addTo(map)}
+			if (city === 2) { BaseLayer_City2.addTo(map)}
+			if (city === 3) { BaseLayer_City3.addTo(map)}
+			if (city === 4) { BaseLayer_City4.addTo(map)}
 			map.closePopup();
 			map.removeLayer(SearchMarker);
 			SearchMarker = new L.marker(xy([x, y])).on('click', function(e) { map.removeLayer(SearchMarker);});
@@ -726,12 +726,11 @@ function function_get_selection_influence () {
 	let Selection_x1 = 0 
 	let Selection_y1 = 0
 	let Selection_city = 0
-	let Selection_is_empty = 'yes'
+	let Selection_is_empty = true
 	let Influence_from_role_percent = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	let influencing = 0
 	Selection_x0 = Math.min(marker_first.getLatLng().lng, marker_second.getLatLng().lng)// Longitude
 	Selection_y0 = Math.min(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
-	Selection_x1 = Math.max(marker_first.getLatLng().lng, marker_second.getLatLng().lng) // Longitude
+	Selection_x1 = Math.max(marker_first.getLatLng().lng, marker_second.getLatLng().lng)// Longitude
 	Selection_y1 = Math.max(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
 	if (map.hasLayer(BaseLayer_City0) == 1) { Selection_city = 0 }
 	if (map.hasLayer(BaseLayer_City1) == 1) { Selection_city = 1 }
@@ -744,49 +743,39 @@ function function_get_selection_influence () {
 	marker_first = L.marker(temp1, {draggable: true}).addTo(featureGroup_Legend);
 	marker_second = L.marker(temp2, {draggable: true}).addTo(featureGroup_Legend);
 	rectangle_from_markers = L.rectangle([xy([Selection_x0, Selection_y0]),xy([Selection_x1, Selection_y1])], {color: 'Blue',fillColor: 'SkyBlue', weight: 3, fillOpacity: 0.9, interactive: false}).addTo(featureGroup_Legend);
-	var run = L.geoJson(allFlagsCities, {
+	L.geoJson(allFlagsCities, {
 		onEachFeature: function(feature, layer){
-			let uz_je_tam_flag = 0
-			let Selection_Flag_pres_sebe_msq = 0
+			let FlagIsAlreadyThere = 0
 			let OtherFlag_x0 = feature.geometry.coordinates[0][0][0]
 			let OtherFlag_y0 = feature.geometry.coordinates[0][0][1]
 			let OtherFlag_x1 = feature.geometry.coordinates[0][2][0]
 			let OtherFlag_y1 = feature.geometry.coordinates[0][2][1]
+			if (
+				   Selection_city == feature.properties.city
+				&& Math.max(Selection_x0, OtherFlag_x0) < Selection_x1
+				&& Math.max(Selection_y0, OtherFlag_y0) < Selection_y1
+				&& Math.min(Selection_x1, OtherFlag_x1) > Selection_x0
+				&& Math.min(Selection_y1, OtherFlag_y1) > Selection_y0
+				) { Selection_is_empty = false }
 			if ( Selection_city == feature.properties.city ) {
-				let Dx0
-				let Dy0
-				let Dx1
-				let Dy1
-				if (Math.max(Selection_x0, OtherFlag_x0) < Selection_x1) { Dx0 = Math.max(Selection_x0, OtherFlag_x0); uz_je_tam_flag += 1 }
-				if (Math.max(Selection_y0, OtherFlag_y0) < Selection_y1) { Dy0 = Math.max(Selection_y0, OtherFlag_y0); uz_je_tam_flag += 1 }
-				if (Math.min(Selection_x1, OtherFlag_x1) > Selection_x0) { Dx1 = Math.min(Selection_x1, OtherFlag_x1); uz_je_tam_flag += 1 }
-				if (Math.min(Selection_y1, OtherFlag_y1) > Selection_y0) { Dy1 = Math.min(Selection_y1, OtherFlag_y1); uz_je_tam_flag += 1 }
-				if ( uz_je_tam_flag == 4 ) {
-					Selection_Flag_pres_sebe_msq = (Dx1 - Dx0) * (Dy1 - Dy0)
-					Selection_is_empty = 'no'
-					}
-				}
-
-			let influence_over_selection = 0
-			if ( Selection_city == feature.properties.city ) {
-				OtherFlag_x0 -= Number(feature.properties.inf)
-				OtherFlag_y0 -= Number(feature.properties.inf)
-				OtherFlag_x1 += Number(feature.properties.inf)
-				OtherFlag_y1 += Number(feature.properties.inf)
-				if (Math.max(Selection_x0, OtherFlag_x0) < Selection_x1) { Dx0 = Math.max(Selection_x0, OtherFlag_x0); influence_over_selection += 1 }
-				if (Math.max(Selection_y0, OtherFlag_y0) < Selection_y1) { Dy0 = Math.max(Selection_y0, OtherFlag_y0); influence_over_selection += 1 }
-				if (Math.min(Selection_x1, OtherFlag_x1) > Selection_x0) { Dx1 = Math.min(Selection_x1, OtherFlag_x1); influence_over_selection += 1 }
-				if (Math.min(Selection_y1, OtherFlag_y1) > Selection_y0) { Dy1 = Math.min(Selection_y1, OtherFlag_y1); influence_over_selection += 1 }
-				const Selection_msq = (Selection_x1 - Selection_x0) * (Selection_y1 - Selection_y0)
-
-				let Dsqm
-				if ( influence_over_selection == 4 ){
-					Dsqm = (Dx1 - Dx0) * (Dy1 - Dy0)
-					}
-				if ( Dsqm > 0 ) { //overlap
-					influencing += 1
-					Influence_from_role_percent[feature.properties.role] += ( Dsqm / Selection_msq * 100 ) // influence in percent
-					}
+				const Selection_BlockSq = (Selection_x1 - Selection_x0) * (Selection_y1 - Selection_y0)
+				OtherFlag_x0 -= feature.properties.inf
+				OtherFlag_y0 -= feature.properties.inf
+				OtherFlag_x1 += feature.properties.inf
+				OtherFlag_y1 += feature.properties.inf
+				if (
+					   Math.max(Selection_x0, OtherFlag_x0) < Selection_x1
+					&& Math.max(Selection_y0, OtherFlag_y0) < Selection_y1
+					&& Math.min(Selection_x1, OtherFlag_x1) > Selection_x0
+					&& Math.min(Selection_y1, OtherFlag_y1) > Selection_y0
+					) {
+						const BlocksOverSelection_x0 = Math.max(Selection_x0, OtherFlag_x0)
+						const BlocksOverSelection_y0 = Math.max(Selection_y0, OtherFlag_y0)
+						const BlocksOverSelection_x1 = Math.min(Selection_x1, OtherFlag_x1)
+						const BlocksOverSelection_y1 = Math.min(Selection_y1, OtherFlag_y1)
+						const InfluenceOverSelection_BlockSq = (BlocksOverSelection_x1 - BlocksOverSelection_x0) * (BlocksOverSelection_y1 - BlocksOverSelection_y0)
+						Influence_from_role_percent[feature.properties.role] += ( InfluenceOverSelection_BlockSq / Selection_BlockSq * 100 ) // influence overlap in percent
+						}
 				}
 			}
 		})
@@ -800,7 +789,7 @@ function function_get_selection_influence () {
 	if (SelectionSizeY > 256){
 		WARNING += "<h1 style='color: red; line-height: 0.4; white-space: nowrap;'>Selected y is larger than 256</h1>"
 		}
-	if (Selection_is_empty == 'no'){
+	if (Selection_is_empty == false){
 		WARNING += "<h1 style='color: red; line-height: 0.4; white-space: nowrap;'>Flag is already there</h1>"
 		}
 	text1=`
@@ -1199,7 +1188,7 @@ const LayersForInactiveImages = [];
 	LayersForInactiveImages[4] = Layer_Image_InactiveFlags_City4
 const Generation_of_inactive_images = L.geoJson(allFlagsCities, {
 		onEachFeature: function(feature, layer){
-			if ( feature.properties.active == 'false' && feature.properties.role != 0 ) {
+			if ( feature.properties.active == false && feature.properties.role != 0 ) {
 				L.imageOverlay(Img_role[0], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(LayersForInactiveImages[feature.properties.city])
 	}}})
 const LayersForRoleImages = [];
@@ -1210,7 +1199,7 @@ const LayersForRoleImages = [];
 	LayersForRoleImages[4] = Layer_Image_RoleFlags_City4
 const Generation_of_role_images = L.geoJson(allFlagsCities, {
 		onEachFeature: function(feature, layer){
-			if ( feature.properties.active == 'true' && Img_role[feature.properties.role] != '' ) {
+			if ( feature.properties.active == true && Img_role[feature.properties.role] != 0 ) {
 				L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(LayersForRoleImages[feature.properties.city])
 	}}})
 const LayersForSizeNumbers = [];
@@ -1270,7 +1259,6 @@ map.on('zoomend', function () {
 L.rectangle([xy([-1115, -2008]),xy([1459, 581])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 L.rectangle([xy([72, -50]),xy([507, 387])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 L.rectangle([xy([-2772, -2278]),xy([2294, 2795])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_1);
-L.rectangle([xy([-5275, -3407]),xy([5425, 7279])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 // These are pulsing markers for Tax Break Points/Zones
 L.marker(xy([0, 0])).addTo(Layer_tax_break_points_city_0);
 L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer_tax_break_points_city_0);
@@ -1301,15 +1289,15 @@ info.onAdd = function (map) {
 	return this._div;
 	};
 
-info.update = function (f) {
-	const contents = f ? `
+info.update = function (feature) {
+	const contents = feature ? `
 		<table>
 		<tr><td align='right'><u>Flag ID</u></td></tr>
-		<tr><td align='right'>${f.id}</td></tr>
+		<tr><td align='right'>${feature.id}</td></tr>
 		<tr><td align='right'><u>Owner</u></td></tr>
-		<tr><td align='right'>${ACCOUNT_NAME[f.properties.owner]}</td></tr>
+		<tr><td align='right'>${ACCOUNT_NAME[feature.properties.owner]}</td></tr>
 		<tr><td align='right'><u>Flag Name</td></u></tr>
-		<tr><td align='right'>${f.properties.name}</td></tr>
+		<tr><td align='right'>${feature.properties.name}</td></tr>
 		</table>
 		` : 'Hover over a Flag';
 	this._div.innerHTML = `<h4 align='right'>Flag Info</h4>${contents}`;
@@ -1318,8 +1306,8 @@ info.update = function (f) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/24_12:59 UTC / Blockchain height: 1,381,327 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/24_12:59"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/24_19:01 UTC / Blockchain height: 1,382,417 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/24_19:01"// attribution tick timer
 const Generated_time_edited = parseDate(Generated_time_string);// attribution tick timer
 const TimerElement = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -1518,7 +1506,7 @@ L.control.burgerMenu({
 					<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>
 					<tr><td>Citizens:</td><td>15</td></tr>
 					<tr><td>Flags:</td><td>469</td></tr>
-					<tr><td>Flags Inactive:</td><td>75</td></tr>
+					<tr><td>Flags Inactive:</td><td>83</td></tr>
 					<tr><td>Flags Empty:</td><td>73</td></tr>
 					</table>`
 					).openOn(map);},},
@@ -1562,11 +1550,11 @@ L.control.burgerMenu({
 					<table class='popup_table'>
 					<tr><td>Name:</td><td><b>Town</b></td></tr>
 					<tr><td>ID:</td><td>4</td></tr>
-					<tr><td>Level (max):</td><td>1 (1)</td></tr>
+					<tr><td>Level (max):</td><td>0 (1)</td></tr>
 					<tr><td>Mayor</td><td>Meloun</td></tr>
 					<tr><td>Citizens:</td><td>2</td></tr>
 					<tr><td>Flags:</td><td>2</td></tr>
-					<tr><td>Flags Inactive:</td><td>0</td></tr>
+					<tr><td>Flags Inactive:</td><td>1</td></tr>
 					<tr><td>Flags Empty:</td><td>0</td></tr>
 					</table>`
 					).openOn(map);},},
