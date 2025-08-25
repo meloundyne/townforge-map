@@ -1259,6 +1259,7 @@ map.on('zoomend', function () {
 L.rectangle([xy([-1115, -2008]),xy([1459, 581])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 L.rectangle([xy([72, -50]),xy([507, 387])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 L.rectangle([xy([-2772, -2278]),xy([2294, 2795])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_1);
+L.rectangle([xy([-5275, -3407]),xy([5425, 7279])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false}).addTo(Layer_firefighting_city_0);
 // These are pulsing markers for Tax Break Points/Zones
 L.marker(xy([0, 0])).addTo(Layer_tax_break_points_city_0);
 L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer_tax_break_points_city_0);
@@ -1306,8 +1307,8 @@ info.update = function (feature) {
 info.addTo(map);
 //<!-- Info panel top right -->>
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/24_19:01 UTC / Blockchain height: 1,382,417 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
-const Generated_time_string = "2025/08/24_19:01"// attribution tick timer
+map.attributionControl.setPrefix('<a href="https://www.townforge.net/">Townforge</a> | <abbr title="0.36.6.4-release |  Generated at 2025/08/25_00:57 UTC / Blockchain height: 1,383,486 | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>')
+const Generated_time_string = "2025/08/25_00:57"// attribution tick timer
 const Generated_time_edited = parseDate(Generated_time_string);// attribution tick timer
 const TimerElement = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
@@ -1506,7 +1507,7 @@ L.control.burgerMenu({
 					<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>
 					<tr><td>Citizens:</td><td>15</td></tr>
 					<tr><td>Flags:</td><td>469</td></tr>
-					<tr><td>Flags Inactive:</td><td>83</td></tr>
+					<tr><td>Flags Inactive:</td><td>76</td></tr>
 					<tr><td>Flags Empty:</td><td>73</td></tr>
 					</table>`
 					).openOn(map);},},
@@ -1550,11 +1551,11 @@ L.control.burgerMenu({
 					<table class='popup_table'>
 					<tr><td>Name:</td><td><b>Town</b></td></tr>
 					<tr><td>ID:</td><td>4</td></tr>
-					<tr><td>Level (max):</td><td>0 (1)</td></tr>
+					<tr><td>Level (max):</td><td>1 (1)</td></tr>
 					<tr><td>Mayor</td><td>Meloun</td></tr>
 					<tr><td>Citizens:</td><td>2</td></tr>
 					<tr><td>Flags:</td><td>2</td></tr>
-					<tr><td>Flags Inactive:</td><td>1</td></tr>
+					<tr><td>Flags Inactive:</td><td>0</td></tr>
 					<tr><td>Flags Empty:</td><td>0</td></tr>
 					</table>`
 					).openOn(map);},},
