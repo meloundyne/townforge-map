@@ -207,206 +207,370 @@ tr:nth-child(even) {
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
 <script type="text/javascript" src="Arrays_AccountsCitiesRolesColors_data.js"></script>
 <script>
-
-
-function getColor_role(FlagRole) {
-	return  FlagRole == 0  ? "white"  :
-			FlagRole == 1  ? "LawnGreen"  :
-			FlagRole == 2  ? "Cyan"  :
-			FlagRole == 3  ? "SaddleBrown"  :
-			FlagRole == 4  ? "Magenta"  :
-			FlagRole == 5  ? "Orange"  :
-			FlagRole == 6  ? "DarkOrange"  :
-			FlagRole == 7  ? "OrangeRed"  :
-			FlagRole == 8  ? "DarkSlateGray"  :
-			FlagRole == 9  ? "MediumSlateBlue"  :
-			FlagRole == 10 ? "Silver" :
-			FlagRole == 11 ? "ForestGreen" :
-			FlagRole == 12 ? "SandyBrown" :
-			FlagRole == 13 ? "Tan" :
-			FlagRole == 14 ? "NavajoWhite" :
-			FlagRole == 15 ? "DimGray" :
-			FlagRole == 16 ? "RebeccaPurple" :
-			FlagRole == 17 ? "RoyalBlue" : "white" ;
-	}
-
-function getColor_active(FlagActive) {
-	return  FlagActive == true  ? "Green"	:
-			FlagActive == false ? "Red"	: "white" ;
-	}
-                        
-function getColor_repair(FlagRepair) {
-	return  FlagRepair > 70 ? "Chartreuse"		:
-			FlagRepair > 60 ? "LightSalmon"		:
-			FlagRepair > 50 ? "Coral"			:
-			FlagRepair > 40 ? "Tomato"			:
-			FlagRepair > 30 ? "OrangeRed"		:
-			FlagRepair > 20 ? "MediumPurple" 	:
-			FlagRepair >  0 ? "RebeccaPurple"	:
-			FlagRepair == 0 ? "white"			: "white" ;
-	}
-                        
-function getColor_owner(AccountHouseName) {
-	let sum = 0;
-	for (let i = 0; i < AccountHouseName.length; i++) {
-		sum += AccountHouseName.charCodeAt(i);
+function generateAll_Flags_city() {
+	globalThis.All_Flags_city = []
+	let CityNumber = 0
+	while (CityNumber != 9999) {
+		eval('if (typeof Flags_city' + CityNumber + ' !== "undefined"){ All_Flags_city[CityNumber] = Flags_city' + CityNumber + ' ; CityNumber += 1 }')
+		eval('if (typeof Flags_city' + CityNumber + ' === "undefined"){CityNumber = 9999}')
 		}
-	const r = (sum * 7) % 256; // change number in "sum * 7" to get different color, it must be prime number 
-	const g = (sum * 41) % 256; // prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
-	const b = (sum * 67) % 256;
-	return `#${[r, g, b]
-	.map((x) => x.toString(16).padStart(2, '0'))
-	.join('')}`;
 	}
 
-function getColor_Economic_Power(FlagEconomicPower) {
-	return  FlagEconomicPower == 300 ? "#0AF51A"	:
-			FlagEconomicPower >  250 ? "#23AC1F"	:
-			FlagEconomicPower >  200 ? "#22681B"	:
-			FlagEconomicPower >  150 ? "#F58F0A"	:
-			FlagEconomicPower >  100 ? "#AD6614"	:
-			FlagEconomicPower == 100 ? "#694014"	: "white" ;
-	}
-
-function Style_Role(feature) {
-	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_role(feature.properties.role)
+function generateArray_ACCOUNT_NAME() {
+	globalThis.ACCOUNT_NAME = []
+	ACCOUNT_NAME.push("");
+	for (let i = 1; i < Account_data.length; i++) {
+		ACCOUNT_NAME.push(Account_data[i][22]);
 		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_role(feature.properties.role)
-		};
-	return {
-		weight: 1,
-		opacity: 1,
-		color: getColor_active(feature.properties.active),
-		dashArray: '4',
-		fillOpacity: 0.8,
-		fillColor: color
-		};
+	return null;
 	}
-	
-function Style_Repair(feature) {
-	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_repair(feature.properties.repair)
+
+function generateArray_ACCOUNT_HOUSE() {
+	globalThis.ACCOUNT_HOUSE = []
+	ACCOUNT_HOUSE.push("");
+	for (let i = 1; i < Account_data.length; i++) {
+		ACCOUNT_HOUSE.push(Account_data[i][23]);
 		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_repair(feature.properties.repair)
-		};
-	return {
-		weight: 1,
-		opacity: 1,
-		color: getColor_active(feature.properties.active),
-		dashArray: '4',
-		fillOpacity: 0.8,
-		fillColor: color
-		};
+	return null;
 	}
 
-function Style_Owner(feature) {
-	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_owner(ACCOUNT_HOUSE[feature.properties.owner])
-		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_owner(ACCOUNT_HOUSE[feature.properties.owner])
-		};
-	return {
-		weight: 1,
-		opacity: 1,
-		color: getColor_active(feature.properties.active),
-		dashArray: '4',
-		fillOpacity: 0.8,
-		fillColor: color
-		};
+function generateArray_Autocomplete_AllFlagIds() {
+	const allFeatures = All_Flags_city.flatMap(flag => flag.features);
+	globalThis.Autocomplete_AllFlagIds = allFeatures.map(feature => feature.id.toString());
+	return null;
 	}
 
-function Style_Economic_Power(feature) {
-	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_Economic_Power(feature.properties.ep)
-		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_Economic_Power(feature.properties.ep)
-		};
-	return {
-		weight: 1,
-		opacity: 1,
-		color: getColor_active(feature.properties.active),
-		dashArray: '4',
-		fillOpacity: 0.8,
-		fillColor: color
-		};
+function generateArray_Autocomplete_AllFlagNames() {
+	const allFeatures = All_Flags_city.flatMap(flag => flag.features);
+	globalThis.Autocomplete_AllFlagNames = allFeatures.map(feature => feature.properties.name.toString());
+	return null;
 	}
 
-function function_highlightFeature(e) {
-		const layer = e.target;
+function declareLayer0_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer0_City' + index + ' = L.geoJson([])') 
+		if (index == 0) {
+			eval('Layer0_City' + index + '.addTo(map)')
+			}
+		});
+	}
 
-		layer.setStyle({
-			weight: 7,
-			dashArray: '',
-			fillOpacity: 0.8
-			});
-		layer.bringToFront();
-		info.update(layer.feature);
+function declareLayer0_City0_events() {
+	CITY_NAME.forEach((value, index) => {
+		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_Firefighting_City' + index + '.addTo(Layer0_Overlay_Firefighting);});')
+		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_TaxBreakPoints_City' + index + '.addTo(Layer0_Overlay_TaxBreakPoints);});')
+		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_Image_RoleFlags_City' + index + '.addTo(Layer0_Overlay_RoleImages);});')
+		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_TextFlagSize_City' + index + '.addTo(Layer0_Overlay_TextFlagSize);});')
+		eval('Layer0_City' + index + '.on("add",(e)=>{Layer0_City' + index + '.bringToBack();});')
 		
-		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == 1) {
-			if (layer.feature.properties.role != 0) {
-				const influence = layer.feature.properties.inf
-				const coordinates = [
-					[
-						xy((layer.feature.geometry.coordinates[0][0][0]) - influence,(layer.feature.geometry.coordinates[0][0][1]) - influence),
-						xy((layer.feature.geometry.coordinates[0][1][0]) + influence,(layer.feature.geometry.coordinates[0][1][1]) - influence),
-						xy((layer.feature.geometry.coordinates[0][2][0]) + influence,(layer.feature.geometry.coordinates[0][2][1]) + influence),
-						xy((layer.feature.geometry.coordinates[0][3][0]) - influence,(layer.feature.geometry.coordinates[0][3][1]) + influence),
-					],
-					[xy(layer.feature.geometry.coordinates[0][0]),xy(layer.feature.geometry.coordinates[0][1]),xy(layer.feature.geometry.coordinates[0][2]),xy(layer.feature.geometry.coordinates[0][3])]
-					]
-				Influence_Rectangle_MouseOver = L.polygon( coordinates, {weight: 0, fillColor: 'LimeGreen', fillOpacity: 0.4, interactive: false}).addTo(Layer0_Overlay_InfluenceMouseOver);
-				}
-			}
-	}	
-	
-function function_resetHighlight(e) {
-		const layer = e.target;
-
-		layer.setStyle({
-			weight: 1,
-			dashArray: '4',
-			fillOpacity: 0.8
-			});
-		layer.bringToBack();
-		info.update();
-
-		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == 1) {
-			Influence_Rectangle_MouseOver.removeFrom(Layer0_Overlay_InfluenceMouseOver)
-			}
+		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_Firefighting_City' + index + '.removeFrom(Layer0_Overlay_Firefighting);});')
+		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_TaxBreakPoints_City' + index + '.removeFrom(Layer0_Overlay_TaxBreakPoints);});')
+		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_Image_RoleFlags_City' + index + '.removeFrom(Layer0_Overlay_RoleImages);});')
+		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_TextFlagSize_City' + index + '.removeFrom(Layer0_Overlay_TextFlagSize);});')
+		eval('Layer0_City' + index + '.on("remove",(e)=>{map.removeLayer(SearchMarker);});')
+		});
 	}
-  
-function onEachFeature(feature, layer) {	
-		layer.on({	
-			mouseover: function_highlightFeature,	
-			mouseout: function_resetHighlight,	
-			});
-		var popup_text=(`
-		<table class='popup_table'>
-		<tr><td>Name:</td>				<td><b>${feature.properties.name}</b></td></tr>
-		<tr><td>Owner:</td>				<td>${ACCOUNT_NAME[feature.properties.owner]}</td></tr>
-		<tr><td>House:</td>				<td>${ACCOUNT_HOUSE[feature.properties.owner]}</td></tr>
-		<tr><td>Role:</td>				<td>${FLAG_ROLE_NAME[feature.properties.role]}</td></tr>
-		<tr><td>Active:</td>			<td>${feature.properties.active}</td></tr>
-		<tr><td>Flag ID:</td>			<td>${feature.id}</td></tr>
-		<tr><td>Size:</td>				<td>${Math.abs(feature.geometry.coordinates[0][0][0] - feature.geometry.coordinates[0][2][0]) + 1} x ${Math.abs(feature.geometry.coordinates[0][0][1] - feature.geometry.coordinates[0][2][1]) + 1}</td></tr>
-		<tr><td>Economic Power:</td>	<td>${feature.properties.ep} %</td></tr>
-		<tr><td>Repair:</td>			<td>${feature.properties.repair} %</td></tr>
-		</table>
-		`)
-		layer.bindPopup(popup_text,{maxWidth: 1000,});
+
+function declareLayer0_Overlays() {
+	globalThis.Layer0_Overlay_Firefighting = L.featureGroup([]);
+	globalThis.Layer0_Overlay_TaxBreakPoints = L.featureGroup([]);
+	globalThis.Layer0_Overlay_RoleImages = L.featureGroup([]).addTo(map);
+	globalThis.Layer0_Overlay_InfluenceMouseOver = L.featureGroup([]);
+	globalThis.Layer0_Overlay_TextFlagSize = L.featureGroup([]);
+	}
+
+function declareLayerStyle_Role() {
+	globalThis.LayerStyle_Role = L.featureGroup([]).addTo(map)
+	LayerStyle_Role.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_role.addTo(map)};})
+	LayerStyle_Role.on('remove',(e)=>{legend_role.remove();})
+	CITY_NAME.forEach((value, index) => {
+		eval('LayerStyle_Role.on("add",(e)=>{Layer1_Flags_ColorByRole_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
+		eval('LayerStyle_Role.on("remove",(e)=>{Layer1_Flags_ColorByRole_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		});
+	}
+
+function declareLayerStyle_Repair() {
+	globalThis.LayerStyle_Repair = L.featureGroup([])
+	LayerStyle_Repair.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_repair.addTo(map)};})
+	LayerStyle_Repair.on('remove',(e)=>{legend_repair.remove();})
+	CITY_NAME.forEach((value, index) => {
+		eval('LayerStyle_Repair.on("add",(e)=>{Layer1_Flags_ColorByRepair_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
+		eval('LayerStyle_Repair.on("remove",(e)=>{Layer1_Flags_ColorByRepair_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		});
+	}
+
+function declareLayerStyle_Owner() {
+	globalThis.LayerStyle_Owner = L.featureGroup([])
+	LayerStyle_Owner.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_owner.addTo(map)};})
+	LayerStyle_Owner.on('remove',(e)=>{legend_owner.remove();})
+	CITY_NAME.forEach((value, index) => {
+		eval('LayerStyle_Owner.on("add",(e)=>{Layer1_Flags_ColorByOwner_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
+		eval('LayerStyle_Owner.on("remove",(e)=>{Layer1_Flags_ColorByOwner_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		});
+	}
+
+function declareLayerStyle_EconomicPower() {
+	globalThis.LayerStyle_EconomicPower = L.featureGroup([])
+	LayerStyle_EconomicPower.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_EcoPow.addTo(map)};})
+	LayerStyle_EconomicPower.on('remove',(e)=>{legend_EcoPow.remove();})
+	CITY_NAME.forEach((value, index) => {
+		eval('LayerStyle_EconomicPower.on("add",(e)=>{Layer1_Flags_ColorByEcoPow_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
+		eval('LayerStyle_EconomicPower.on("remove",(e)=>{Layer1_Flags_ColorByEcoPow_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		});
+	}
+
+function declareLayer1_Image_InactiveFlags_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer1_Image_InactiveFlags_City' + index + ' = L.featureGroup([])') 
+		if (index == 0) {
+			eval('Layer1_Image_InactiveFlags_City' + index + '.addTo(Layer0_City' + index + ')')
+			}
+		});
+	}
+	
+function declareLayer1_Image_RoleFlags_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer1_Image_RoleFlags_City' + index + ' = L.featureGroup([])') 
+		});
+	}
+	
+function declareLayer1_TextFlagSize_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer1_TextFlagSize_City' + index + ' = L.featureGroup([])') 
+		});
+	}
+
+function declareLayer1_Flags_ColorByRole_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer1_Flags_ColorByRole_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Role,onEachFeature})') 
+		if (index == 0) {
+			eval('Layer1_Flags_ColorByRole_City' + index + '.addTo(Layer0_City' + index + ')')
+			}
+		});
+	}
+
+function declareLayer1_Flags_ColorByRepair_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer1_Flags_ColorByRepair_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Repair,onEachFeature})') 
+		});
+	}
+	
+function declareLayer1_Flags_ColorByOwner_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer1_Flags_ColorByOwner_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Owner,onEachFeature})') 
+		});
+	}
+	
+function declareLayer1_Flags_ColorByEcoPow_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.Layer1_Flags_ColorByEcoPow_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Economic_Power,onEachFeature})') 
+		});
+	}
+
+function declareLayer1_Firefighting_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.' + 'Layer1_Firefighting_City' + index + ' = L.layerGroup([])')
+		if (index == 0) {
+			eval('Layer1_Firefighting_City' + index + '.addTo(Layer0_Overlay_Firefighting)')
+			}
+		});
+	}
+
+function declareLayer1_TaxBreakPoints_City() {
+	CITY_NAME.forEach((value, index) => {
+		eval('globalThis.' + 'Layer1_TaxBreakPoints_City' + index + ' = L.layerGroup([])')
+		if (index == 0) {
+			eval('Layer1_TaxBreakPoints_City' + index + '.addTo(Layer0_Overlay_TaxBreakPoints)')
+			}
+		});
+	}
+
+function declareLegend() {
+	globalThis.featureGroup_Legend = L.featureGroup([]);
+	}
+
+function generate_RoleImg_InactiveImg_FlagSizeText() {
+	All_Flags_city.forEach(
+		Flags_cityN => {
+			Flags_cityN.features.forEach(
+				feature => {
+					createRoleImagesOnFlags(feature)
+					createInactiveImagesOnFlags(feature)
+					createFlagSizesText(feature)
+					createMilitaryFirefightingLayer(feature)
+					}
+				)
+			}
+		)
+	}
+
+function createRoleImagesOnFlags(feature) {
+	if ( feature.properties.active == true && Img_role[feature.properties.role] != 0 ) {
+		L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(eval('Layer1_Image_RoleFlags_City' + feature.properties.city))
+		}
+	}
+
+function createInactiveImagesOnFlags(feature) {
+	if ( feature.properties.active == false && feature.properties.role != 0 ) {
+		L.imageOverlay(Img_role[0], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(eval('Layer1_Image_InactiveFlags_City' + feature.properties.city))
+		}
+	}
+
+function createFlagSizesText(feature) {
+	const x_size = (feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] + 1)
+	const y_size = (feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] + 1)
+	const horizontal_position 	=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 2)),	(feature.geometry.coordinates[0][0][1] + (y_size / 5))	])
+	const vertical_position		=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 5)),	(feature.geometry.coordinates[0][0][1] + (y_size / 2))	])
+	L.marker(horizontal_position,	{icon: L.divIcon({className: 'Flag_size_x Flag_size',html: x_size}),zIndexOffset: 1000, interactive: false}).addTo(eval('Layer1_TextFlagSize_City' + feature.properties.city))
+	L.marker(vertical_position,		{icon: L.divIcon({className: 'Flag_size_y Flag_size',html: y_size}),zIndexOffset: 1000, interactive: false}).addTo(eval('Layer1_TextFlagSize_City' + feature.properties.city))
+	}
+
+function createMilitaryFirefightingLayer(feature) {
+	if ( feature.properties.active == true && feature.properties.role == 8 ) {
+		const firefighting_influence = ( feature.properties.inf  * 350 / 100 )
+		const x0=( feature.geometry.coordinates[0][0][0] - firefighting_influence )
+		const x1=( feature.geometry.coordinates[0][2][0] + firefighting_influence )
+		const y0=( feature.geometry.coordinates[0][0][1] - firefighting_influence )
+		const y1=( feature.geometry.coordinates[0][2][1] + firefighting_influence )
+		const Firefighting_Rectangle = L.rectangle([xy([x0, y0]),xy([x1, y1])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false})
+			eval('Firefighting_Rectangle.addTo(Layer1_Firefighting_City' + feature.properties.city + ');')
+		}
+	}
+
+// POKUD AUTOCOMPLETE FUNKCI DAM PRIMO DO BUTTON ONCLICK PAK TO TAM NEFUNGUJE MUSUIM TO MIT TAKHLE
+function runAutocomplete_flag_id() {
+	autocomplete(document.getElementById("myInput1"), Autocomplete_AllFlagIds);
+	}
+
+function runAutocomplete_flag_names() {
+	autocomplete(document.getElementById("myInput2"), Autocomplete_AllFlagNames);
+	}
+
+function runAutocomplete_account_names() {
+	autocomplete(document.getElementById("myInput3"), ACCOUNT_NAME);
+	}
+
+function runAutocomplete_house_names() {
+	autocomplete(document.getElementById("myInput4"), ACCOUNT_HOUSE);
+	}
+
+function Search_Button_1() {                                 
+	const SearchForm = document.getElementById('search_form_1');
+	console.log('Search: ' + SearchForm.elements[0].value);  
+	let text = '<b>Results:</b>';                                                            
+	text += getFlagInfoFromID(Number(SearchForm.elements[0].value)) + '<br>';
+	document.getElementById("search_form_result1").innerHTML = text;
+	document.getElementById("button01").disabled = false;
+	}
+
+function GoToFlag_Button_1() {
+	const SearchForm = document.getElementById('search_form_1');
+	console.log('Go To Flag Id: ' + SearchForm.elements[0].value);
+	Jump_to_Flag_from_ID(SearchForm.elements[0].value);
+	}
+
+function Search_Button_2() {                                 
+	const SearchForm = document.getElementById('search_form_2');
+	console.log('Search: ' + SearchForm.elements[0].value);
+	let text = '<b>Results:</b>';                                                            
+	text += getFlagInfoFromID(getFlagIDFromName(SearchForm.elements[0].value)) + '<br>';
+	document.getElementById("search_form_result2").innerHTML = text;
+	document.getElementById("button02").disabled = false;
+	}
+
+function GoToFlag_Button_2() {
+	const SearchForm = document.getElementById('search_form_2');
+	console.log('Go To Flag Name: ' + SearchForm.elements[0].value);
+	Jump_to_Flag_from_ID(getFlagIDFromName(SearchForm.elements[0].value));
+	}
+
+function Jump_to_Flag_from_ID(value) {
+	value = Number(value)
+	for (const cityGeoJSON of All_Flags_city) {
+		const feature = cityGeoJSON.features.find(f => f.id === value);
+		if (feature) {
+			const x = ( feature.geometry.coordinates[0][0][0] + ( ( feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] ) / 2 ));
+			const y = ( feature.geometry.coordinates[0][0][1] + ( ( feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] ) / 2 ));
+			const city = feature.properties.city
+			CITY_NAME.forEach((value, index) => {
+				eval('Layer0_City' + index + '.removeFrom(map)') 
+				});
+			eval('Layer0_City' + city + '.addTo(map)')
+			map.closePopup();
+			map.removeLayer(SearchMarker);
+			SearchMarker = new L.marker(xy([x, y])).on('click', function(e) { map.removeLayer(SearchMarker);});
+			map.addLayer(SearchMarker);
+			const PopupText = '<abbr style="white-space: nowrap;">Flag ID: ' + value + '</abbr>'
+			SearchMarker.bindPopup(PopupText).openPopup();
+			map.setView( xy([x, y]));
+			console.log('Jumped to Flag Id: ' + value);
+			return null;
+			}
+		}
+	return null;
+	}
+
+function Search_Button_3() {
+	const SearchForm = document.getElementById('search_form_3');
+	console.log('Search: ' + SearchForm.elements[0].value);
+	let text = '<b>Results:</b>'
+	text += '<table style="white-space: nowrap;"><tr>'
+	text += '<td>House:</td>'
+	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
+	text += '<tr><td>Current Descendant:</td>'
+	text += '<td>' + ACCOUNT_NAME[ACCOUNT_NAME.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
+	text += '<tr><td>Account ID:</td>'
+	text += '<td>' + ACCOUNT_NAME.indexOf(SearchForm.elements[0].value) + '</td></tr>'
+	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
+	text += getAllFlagsForID(ACCOUNT_NAME.indexOf(SearchForm.elements[0].value));
+	text += '</table>'
+	document.getElementById("search_form_result3").innerHTML = text;
+	document.getElementById("button03").disabled = false;
+	}
+
+function Show_only_account_id_3() {
+	Show_only_account_id = ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value);
+	Reset_style_of_Geojson_Flags_Layers();
+	document.getElementById("Disable_Highlight_Button").style.display = "flex";
+	document.getElementById("button03").disabled = true;
+	}
+
+function Search_Button_4() {
+	const SearchForm = document.getElementById('search_form_4');
+	console.log('Search: ' + SearchForm.elements[0].value);
+	let text = '<b>Results:</b>'
+	text += '<table style="white-space: nowrap;"><tr>'
+	text += '<td>House:</td>'
+	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
+	text += '<tr><td>Current Descendant:</td>'
+	text += '<td>' + ACCOUNT_NAME[ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
+	text += '<tr><td>Account ID:</td>'
+	text += '<td>' + ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value) + '</td></tr>'
+	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
+	text += getAllFlagsForID(ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value));
+	text += '</table>'
+	document.getElementById("search_form_result4").innerHTML = text;
+	document.getElementById("button04").disabled = false;
+	}
+
+function Show_only_account_id_4() {
+	Show_only_account_id = ACCOUNT_HOUSE.indexOf(document.getElementById('search_form_4').elements[0].value);
+	Reset_style_of_Geojson_Flags_Layers();
+	document.getElementById("Disable_Highlight_Button").style.display = "flex";
+	document.getElementById("button04").disabled = true;
+	}
+
+function Reset_style_of_Geojson_Flags_Layers() {
+	CITY_NAME.forEach((value, index) => {
+		eval('Layer1_Flags_ColorByRole_City' + index + '.resetStyle()')
+		eval('Layer1_Flags_ColorByRepair_City' + index + '.resetStyle()')
+		eval('Layer1_Flags_ColorByOwner_City' + index + '.resetStyle()')
+		eval('Layer1_Flags_ColorByEcoPow_City' + index + '.resetStyle()')
+		});
 	}
 
 function getFlagIDFromName(FlagName) {
-	for (const cityGeoJSON of allFlagsCities) {
+	for (const cityGeoJSON of All_Flags_city) {
 		const feature = cityGeoJSON.features.find(f => f.properties.name === FlagName);
 		if (feature) {
 			console.log('Flag Name To ID: "' + FlagName + '" = ' + feature.id)
@@ -417,7 +581,7 @@ function getFlagIDFromName(FlagName) {
 	}
 
 function getFlagInfoFromID(FlagID) {
-	for (const cityGeoJSON of allFlagsCities) {
+	for (const cityGeoJSON of All_Flags_city) {
 		const feature = cityGeoJSON.features.find(f => f.id === FlagID);
 		if (feature) {
 			let html =''
@@ -451,7 +615,7 @@ function getFlagInfoFromID(FlagID) {
 function getAllFlagsForID(AccountID) {
 	const breakAfter = 20;
 	let cityResults = [];
-	allFlagsCities.forEach((cityGeoJSON, index) => {
+	All_Flags_city.forEach((cityGeoJSON, index) => {
 		if (!cityGeoJSON || !cityGeoJSON.features) return;
 		const filteredFeatures = cityGeoJSON.features.filter(feature =>
 			feature.properties.owner == AccountID
@@ -474,137 +638,8 @@ function getAllFlagsForID(AccountID) {
 	const finalResult = cityResults.join('');
 	return finalResult;
 	}
-function Jump_to_Flag_from_ID(value) {
-	value = Number(value)
-	for (const cityGeoJSON of allFlagsCities) {
-		const feature = cityGeoJSON.features.find(f => f.id === value);
-		if (feature) {
-			const x = ( feature.geometry.coordinates[0][0][0] + ( ( feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] ) / 2 ));
-			const y = ( feature.geometry.coordinates[0][0][1] + ( ( feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] ) / 2 ));
-			const city = feature.properties.city
-			CITY_NAME.forEach((value, index) => {
-				eval('Layer0_City' + index + '.removeFrom(map)') 
-				});
-			eval('Layer0_City' + city + '.addTo(map)')
-			map.closePopup();
-			map.removeLayer(SearchMarker);
-			SearchMarker = new L.marker(xy([x, y])).on('click', function(e) { map.removeLayer(SearchMarker);});
-			map.addLayer(SearchMarker);
-			const PopupText = '<abbr style="white-space: nowrap;">Flag ID: ' + value + '</abbr>'
-			SearchMarker.bindPopup(PopupText).openPopup();
-			map.setView( xy([x, y]));
-			console.log('Jumped to Flag Id: ' + value);
-			return null;
-			}
-		}
-	return null;
-	}
 
-function GoToFlag_Button_1() {
-	const SearchForm = document.getElementById('search_form_1');
-	console.log('Go To Flag Id: ' + SearchForm.elements[0].value);
-	Jump_to_Flag_from_ID(SearchForm.elements[0].value);
-	}
-
-function GoToFlag_Button_2() {
-	const SearchForm = document.getElementById('search_form_2');
-	console.log('Go To Flag Name: ' + SearchForm.elements[0].value);
-	Jump_to_Flag_from_ID(getFlagIDFromName(SearchForm.elements[0].value));
-	}
-
-function Search_Button_1() {                                 
-	const SearchForm = document.getElementById('search_form_1');
-	console.log('Search: ' + SearchForm.elements[0].value);  
-	let text = '<b>Results:</b>';                                                            
-	text += getFlagInfoFromID(Number(SearchForm.elements[0].value)) + '<br>';
-	document.getElementById("search_form_result1").innerHTML = text;
-	document.getElementById("button01").disabled = false;
-	}
-
-function Search_Button_2() {                                 
-	const SearchForm = document.getElementById('search_form_2');
-	console.log('Search: ' + SearchForm.elements[0].value);
-	let text = '<b>Results:</b>';                                                            
-	text += getFlagInfoFromID(getFlagIDFromName(SearchForm.elements[0].value)) + '<br>';
-	document.getElementById("search_form_result2").innerHTML = text;
-	document.getElementById("button02").disabled = false;
-	}
-
-function Search_Button_3() {
-	const SearchForm = document.getElementById('search_form_3');
-	console.log('Search: ' + SearchForm.elements[0].value);
-	let text = '<b>Results:</b>'
-	text += '<table style="white-space: nowrap;"><tr>'
-	text += '<td>House:</td>'
-	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_NAME.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
-	text += '<tr><td>Current Descendant:</td>'
-	text += '<td>' + ACCOUNT_NAME[ACCOUNT_NAME.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
-	text += '<tr><td>Account ID:</td>'
-	text += '<td>' + ACCOUNT_NAME.indexOf(SearchForm.elements[0].value) + '</td></tr>'
-	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
-	text += getAllFlagsForID(ACCOUNT_NAME.indexOf(SearchForm.elements[0].value));
-	text += '</table>'
-	document.getElementById("search_form_result3").innerHTML = text;
-	document.getElementById("button03").disabled = false;
-	}
-
-function Search_Button_4() {
-	const SearchForm = document.getElementById('search_form_4');
-	console.log('Search: ' + SearchForm.elements[0].value);
-	let text = '<b>Results:</b>'
-	text += '<table style="white-space: nowrap;"><tr>'
-	text += '<td>House:</td>'
-	text += '<td>' + ACCOUNT_HOUSE[ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
-	text += '<tr><td>Current Descendant:</td>'
-	text += '<td>' + ACCOUNT_NAME[ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value)] + '</td></tr>'
-	text += '<tr><td>Account ID:</td>'
-	text += '<td>' + ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value) + '</td></tr>'
-	text += '<tr><td colspan="2">Owned Flags:</td></tr>';
-	text += getAllFlagsForID(ACCOUNT_HOUSE.indexOf(SearchForm.elements[0].value));
-	text += '</table>'
-	document.getElementById("search_form_result4").innerHTML = text;
-	document.getElementById("button04").disabled = false;
-	}
-
-function Show_only_account_id_3() {
-	Show_only_account_id = ACCOUNT_NAME.indexOf(document.getElementById('search_form_3').elements[0].value);
-	Reset_style_of_Geojson_Flags_Layers();
-	document.getElementById("Disable_Highlight_Button").style.display = "flex";
-	document.getElementById("button03").disabled = true;
-	}
-
-function Show_only_account_id_4() {
-	Show_only_account_id = ACCOUNT_HOUSE.indexOf(document.getElementById('search_form_4').elements[0].value);
-	Reset_style_of_Geojson_Flags_Layers();
-	document.getElementById("Disable_Highlight_Button").style.display = "flex";
-	document.getElementById("button04").disabled = true;
-	}
-
-function Reset_style_of_Geojson_Flags_Layers() {
-	CITY_NAME.forEach((value, index) => {
-		eval('Layer1_Flags_ColorByRole_City' + index + '.resetStyle()')
-		eval('Layer1_Flags_ColorByRepair_City' + index + '.resetStyle()')
-		eval('Layer1_Flags_ColorByOwner_City' + index + '.resetStyle()')
-		eval('Layer1_Flags_ColorByEcoPow_City' + index + '.resetStyle()')
-		});
-	}
-
-function runAutocomplete_flag_id() {
-	autocomplete(document.getElementById("myInput1"), Autocomplete_AllFlagIds);
-	}
-
-function runAutocomplete_flag_names() {
-	autocomplete(document.getElementById("myInput2"), Autocomplete_AllFlagNames);
-	}
-
-function runAutocomplete_account_names() {
-	autocomplete(document.getElementById("myInput3"), ACCOUNT_NAME);
-	}
-
-function runAutocomplete_house_names() {
-	autocomplete(document.getElementById("myInput4"), ACCOUNT_HOUSE);
-	}
-function generateTable(ArrayWithData, IndexInSubArray) {
+function generateLeaderboardTable(ArrayWithData, IndexInSubArray) {
 	const entries = Object.entries(ArrayWithData).filter(([key, value]) => !isNaN(key) && Array.isArray(value));
 	entries.sort((a,b) => Number(b[1][IndexInSubArray]) - Number(a[1][IndexInSubArray]));
 	let html = `<table class='popup_table'>`;
@@ -619,24 +654,6 @@ function generateTable(ArrayWithData, IndexInSubArray) {
 
 function formatNumberWithDots(NumberWithoutDots) {
 	return NumberWithoutDots.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-	}
-
-function parseDate(StringWithGeneratedTime) {
-	const [date, time] = StringWithGeneratedTime.split('_');
-	const [year, month, day] = date.split('/').map(Number);
-	const [hour, minute] = time.split(':').map(Number);
-	return new Date(Date.UTC(year, month - 1, day, hour, minute));
-	}
-  
-function update_tick_timer() {
-	const now = new Date();
-	let diff = Generated_time_edited - now; // ms difference
-	diff = Math.abs(diff);
-	const totalSeconds = Math.floor(diff / 1000);
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
-	const seconds = totalSeconds % 60;
-	TimerElement.textContent =`Last update ${hours}h ${minutes}m ${seconds}s ago`;
 	}
 
 function function_select_first_marker(e) {
@@ -716,7 +733,7 @@ function function_get_selection_influence () {
 	marker_first = L.marker(temp1, {draggable: true}).addTo(featureGroup_Legend);
 	marker_second = L.marker(temp2, {draggable: true}).addTo(featureGroup_Legend);
 	rectangle_from_markers = L.rectangle([xy([Selection_x0, Selection_y0]),xy([Selection_x1, Selection_y1])], {color: 'Blue',fillColor: 'SkyBlue', weight: 3, fillOpacity: 0.9, interactive: false}).addTo(featureGroup_Legend);
-	L.geoJson(allFlagsCities, {
+	L.geoJson(All_Flags_city, {
 		onEachFeature: function(feature, layer){
 			let FlagIsAlreadyThere = 0
 			let OtherFlag_x0 = feature.geometry.coordinates[0][0][0]
@@ -765,7 +782,7 @@ function function_get_selection_influence () {
 	if (Selection_is_empty == false){
 		WARNING += "<h1 style='color: red; line-height: 0.4; white-space: nowrap;'>Flag is already there</h1>"
 		}
-	text1=`
+	InfluenceTable=`
 		<table class='popup_table'><thead>${WARNING}</thead><tbody>
 		<tr><td>Selection</td><td>${SelectionSizeX} x ${SelectionSizeY}</td></tr>
 		<tr><td colspan="2"><b>Influence from role</b></td></tr>
@@ -792,7 +809,7 @@ function function_get_selection_influence () {
 		`;
 	var popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false})
 			.setLatLng(xy([Selection_x1, (Selection_y1 + 60)]))
-			.setContent(text1)
+			.setContent(InfluenceTable)
 			.openOn(featureGroup_Legend);
 	}
 
@@ -803,226 +820,293 @@ function changeFontSizeForClass(CssClassName, TargetFontSize) {
 		});
 	}
 
-function generateArray_Autocomplete_AllFlagIds() {
-	const allFeatures = allFlagsCities.flatMap(flag => flag.features);
-	globalThis.Autocomplete_AllFlagIds = allFeatures.map(feature => feature.id.toString());
-	return null;
-	}
+function function_highlightFeature(e) {
+		const layer = e.target;
 
-function generateArray_Autocomplete_AllFlagNames() {
-	const allFeatures = allFlagsCities.flatMap(flag => flag.features);
-	globalThis.Autocomplete_AllFlagNames = allFeatures.map(feature => feature.properties.name.toString());
-	return null;
-	}
-
-function generateArray_ACCOUNT_NAME() {
-	globalThis.ACCOUNT_NAME = []
-	ACCOUNT_NAME.push("");
-	for (let i = 1; i < Account_data.length; i++) {
-		ACCOUNT_NAME.push(Account_data[i][22]);
-		}
-	return null;
-	}
-
-function generateArray_ACCOUNT_HOUSE() {
-	globalThis.ACCOUNT_HOUSE = []
-	ACCOUNT_HOUSE.push("");
-	for (let i = 1; i < Account_data.length; i++) {
-		ACCOUNT_HOUSE.push(Account_data[i][23]);
-		}
-	return null;
-	}
-
-function declareLayer0_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer0_City' + index + ' = L.geoJson([])') 
-  		if (index == 0) {
-  			eval('Layer0_City' + index + '.addTo(map)')
-			}
-		});
-	}
-
-function declareLayer0_Overlays() {
-	globalThis.Layer0_Overlay_Firefighting = L.featureGroup([]);
-	globalThis.Layer0_Overlay_TaxBreakPoints = L.featureGroup([]);
-	globalThis.Layer0_Overlay_RoleImages = L.featureGroup([]).addTo(map);
-	globalThis.Layer0_Overlay_InfluenceMouseOver = L.featureGroup([]);
-	globalThis.Layer0_Overlay_TextFlagSize = L.featureGroup([]);
-	}
-
-function declareLayer1_Image_InactiveFlags_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer1_Image_InactiveFlags_City' + index + ' = L.featureGroup([])') 
-  		if (index == 0) {
-  			eval('Layer1_Image_InactiveFlags_City' + index + '.addTo(Layer0_City' + index + ')')
-			}
-		});
-	}
-	
-function declareLayer1_Image_RoleFlags_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer1_Image_RoleFlags_City' + index + ' = L.featureGroup([])') 
-		});
-	}
-	
-function declareLayer1_TextFlagSize_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer1_TextFlagSize_City' + index + ' = L.featureGroup([])') 
-		});
-	}
-
-function declareLayer1_Flags_ColorByRole_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer1_Flags_ColorByRole_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Role,onEachFeature})') 
-  		if (index == 0) {
-  			eval('Layer1_Flags_ColorByRole_City' + index + '.addTo(Layer0_City' + index + ')')
-			}
-		});
-	}
-
-function declareLayer1_Flags_ColorByRepair_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer1_Flags_ColorByRepair_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Repair,onEachFeature})') 
-		});
-	}
-	
-function declareLayer1_Flags_ColorByOwner_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer1_Flags_ColorByOwner_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Owner,onEachFeature})') 
-		});
-	}
-	
-function declareLayer1_Flags_ColorByEcoPow_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.Layer1_Flags_ColorByEcoPow_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Economic_Power,onEachFeature})') 
-		});
-	}
-
-function declareLayer1_Firefighting_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.' + 'Layer1_Firefighting_City' + index + ' = L.layerGroup([])')
-		if (index == 0) {
-  			eval('Layer1_Firefighting_City' + index + '.addTo(Layer0_Overlay_Firefighting)')
-			}
-		});
-	}
-
-function declareLayer1_TaxBreakPoints_City() {
-	CITY_NAME.forEach((value, index) => {
-  		eval('globalThis.' + 'Layer1_TaxBreakPoints_City' + index + ' = L.layerGroup([])')
-		if (index == 0) {
-  			eval('Layer1_TaxBreakPoints_City' + index + '.addTo(Layer0_Overlay_TaxBreakPoints)')
-			}
-		});
-	}
-
-function declareLayerStyle_Role() {
-	globalThis.LayerStyle_Role = L.featureGroup([]).addTo(map)
-	LayerStyle_Role.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_role.addTo(map)};})
-	LayerStyle_Role.on('remove',(e)=>{legend_role.remove();})
-	CITY_NAME.forEach((value, index) => {
-  		eval('LayerStyle_Role.on("add",(e)=>{Layer1_Flags_ColorByRole_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-  		eval('LayerStyle_Role.on("remove",(e)=>{Layer1_Flags_ColorByRole_City' + index + '.removeFrom(Layer0_City' + index + ');})')
-		});
-	}
-
-function declareLayerStyle_Repair() {
-	globalThis.LayerStyle_Repair = L.featureGroup([])
-	LayerStyle_Repair.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_repair.addTo(map)};})
-	LayerStyle_Repair.on('remove',(e)=>{legend_repair.remove();})
-	CITY_NAME.forEach((value, index) => {
-  		eval('LayerStyle_Repair.on("add",(e)=>{Layer1_Flags_ColorByRepair_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-  		eval('LayerStyle_Repair.on("remove",(e)=>{Layer1_Flags_ColorByRepair_City' + index + '.removeFrom(Layer0_City' + index + ');})')
-		});
-	}
-
-function declareLayerStyle_Owner() {
-	globalThis.LayerStyle_Owner = L.featureGroup([])
-	LayerStyle_Owner.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_owner.addTo(map)};})
-	LayerStyle_Owner.on('remove',(e)=>{legend_owner.remove();})
-	CITY_NAME.forEach((value, index) => {
-  		eval('LayerStyle_Owner.on("add",(e)=>{Layer1_Flags_ColorByOwner_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-  		eval('LayerStyle_Owner.on("remove",(e)=>{Layer1_Flags_ColorByOwner_City' + index + '.removeFrom(Layer0_City' + index + ');})')
-		});
-	}
-
-function declareLayerStyle_EconomicPower() {
-	globalThis.LayerStyle_EconomicPower = L.featureGroup([])
-	LayerStyle_EconomicPower.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_EcoPow.addTo(map)};})
-	LayerStyle_EconomicPower.on('remove',(e)=>{legend_EcoPow.remove();})
-	CITY_NAME.forEach((value, index) => {
-  		eval('LayerStyle_EconomicPower.on("add",(e)=>{Layer1_Flags_ColorByEcoPow_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-  		eval('LayerStyle_EconomicPower.on("remove",(e)=>{Layer1_Flags_ColorByEcoPow_City' + index + '.removeFrom(Layer0_City' + index + ');})')
-		});
-	}
-
-function declareLayer0_City0_events() {
-	CITY_NAME.forEach((value, index) => {
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_Firefighting_City' + index + '.addTo(Layer0_Overlay_Firefighting);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_TaxBreakPoints_City' + index + '.addTo(Layer0_Overlay_TaxBreakPoints);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_Image_RoleFlags_City' + index + '.addTo(Layer0_Overlay_RoleImages);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_TextFlagSize_City' + index + '.addTo(Layer0_Overlay_TextFlagSize);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer0_City' + index + '.bringToBack();});')
+		layer.setStyle({
+			weight: 7,
+			dashArray: '',
+			fillOpacity: 0.8
+			});
+		layer.bringToFront();
+		info.update(layer.feature);
 		
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_Firefighting_City' + index + '.removeFrom(Layer0_Overlay_Firefighting);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_TaxBreakPoints_City' + index + '.removeFrom(Layer0_Overlay_TaxBreakPoints);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_Image_RoleFlags_City' + index + '.removeFrom(Layer0_Overlay_RoleImages);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_TextFlagSize_City' + index + '.removeFrom(Layer0_Overlay_TextFlagSize);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{map.removeLayer(SearchMarker);});')
+		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == 1) {
+			if (layer.feature.properties.role != 0) {
+				const influence = layer.feature.properties.inf
+				const coordinates = [
+					[
+						xy((layer.feature.geometry.coordinates[0][0][0]) - influence,(layer.feature.geometry.coordinates[0][0][1]) - influence),
+						xy((layer.feature.geometry.coordinates[0][1][0]) + influence,(layer.feature.geometry.coordinates[0][1][1]) - influence),
+						xy((layer.feature.geometry.coordinates[0][2][0]) + influence,(layer.feature.geometry.coordinates[0][2][1]) + influence),
+						xy((layer.feature.geometry.coordinates[0][3][0]) - influence,(layer.feature.geometry.coordinates[0][3][1]) + influence),
+					],
+					[xy(layer.feature.geometry.coordinates[0][0]),xy(layer.feature.geometry.coordinates[0][1]),xy(layer.feature.geometry.coordinates[0][2]),xy(layer.feature.geometry.coordinates[0][3])]
+					]
+				Influence_Rectangle_MouseOver = L.polygon( coordinates, {weight: 0, fillColor: 'LimeGreen', fillOpacity: 0.4, interactive: false}).addTo(Layer0_Overlay_InfluenceMouseOver);
+				}
+			}
+	}	
+	
+function function_resetHighlight(e) {
+		const layer = e.target;
+
+		layer.setStyle({
+			weight: 1,
+			dashArray: '4',
+			fillOpacity: 0.8
+			});
+		layer.bringToBack();
+		info.update();
+
+		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == 1) {
+			Influence_Rectangle_MouseOver.removeFrom(Layer0_Overlay_InfluenceMouseOver)
+			}
+	}
+
+function onEachFeature(feature, layer) {	
+		layer.on({	
+			mouseover: function_highlightFeature,	
+			mouseout: function_resetHighlight,	
+			});
+		var popup_text=(`
+		<table class='popup_table'>
+		<tr><td>Name:</td>				<td><b>${feature.properties.name}</b></td></tr>
+		<tr><td>Owner:</td>				<td>${ACCOUNT_NAME[feature.properties.owner]}</td></tr>
+		<tr><td>House:</td>				<td>${ACCOUNT_HOUSE[feature.properties.owner]}</td></tr>
+		<tr><td>Role:</td>				<td>${FLAG_ROLE_NAME[feature.properties.role]}</td></tr>
+		<tr><td>Active:</td>			<td>${feature.properties.active}</td></tr>
+		<tr><td>Flag ID:</td>			<td>${feature.id}</td></tr>
+		<tr><td>Size:</td>				<td>${Math.abs(feature.geometry.coordinates[0][0][0] - feature.geometry.coordinates[0][2][0]) + 1} x ${Math.abs(feature.geometry.coordinates[0][0][1] - feature.geometry.coordinates[0][2][1]) + 1}</td></tr>
+		<tr><td>Economic Power:</td>	<td>${feature.properties.ep} %</td></tr>
+		<tr><td>Repair:</td>			<td>${feature.properties.repair} %</td></tr>
+		</table>
+		`)
+		layer.bindPopup(popup_text,{maxWidth: 1000,});
+	}
+
+function Style_Role(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_role(feature.properties.role)
+		}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_role(feature.properties.role)
+		};
+	return {
+		weight: 1,
+		opacity: 1,
+		color: getColor_active(feature.properties.active),
+		dashArray: '4',
+		fillOpacity: 0.8,
+		fillColor: color
+		};
+	}
+	
+function Style_Repair(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_repair(feature.properties.repair)
+		}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_repair(feature.properties.repair)
+		};
+	return {
+		weight: 1,
+		opacity: 1,
+		color: getColor_active(feature.properties.active),
+		dashArray: '4',
+		fillOpacity: 0.8,
+		fillColor: color
+		};
+	}
+
+function Style_Owner(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_owner(ACCOUNT_HOUSE[feature.properties.owner])
+		}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_owner(ACCOUNT_HOUSE[feature.properties.owner])
+		};
+	return {
+		weight: 1,
+		opacity: 1,
+		color: getColor_active(feature.properties.active),
+		dashArray: '4',
+		fillOpacity: 0.8,
+		fillColor: color
+		};
+	}
+
+function Style_Economic_Power(feature) {
+	let color = 'LightGray'
+	if (Show_only_account_id == 0) {
+		color = getColor_Economic_Power(feature.properties.ep)
+		}
+	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
+		color = getColor_Economic_Power(feature.properties.ep)
+		};
+	return {
+		weight: 1,
+		opacity: 1,
+		color: getColor_active(feature.properties.active),
+		dashArray: '4',
+		fillOpacity: 0.8,
+		fillColor: color
+		};
+	}
+
+function getColor_role(FlagRole) {
+	return  FlagRole == 0  ? FlagRoleColors[0]  :
+			FlagRole == 1  ? FlagRoleColors[1]  :
+			FlagRole == 2  ? FlagRoleColors[2]  :
+			FlagRole == 3  ? FlagRoleColors[3]  :
+			FlagRole == 4  ? FlagRoleColors[4]  :
+			FlagRole == 5  ? FlagRoleColors[5]  :
+			FlagRole == 6  ? FlagRoleColors[6]  :
+			FlagRole == 7  ? FlagRoleColors[7]  :
+			FlagRole == 8  ? FlagRoleColors[8]  :
+			FlagRole == 9  ? FlagRoleColors[9]  :
+			FlagRole == 10 ? FlagRoleColors[10] :
+			FlagRole == 11 ? FlagRoleColors[11] :
+			FlagRole == 12 ? FlagRoleColors[12] :
+			FlagRole == 13 ? FlagRoleColors[13] :
+			FlagRole == 14 ? FlagRoleColors[14] :
+			FlagRole == 15 ? FlagRoleColors[15] :
+			FlagRole == 16 ? FlagRoleColors[16] :
+			FlagRole == 17 ? FlagRoleColors[17] : "white" ;
+	}
+
+function getColor_active(FlagActive) {
+	return  FlagActive == true  ? "Green"	:
+			FlagActive == false ? "Red"		: "white" ;
+	}
+                        
+function getColor_repair(FlagRepair) {
+	return  FlagRepair > 70 ? "Chartreuse"		:
+			FlagRepair > 60 ? "LightSalmon"		:
+			FlagRepair > 50 ? "Coral"			:
+			FlagRepair > 40 ? "Tomato"			:
+			FlagRepair > 30 ? "OrangeRed"		:
+			FlagRepair > 20 ? "MediumPurple" 	:
+			FlagRepair >  0 ? "RebeccaPurple"	:
+			FlagRepair == 0 ? "white"			: "white" ;
+	}
+
+function getColor_owner(AccountHouseName) {
+	let sum = 0;
+	for (let i = 0; i < AccountHouseName.length; i++) {
+		sum += AccountHouseName.charCodeAt(i);
+		}
+	const r = (sum * 7) % 256; // change number in "sum * 7" to get different color, it must be prime number 
+	const g = (sum * 41) % 256; // prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
+	const b = (sum * 67) % 256;
+	return `#${[r, g, b]
+	.map((x) => x.toString(16).padStart(2, '0'))
+	.join('')}`;
+	}
+
+function getColor_Economic_Power(FlagEconomicPower) {
+	return  FlagEconomicPower == 300 ? "#0AF51A"	:
+			FlagEconomicPower >  250 ? "#23AC1F"	:
+			FlagEconomicPower >  200 ? "#22681B"	:
+			FlagEconomicPower >  150 ? "#F58F0A"	:
+			FlagEconomicPower >  100 ? "#AD6614"	:
+			FlagEconomicPower == 100 ? "#694014"	: "white" ;
+	}
+
+function parseDate(StringWithGeneratedTime) {
+	const [date, time] = StringWithGeneratedTime.split('_');
+	const [year, month, day] = date.split('/').map(Number);
+	const [hour, minute] = time.split(':').map(Number);
+	return new Date(Date.UTC(year, month - 1, day, hour, minute));
+	}
+  
+function update_tick_timer() {
+	const now = new Date();
+	let diff = Generated_time_edited - now; // ms difference
+	diff = Math.abs(diff);
+	const totalSeconds = Math.floor(diff / 1000);
+	const hours = Math.floor(totalSeconds / 3600);
+	const minutes = Math.floor((totalSeconds % 3600) / 60);
+	const seconds = totalSeconds % 60;
+	TimerElement.textContent =`Last update ${hours}h ${minutes}m ${seconds}s ago`;
+	}
+
+function generateBaseMapsChooser() {
+	CITY_NAME.forEach((value, index) => {
+		const value_without_spaces = value.replace(/ /g, '_')
+		eval('baseMaps.' + value_without_spaces + ' = ' + 'Layer0_City' + index)
 		});
 	}
 
-function declareLegend() {
-	globalThis.featureGroup_Legend = L.featureGroup([]);
-	}
-
-function createRoleImagesOnFlags(feature) {
-	if ( feature.properties.active == true && Img_role[feature.properties.role] != 0 ) {
-		L.imageOverlay(Img_role[feature.properties.role], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(eval('Layer1_Image_RoleFlags_City' + feature.properties.city))
-		}
-	}
-
-function createInactiveImagesOnFlags(feature) {
-	if ( feature.properties.active == false && feature.properties.role != 0 ) {
-		L.imageOverlay(Img_role[0], [xy(feature.geometry.coordinates[0][0]),xy(feature.geometry.coordinates[0][2])]).addTo(eval('Layer1_Image_InactiveFlags_City' + feature.properties.city))
-		}
-	}
-
-function createFlagSizesText(feature) {
-	const x_size = (feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] + 1)
-	const y_size = (feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] + 1)
-	const horizontal_position 	=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 2)),	(feature.geometry.coordinates[0][0][1] + (y_size / 5))	])
-	const vertical_position		=	xy([	(feature.geometry.coordinates[0][0][0] + (x_size / 5)),	(feature.geometry.coordinates[0][0][1] + (y_size / 2))	])
-	L.marker(horizontal_position,	{icon: L.divIcon({className: 'Flag_size_x Flag_size',html: x_size}),zIndexOffset: 1000, interactive: false}).addTo(eval('Layer1_TextFlagSize_City' + feature.properties.city))
-	L.marker(vertical_position,		{icon: L.divIcon({className: 'Flag_size_y Flag_size',html: y_size}),zIndexOffset: 1000, interactive: false}).addTo(eval('Layer1_TextFlagSize_City' + feature.properties.city))
-	}
-
-function createMilitaryFirefightingLayer(feature) {
-	if ( feature.properties.active == true && feature.properties.role == 8 ) {
-		const firefighting_influence = ( feature.properties.inf  * 350 / 100 )
-		const x0=( feature.geometry.coordinates[0][0][0] - firefighting_influence )
-		const x1=( feature.geometry.coordinates[0][2][0] + firefighting_influence )
-		const y0=( feature.geometry.coordinates[0][0][1] - firefighting_influence )
-		const y1=( feature.geometry.coordinates[0][2][1] + firefighting_influence )
-		const Firefighting_Rectangle = L.rectangle([xy([x0, y0]),xy([x1, y1])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false})
-			eval('Firefighting_Rectangle.addTo(Layer1_Firefighting_City' + feature.properties.city + ');')
-		}
-	}
-
-function generate_RoleImg_InactiveImg_FlagSizeText() {
-	allFlagsCities.forEach(
-		Flags_cityN => {
+function generateCityBoundsOrangeRectangles() {
+	All_Flags_city.forEach(
+		(Flags_cityN, index) => {
+			let x0 = 0
+			let y0 = 0
+			let x1 = 0
+			let y1 = 0
 			Flags_cityN.features.forEach(
 				feature => {
-					createRoleImagesOnFlags(feature)
-					createInactiveImagesOnFlags(feature)
-					createFlagSizesText(feature)
-					createMilitaryFirefightingLayer(feature)
+					x0 = Math.min(x0, feature.geometry.coordinates[0][0][0])
+					y0 = Math.min(y0, feature.geometry.coordinates[0][0][1])
+					x1 = Math.max(x1, feature.geometry.coordinates[0][2][0])
+					y1 = Math.max(y1, feature.geometry.coordinates[0][2][1])
+					}
+				)
+			x0 -= 1000
+			y0 -= 1000
+			x1 += 1000
+			y1 += 1000
+			eval(`L.rectangle([xy([x0, y0]),xy([x1, y1])], {color: "Orange",fill: false, weight: 10}).bindPopup("<abbr style='white-space: nowrap;'>No Flag is beyond this line<abbr>").addTo(Layer0_City` +  index + `)`)
+			}
+		)
+	}
+
+function generateMapBounds() {
+	globalThis.MapBounds = []
+	let x0 = 0
+	let y0 = 0
+	let x1 = 0
+	let y1 = 0
+	All_Flags_city.forEach(
+		(Flags_cityN, index) => {
+			Flags_cityN.features.forEach(
+				feature => {
+					x0 = Math.min(x0, feature.geometry.coordinates[0][0][0])
+					y0 = Math.min(y0, feature.geometry.coordinates[0][0][1])
+					x1 = Math.max(x1, feature.geometry.coordinates[0][2][0])
+					y1 = Math.max(y1, feature.geometry.coordinates[0][2][1])
 					}
 				)
 			}
 		)
+	const MaxBounds = Math.max(Math.abs(x0), Math.abs(y0), Math.abs(x1), Math.abs(y1)) + 5000
+	MapBounds[0] = -MaxBounds
+	MapBounds[1] = -MaxBounds
+	MapBounds[2] = MaxBounds
+	MapBounds[3] = MaxBounds
 	}
+
+function generateHtmlTableCitiesInfo() {
+	let html = "<table class='popup_table'>"
+	html += `<thead><tr><th colspan="8"><h2>Cities info</h2></th></tr></thead><tbody>`;
+	
+	All_Flags_city.forEach(
+		(Flags_cityN, index) => {
+			html += `	<tr><td colspan="8">&emsp;&emsp;&emsp;${CITY_NAME[index]}</td></tr>
+						<tr><td>${City_Info_fieldNames[0]}</td><td>${City_Info_fieldNames[4]}</td><td>${City_Info_fieldNames[2]}</td><td>${City_Info_fieldNames[3]}</td><td>${City_Info_fieldNames[5]}</td><td>${City_Info_fieldNames[6]}</td><td>${City_Info_fieldNames[7]}</td><td>${City_Info_fieldNames[8]}</td></tr>
+						<tr><td>${City_Info[index][0]}</td><td>${City_Info[index][4]}</td><td>${City_Info[index][2]}</td><td>${City_Info[index][3]}</td><td>${City_Info[index][5]}</td><td>${City_Info[index][6]}</td><td>${City_Info[index][7]}</td><td>${City_Info[index][2]}</td></tr>
+						<tr><td colspan="8"></td></tr>
+						`;
+			}
+		)
+	html += `</tbody></table>`;
+	return html
+	}
+	
 </script>
 <script>
 var map = L.map('map', {
@@ -1037,95 +1121,6 @@ var map = L.map('map', {
 	fadeAnimation: false,
 	});
 map.getRenderer(map).options.padding = 100; // How much to extend the clip area around the map view (relative to its size) e.g. 0.1 would be 10% of map view in each direction
-
-let SearchMarker = L.marker()
-const Select_Ignore_interactive_map_Rectangle = L.rectangle([[-10000000, -10000000],[10000000, 10000000]], {color: "gray", weight: 0, fillOpacity: 0, interactive: true});
-let Influence_Rectangle_MouseOver
-let Show_only_account_id = 0
-let marker_first = L.marker([0,0])
-let marker_second = L.marker([0,0])
-let rectangle_from_markers
-
-//<!-- Pulsing Marker -->
-var cssIcon = L.divIcon({
-	className: 'css-icon',
-	html: '<div class="gps_ring"></div>'
-	// Set marker width and height
-	,iconSize: [22,22]
-	// ,iconAnchor: [11,11]
-	});
-//<!-- Pulsing Marker -->
-
-//<!-- xy to yx to L.latLng -->
-var yx = L.latLng;
-var xy = function(x, y) {
-	if (Array.isArray(x)) {    // When doing xy([x, y]);
-		return yx(x[1], x[0]);
-		}
-	return yx(y, x);  // When doing xy(x, y);
-	};
-//<!-- xy to yx to L.latLng -->
-
-//<!--https://github.com/ablakey/Leaflet.SimpleGraticule --> 
-var SimpleGraticuleOptions = {
-	interval: 20,
-	showOriginLabel: true,
-	redraw: 'move',
-	zoomIntervals: [
-		{start: -5, end: -4, interval: 2048},
-		{start: -3, end: -3, interval: 1024},
-		{start: -2, end: -2, interval: 512},
-		{start: -1, end: -1, interval: 256},
-		{start: 0, end: 1, interval: 128},
-		{start: 2, end: 3, interval: 64}
-		]
-	};
-L.simpleGraticule(SimpleGraticuleOptions).addTo(map);
-//<!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
-
-const Img_role = []
-	Img_role[0] = './dist/inactive.svg'
-	Img_role[1] = './dist/farm.svg'
-	Img_role[2] = './dist/anvil.svg'
-	Img_role[3] = ''
-	Img_role[4] = './dist/shop.svg'
-	Img_role[5] = './dist/tent.svg'
-	Img_role[6] = './dist/longhouse.svg'
-	Img_role[7] = './dist/castle.svg'
-	Img_role[8] = './dist/sword.svg'
-	Img_role[9] = './dist/beer.svg'
-	Img_role[10] = './dist/stone.svg'
-	Img_role[11] = './dist/tree.svg'
-	Img_role[13] = ''
-	Img_role[14] = './dist/slave.svg'
-	Img_role[15] = ''
-	Img_role[16] = './dist/research.svg'
-	Img_role[17] = './dist/ship.svg'
-
-const FLAG_ROLE_NAME = ["","agricultural","craft","industrial","commercial","basic residential","affluent residential","luxury residential","military","cultural","stonecutter","sawmill","kiln","smelter","workforce","road","research","fishery",]
-map.setMaxBounds([[-55102,-55102], [55102,55102]]);
-generateArray_Autocomplete_AllFlagIds();
-generateArray_Autocomplete_AllFlagNames();
-generateArray_ACCOUNT_NAME();
-generateArray_ACCOUNT_HOUSE();
-declareLayer0_City();
-declareLayer0_Overlays();
-declareLayer1_Image_InactiveFlags_City();
-declareLayer1_Image_RoleFlags_City();
-declareLayer1_TextFlagSize_City();
-declareLayer1_Flags_ColorByRole_City();
-declareLayer1_Flags_ColorByRepair_City();
-declareLayer1_Flags_ColorByOwner_City();
-declareLayer1_Flags_ColorByEcoPow_City();
-declareLayer1_Firefighting_City();
-declareLayer1_TaxBreakPoints_City();
-declareLayerStyle_Role();
-declareLayerStyle_Repair();
-declareLayerStyle_Owner();
-declareLayerStyle_EconomicPower();
-declareLayer0_City0_events();
-declareLegend();
-generate_RoleImg_InactiveImg_FlagSizeText();
 map.on('zoomend', function () {
 	if (map.hasLayer(Layer0_Overlay_TextFlagSize) == 1) {
 		var zoomLevel = map.getZoom();
@@ -1163,27 +1158,97 @@ map.on('zoomend', function () {
 			}
 		}
 	});
-// These are pulsing markers for Tax Break Points/Zones
-L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City0);
-L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City0);
-L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City1);
-L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City1);
-L.marker(xy([24962, 16852])).addTo(Layer1_TaxBreakPoints_City1);
-L.marker(xy([24962, 16852]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City1);
-L.marker(xy([3460, 449])).addTo(Layer1_TaxBreakPoints_City1);
-L.marker(xy([3460, 449]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City1);
-L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City2);
-L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City2);
-L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City3);
-L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City3);
-L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City4);
-L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City4);
-// These are orange rectangles for boundary of map
-L.rectangle([xy([-7776, -6265]),xy([11447, 14509])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(Layer0_City0);
-L.rectangle([xy([-11783, -3748]),xy([51102, 17889])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(Layer0_City1);
-L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(Layer0_City2);
-L.rectangle([xy([-1128, -1128]),xy([1127, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(Layer0_City3);
-L.rectangle([xy([-1128, -1152]),xy([1398, 1127])], {color: 'Orange',fill: false, weight: 10}).bindPopup('No Flag is beyond this line').addTo(Layer0_City4);
+	
+let SearchMarker = L.marker()
+const Select_Ignore_interactive_map_Rectangle = L.rectangle([[-10000000, -10000000],[10000000, 10000000]], {color: "gray", weight: 0, fillOpacity: 0, interactive: true});
+let Influence_Rectangle_MouseOver
+let Show_only_account_id = 0
+let marker_first = L.marker([0,0])
+let marker_second = L.marker([0,0])
+let rectangle_from_markers
+
+//<!-- Pulsing Marker -->
+const cssIcon = L.divIcon({
+	className: 'css-icon',
+	html: '<div class="gps_ring"></div>'
+	// Set marker width and height
+	,iconSize: [22,22]
+	// ,iconAnchor: [11,11]
+	});
+//<!-- Pulsing Marker -->
+
+//<!-- xy to yx to L.latLng -->
+const yx = L.latLng;
+const xy = function(x, y) {
+	if (Array.isArray(x)) {    // When doing xy([x, y]);
+		return yx(x[1], x[0]);
+		}
+	return yx(y, x);  // When doing xy(x, y);
+	};
+//<!-- xy to yx to L.latLng -->
+
+//<!--https://github.com/ablakey/Leaflet.SimpleGraticule --> 
+const SimpleGraticuleOptions = {
+	interval: 20,
+	showOriginLabel: true,
+	redraw: 'move',
+	zoomIntervals: [
+		{start: -5, end: -4, interval: 2048},
+		{start: -3, end: -3, interval: 1024},
+		{start: -2, end: -2, interval: 512},
+		{start: -1, end: -1, interval: 256},
+		{start: 0, end: 1, interval: 128},
+		{start: 2, end: 3, interval: 64}
+		]
+	};
+L.simpleGraticule(SimpleGraticuleOptions).addTo(map);
+//<!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
+
+const Img_role = []
+	Img_role[0] = './dist/inactive.svg'
+	Img_role[1] = './dist/farm.svg'
+	Img_role[2] = './dist/anvil.svg'
+	Img_role[3] = ''
+	Img_role[4] = './dist/shop.svg'
+	Img_role[5] = './dist/tent.svg'
+	Img_role[6] = './dist/longhouse.svg'
+	Img_role[7] = './dist/castle.svg'
+	Img_role[8] = './dist/sword.svg'
+	Img_role[9] = './dist/beer.svg'
+	Img_role[10] = './dist/stone.svg'
+	Img_role[11] = './dist/tree.svg'
+	Img_role[13] = ''
+	Img_role[14] = './dist/slave.svg'
+	Img_role[15] = ''
+	Img_role[16] = './dist/research.svg'
+	Img_role[17] = './dist/ship.svg'
+generateAll_Flags_city();
+generateMapBounds();
+map.setMaxBounds([[MapBounds[0],MapBounds[1]], [MapBounds[2],MapBounds[3]]]);
+generateArray_Autocomplete_AllFlagIds();
+generateArray_Autocomplete_AllFlagNames();
+generateArray_ACCOUNT_NAME();
+generateArray_ACCOUNT_HOUSE();
+declareLayer0_City();
+declareLayer0_Overlays();
+declareLayer1_Image_InactiveFlags_City();
+declareLayer1_Image_RoleFlags_City();
+declareLayer1_TextFlagSize_City();
+declareLayer1_Flags_ColorByRole_City();
+declareLayer1_Flags_ColorByRepair_City();
+declareLayer1_Flags_ColorByOwner_City();
+declareLayer1_Flags_ColorByEcoPow_City();
+declareLayer1_Firefighting_City();
+declareLayer1_TaxBreakPoints_City();
+declareLayerStyle_Role();
+declareLayerStyle_Repair();
+declareLayerStyle_Owner();
+declareLayerStyle_EconomicPower();
+declareLayer0_City0_events();
+declareLegend();
+generate_RoleImg_InactiveImg_FlagSizeText();
+generateCityBoundsOrangeRectangles();
+
 //<!-- Info panel top right -->>
 const info = L.control();
 
@@ -1209,13 +1274,16 @@ info.update = function (feature) {
 
 info.addTo(map);
 //<!-- Info panel top right -->>
+
+text_bottom=`<a href="https://www.townforge.net/">Townforge</a> | <abbr title="${Generated_daemon_version} |  Generated at ${Generated_time_string} UTC / Blockchain height: ${Generated_blockchain_height} | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>`
 map.attributionControl.setPosition('bottomleft')
-map.attributionControl.setPrefix(`<a href="https://www.townforge.net/">Townforge</a> | <abbr title="${Generated_daemon_version} |  Generated at ${Generated_time_string} UTC / Blockchain height: ${Generated_blockchain_height} | Update should be each game tick"><abbr id="timer">Loading...</abbr></abbr>`)
+map.attributionControl.setPrefix(text_bottom)
 const Generated_time_edited = parseDate(Generated_time_string);// attribution tick timer
 const TimerElement = document.getElementById('timer');// attribution tick timer
 update_tick_timer();// attribution tick timer
 setInterval(update_tick_timer, 1000);// attribution tick timer
 L.control.zoom({position:'bottomleft'}).addTo(map)
+
 const legend_repair_text=`
 								 <div class="Legend_text_background_repair" style="background-color:Chartreuse"		>> 70%</div>   
 	<br class='Legend_br_height'><div class="Legend_text_background_repair" style="background-color:LightSalmon"	>> 60%</div>  
@@ -1234,38 +1302,35 @@ legend_repair.onAdd = function (map) {
 	return div;
 	};
 
-const legend_role_text=`
-								 <div class="Legend_text_background_role" style="background-color:white ">none                </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:LawnGreen ">agricultural        </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Cyan ">craft               </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:SaddleBrown ">industrial          </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Magenta ">commercial          </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Orange ">basic residential   </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:DarkOrange ">affluent residential</div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:OrangeRed ">luxury residential  </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:DarkSlateGray ">military            </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:MediumSlateBlue ">cultural            </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Silver">stonecutter         </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:ForestGreen">sawmill             </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:SandyBrown">kiln                </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:Tan">smelter             </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:NavajoWhite">workforce           </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:DimGray">road                </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:RebeccaPurple">research            </div>
-	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:RoyalBlue">fishery             </div>
+const legend_role_text=`                                                                             
+								 <div class="Legend_text_background_role" style="background-color:${FlagRoleColors[0]} ">none                </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[1]} ">agricultural        </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[2]} ">craft               </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[3]} ">industrial          </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[4]} ">commercial          </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[5]} ">basic residential   </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[6]} ">affluent residential</div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[7]} ">luxury residential  </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[8]} ">military            </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[9]} ">cultural            </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[10]}">stonecutter         </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[11]}">sawmill             </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[12]}">kiln                </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[13]}">smelter             </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[14]}">workforce           </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[15]}">road                </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[16]}">research            </div>
+	<br class='Legend_br_height'><div class="Legend_text_background_role" style="background-color:${FlagRoleColors[17]}">fishery             </div>
 	`
-
 const legend_role = L.control({position: 'bottomright'});
 legend_role.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
 	div.innerHTML = legend_role_text;
 	return div;
 	};       
-//default view
 legend_role.addTo(map);
         
 const legend_owner_text="Colors are generated from house name"
-
 const legend_owner = L.control({position: 'bottomright'});
 legend_owner.onAdd = function (map) {
 	const div = L.DomUtil.create('div', 'info legend');
@@ -1303,13 +1368,8 @@ legend_Influence_calculator.onAdd = function (map) {
 	return div;
 	};
 
-var baseMaps = {
-	'Helsengaard': Layer0_City0,
-	'Island': Layer0_City1,
-	'njkdcskjnds sdfsdf dffse errerw': Layer0_City2,
-	'ABC123': Layer0_City3,
-	'Town': Layer0_City4,
-	};
+var baseMaps = new Object();
+generateBaseMapsChooser()
 var baseMaps_overlays = {
 	'Firefighting range': Layer0_Overlay_Firefighting,
 	'Tax break points': Layer0_Overlay_TaxBreakPoints,
@@ -1326,6 +1386,7 @@ var overlays = {
 var overlays_overlays = {};
 var layerControl = L.control.layers(baseMaps,baseMaps_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
 var layerControl = L.control.layers(overlays,overlays_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
+
 const Burger_Search_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
 L.control.burgerMenu({
 	title: "Search Menu",
@@ -1393,119 +1454,73 @@ L.control.burgerMenu({
 			}},
 		],
 	}).addTo(map);
+
 const Burger_Leaderboard_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
 const Burger_City_Info_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
 L.control.burgerMenu({
 	title: "Info Menu",
 	menuIcon: "<img src='./dist/info.svg' style='width:20px;'>" ,
 	menuItems: [
-		{title: "City info",
-			menuItems: [
-				{title: "Helsengaard",onClick: () => {Burger_City_Info_popup.setContent(`
-					<table class='popup_table'>
-					<tr><td>Name:</td><td><b>Helsengaard</b></td></tr>
-					<tr><td>ID:</td><td>0</td></tr>
-					<tr><td>Level (max):</td><td>6 (6)</td></tr>
-					<tr><td>Mayor</td><td>Sigrid Sigrúnarsdóttir</td></tr>
-					<tr><td>Citizens:</td><td>15</td></tr>
-					<tr><td>Flags:</td><td>471</td></tr>
-					<tr><td>Flags Inactive:</td><td>75</td></tr>
-					<tr><td>Flags Empty:</td><td>73</td></tr>
-					</table>`
-					).openOn(map);},},
-				{title: "Island",onClick: () => {Burger_City_Info_popup.setContent(`
-					<table class='popup_table'>
-					<tr><td>Name:</td><td><b>Island</b></td></tr>
-					<tr><td>ID:</td><td>1</td></tr>
-					<tr><td>Level (max):</td><td>5 (5)</td></tr>
-					<tr><td>Mayor</td><td>Meloun</td></tr>
-					<tr><td>Citizens:</td><td>2</td></tr>
-					<tr><td>Flags:</td><td>33</td></tr>
-					<tr><td>Flags Inactive:</td><td>4</td></tr>
-					<tr><td>Flags Empty:</td><td>3</td></tr>
-					</table>`
-					).openOn(map);},},
-				{title: "njkdcskjnds sdfsdf dffse errerw",onClick: () => {Burger_City_Info_popup.setContent(`
-					<table class='popup_table'>
-					<tr><td>Name:</td><td><b>njkdcskjnds sdfsdf dffse errerw</b></td></tr>
-					<tr><td>ID:</td><td>2</td></tr>
-					<tr><td>Level (max):</td><td>0 (0)</td></tr>
-					<tr><td>Mayor</td><td>Meloun</td></tr>
-					<tr><td>Citizens:</td><td>1</td></tr>
-					<tr><td>Flags:</td><td>1</td></tr>
-					<tr><td>Flags Inactive:</td><td>0</td></tr>
-					<tr><td>Flags Empty:</td><td>0</td></tr>
-					</table>`
-					).openOn(map);},},
-				{title: "ABC123",onClick: () => {Burger_City_Info_popup.setContent(`
-					<table class='popup_table'>
-					<tr><td>Name:</td><td><b>ABC123</b></td></tr>
-					<tr><td>ID:</td><td>3</td></tr>
-					<tr><td>Level (max):</td><td>0 (0)</td></tr>
-					<tr><td>Mayor</td><td>Meloun</td></tr>
-					<tr><td>Citizens:</td><td>1</td></tr>
-					<tr><td>Flags:</td><td>1</td></tr>
-					<tr><td>Flags Inactive:</td><td>0</td></tr>
-					<tr><td>Flags Empty:</td><td>0</td></tr>
-					</table>`
-					).openOn(map);},},
-				{title: "Town",onClick: () => {Burger_City_Info_popup.setContent(`
-					<table class='popup_table'>
-					<tr><td>Name:</td><td><b>Town</b></td></tr>
-					<tr><td>ID:</td><td>4</td></tr>
-					<tr><td>Level (max):</td><td>1 (1)</td></tr>
-					<tr><td>Mayor</td><td>Meloun</td></tr>
-					<tr><td>Citizens:</td><td>2</td></tr>
-					<tr><td>Flags:</td><td>2</td></tr>
-					<tr><td>Flags Inactive:</td><td>0</td></tr>
-					<tr><td>Flags Empty:</td><td>0</td></tr>
-					</table>`
-					).openOn(map);},},
-			],
-			},
+		{title: "Cities info",onClick: () => {Burger_City_Info_popup.setContent(generateHtmlTableCitiesInfo()).openOn(map);},},
 		{title: "Leaderboards",
 			menuItems: [
 				{title: "Gold",
 				menuItems: [
-					{title: Account_data_fieldNames[0],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 0)).openOn(map);},},
-					{title: Account_data_fieldNames[4],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 4)).openOn(map);},},
-					{title: Account_data_fieldNames[6],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 6)).openOn(map);},},
-					{title: Account_data_fieldNames[17],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 17)).openOn(map);},},
+					{title: Account_data_fieldNames[0],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 0)).openOn(map);},},
+					{title: Account_data_fieldNames[4],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 4)).openOn(map);},},
+					{title: Account_data_fieldNames[6],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 6)).openOn(map);},},
+					{title: Account_data_fieldNames[17],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 17)).openOn(map);},},
 					],},
 				{title: "Food",
 				menuItems: [
-					{title: Account_data_fieldNames[5],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 5)).openOn(map);},},
-					{title: Account_data_fieldNames[7],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 7)).openOn(map);},},
-					{title: Account_data_fieldNames[18],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 18)).openOn(map);},},
+					{title: Account_data_fieldNames[5],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 5)).openOn(map);},},
+					{title: Account_data_fieldNames[7],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 7)).openOn(map);},},
+					{title: Account_data_fieldNames[18],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 18)).openOn(map);},},
 					],},
 				{title: "Food - Animals",
 				menuItems: [
-					{title: Account_data_fieldNames[1],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 1)).openOn(map);},},
-					{title: Account_data_fieldNames[2],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 2)).openOn(map);},},
-					{title: Account_data_fieldNames[3],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 3)).openOn(map);},},
+					{title: Account_data_fieldNames[1],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 1)).openOn(map);},},
+					{title: Account_data_fieldNames[2],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 2)).openOn(map);},},
+					{title: Account_data_fieldNames[3],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 3)).openOn(map);},},
 					],},
 				{title: "Other",
 				menuItems: [
-					{title: Account_data_fieldNames[8],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 8)).openOn(map);},},
-					{title: Account_data_fieldNames[9],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 9)).openOn(map);},},
-					{title: Account_data_fieldNames[10],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 10)).openOn(map);},},
-					{title: Account_data_fieldNames[11],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 11)).openOn(map);},},
-					{title: Account_data_fieldNames[12],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 12)).openOn(map);},},
-					{title: Account_data_fieldNames[13],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 13)).openOn(map);},},
-					{title: Account_data_fieldNames[14],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 14)).openOn(map);},},
-					{title: Account_data_fieldNames[15],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 15)).openOn(map);},},
-					{title: Account_data_fieldNames[16],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 16)).openOn(map);},},
+					{title: Account_data_fieldNames[8],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 8)).openOn(map);},},
+					{title: Account_data_fieldNames[9],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 9)).openOn(map);},},
+					{title: Account_data_fieldNames[10],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 10)).openOn(map);},},
+					{title: Account_data_fieldNames[11],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 11)).openOn(map);},},
+					{title: Account_data_fieldNames[12],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 12)).openOn(map);},},
+					{title: Account_data_fieldNames[13],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 13)).openOn(map);},},
+					{title: Account_data_fieldNames[14],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 14)).openOn(map);},},
+					{title: Account_data_fieldNames[15],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 15)).openOn(map);},},
+					{title: Account_data_fieldNames[16],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 16)).openOn(map);},},
 					],},
 				{title: "Sustained",
 				menuItems: [
-					{title: Account_data_fieldNames[19],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 19)).openOn(map);},},
-					{title: Account_data_fieldNames[20],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 20)).openOn(map);},},
-					{title: Account_data_fieldNames[21],onClick: () => {Burger_Leaderboard_popup.setContent(generateTable(Account_data, 21)).openOn(map);},},
+					{title: Account_data_fieldNames[19],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 19)).openOn(map);},},
+					{title: Account_data_fieldNames[20],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 20)).openOn(map);},},
+					{title: Account_data_fieldNames[21],onClick: () => {Burger_Leaderboard_popup.setContent(generateLeaderboardTable(Account_data, 21)).openOn(map);},},
 					],},
 				],
 			},
 		],
 	}).addTo(map);
+
+// These are pulsing markers for Tax Break Points/Zones
+L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City0);
+L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City0);
+L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City1);
+L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City1);
+L.marker(xy([24962, 16852])).addTo(Layer1_TaxBreakPoints_City1);
+L.marker(xy([24962, 16852]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City1);
+L.marker(xy([3460, 449])).addTo(Layer1_TaxBreakPoints_City1);
+L.marker(xy([3460, 449]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City1);
+L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City2);
+L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City2);
+L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City3);
+L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City3);
+L.marker(xy([0, 0])).addTo(Layer1_TaxBreakPoints_City4);
+L.marker(xy([0, 0]), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City4);
 map.setView( [0, 0], -1)
 </script>
 </body>
