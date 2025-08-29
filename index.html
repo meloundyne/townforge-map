@@ -177,7 +177,7 @@ tr:nth-child(even) {
 		</button>
 	<button id="Calculate_influence_button" title='Calculate Influence of Flags on Selection' style="line-height: 1;"
 		onclick='
-			if (map.hasLayer(featureGroup_Legend) == 0) {
+			if (map.hasLayer(featureGroup_Legend) == false) {
 				document.getElementById("Calculate_influence_button").style.background="Lime";
 				document.getElementById("Calculate_influence_button").style.border="2px solid Green";
 				featureGroup_Legend.addTo(map).clearLayers();
@@ -187,32 +187,37 @@ tr:nth-child(even) {
 				legend_owner.remove();
 				legend_EcoPow.remove();
 				}
-			else if (map.hasLayer(featureGroup_Legend) == 1) {
+			else if (map.hasLayer(featureGroup_Legend) == true) {
 				document.getElementById("Calculate_influence_button").style.background="White";
 				document.getElementById("Calculate_influence_button").style.border="1px solid Gray";
 				featureGroup_Legend.remove();
 				legend_Influence_calculator.remove();
-				if (map.hasLayer(LayerStyle_Role) == 1) {legend_role.addTo(map)};
-				if (map.hasLayer(LayerStyle_Repair) == 1) {legend_repair.addTo(map)};
-				if (map.hasLayer(LayerStyle_Owner) == 1) {legend_owner.addTo(map)};
-				if (map.hasLayer(LayerStyle_EconomicPower) == 1) {legend_EcoPow.addTo(map)};
+				if (map.hasLayer(LayerStyle_Role) == true) {legend_role.addTo(map)};
+				if (map.hasLayer(LayerStyle_Repair) == true) {legend_repair.addTo(map)};
+				if (map.hasLayer(LayerStyle_Owner) == true) {legend_owner.addTo(map)};
+				if (map.hasLayer(LayerStyle_EconomicPower) == true) {legend_EcoPow.addTo(map)};
 				}
 			'>
 		Influence Calculator 
 		</button>
-	<button id="Disable_Highlight_Button" title='Disable Highlighted Flags' onclick='Show_only_account_id = 0;Reset_style_of_Geojson_Flags_Layers();document.getElementById("Disable_Highlight_Button").style.display = "none";'>
+	<button id="Disable_Highlight_Button" title='Disable Highlighted Flags' onclick='Show_only_account_id = 0;resetStyleOfAll_Layer1_Flags_City();document.getElementById("Disable_Highlight_Button").style.display = "none";'>
 		Disable Highlighting Flags
 		</button>
 	</div>
 <script type="text/javascript" src="GeoJSON_Flags_data.js"></script>
-<script type="text/javascript" src="Arrays_AccountsCitiesRolesColors_data.js"></script>
+<script type="text/javascript" src="Arrays_AccountCity_data.js"></script>
 <script>
 function generateAll_Flags_city() {
 	globalThis.All_Flags_city = []
 	let CityNumber = 0
-	while (CityNumber != 9999) {
-		eval('if (typeof Flags_city' + CityNumber + ' !== "undefined"){ All_Flags_city[CityNumber] = Flags_city' + CityNumber + ' ; CityNumber += 1 }')
-		eval('if (typeof Flags_city' + CityNumber + ' === "undefined"){CityNumber = 9999}')
+	while (true) {
+		if (eval('typeof Flags_city' + CityNumber) !== "undefined") {
+			All_Flags_city[CityNumber] = eval('Flags_city' + CityNumber)
+			CityNumber += 1
+			}
+		else {
+			break;
+			}
 		}
 	}
 
@@ -250,24 +255,24 @@ function declareLayer0_City() {
 	City_data.forEach((value, index) => {
 		eval('globalThis.Layer0_City' + index + ' = L.geoJson([])') 
 		if (index == 0) {
-			eval('Layer0_City' + index + '.addTo(map)')
+			eval('Layer0_City' + index).addTo(map)
 			}
 		});
 	}
 
 function declareLayer0_City0_events() {
 	City_data.forEach((value, index) => {
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_Firefighting_City' + index + '.addTo(Layer0_Overlay_Firefighting);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_TaxBreakPoints_City' + index + '.addTo(Layer0_Overlay_TaxBreakPoints);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_Image_RoleFlags_City' + index + '.addTo(Layer0_Overlay_RoleImages);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer1_TextFlagSize_City' + index + '.addTo(Layer0_Overlay_TextFlagSize);});')
-		eval('Layer0_City' + index + '.on("add",(e)=>{Layer0_City' + index + '.bringToBack();});')
-		
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_Firefighting_City' + index + '.removeFrom(Layer0_Overlay_Firefighting);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_TaxBreakPoints_City' + index + '.removeFrom(Layer0_Overlay_TaxBreakPoints);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_Image_RoleFlags_City' + index + '.removeFrom(Layer0_Overlay_RoleImages);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{Layer1_TextFlagSize_City' + index + '.removeFrom(Layer0_Overlay_TextFlagSize);});')
-		eval('Layer0_City' + index + '.on("remove",(e)=>{map.removeLayer(SearchMarker);});')
+		eval('Layer0_City' + index).on("add",(e)=>{eval('Layer1_Firefighting_City' + index).addTo(Layer0_Overlay_Firefighting);})
+		eval('Layer0_City' + index).on("add",(e)=>{eval('Layer1_TaxBreakPoints_City' + index).addTo(Layer0_Overlay_TaxBreakPoints);})
+		eval('Layer0_City' + index).on("add",(e)=>{eval('Layer1_Image_RoleFlags_City' + index).addTo(Layer0_Overlay_RoleImages);})
+		eval('Layer0_City' + index).on("add",(e)=>{eval('Layer1_TextFlagSize_City' + index).addTo(Layer0_Overlay_TextFlagSize);})
+		eval('Layer0_City' + index).on("add",(e)=>{eval('Layer0_City' + index).bringToBack();})
+
+		eval('Layer0_City' + index).on("remove",(e)=>{eval('Layer1_Firefighting_City' + index).removeFrom(Layer0_Overlay_Firefighting);})
+		eval('Layer0_City' + index).on("remove",(e)=>{eval('Layer1_TaxBreakPoints_City' + index).removeFrom(Layer0_Overlay_TaxBreakPoints);})
+		eval('Layer0_City' + index).on("remove",(e)=>{eval('Layer1_Image_RoleFlags_City' + index).removeFrom(Layer0_Overlay_RoleImages);})
+		eval('Layer0_City' + index).on("remove",(e)=>{eval('Layer1_TextFlagSize_City' + index).removeFrom(Layer0_Overlay_TextFlagSize);})
+		eval('Layer0_City' + index).on("remove",(e)=>{map.removeLayer(SearchMarker);})
 		});
 	}
 
@@ -281,48 +286,44 @@ function declareLayer0_Overlays() {
 
 function declareLayerStyle_Role() {
 	globalThis.LayerStyle_Role = L.featureGroup([]).addTo(map)
-	LayerStyle_Role.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_role.addTo(map)};})
+	LayerStyle_Role.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == false) {legend_role.addTo(map)};})
 	LayerStyle_Role.on('remove',(e)=>{legend_role.remove();})
 	City_data.forEach((value, index) => {
-		eval('LayerStyle_Role.on("add",(e)=>{Layer1_Flags_ColorByRole_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-		eval('LayerStyle_Role.on("remove",(e)=>{Layer1_Flags_ColorByRole_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		LayerStyle_Role.on("add",(e)=>{resetStyleOfAll_Layer1_Flags_City()})
 		});
 	}
 
 function declareLayerStyle_Repair() {
 	globalThis.LayerStyle_Repair = L.featureGroup([])
-	LayerStyle_Repair.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_repair.addTo(map)};})
+	LayerStyle_Repair.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == false) {legend_repair.addTo(map)};})
 	LayerStyle_Repair.on('remove',(e)=>{legend_repair.remove();})
 	City_data.forEach((value, index) => {
-		eval('LayerStyle_Repair.on("add",(e)=>{Layer1_Flags_ColorByRepair_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-		eval('LayerStyle_Repair.on("remove",(e)=>{Layer1_Flags_ColorByRepair_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		LayerStyle_Repair.on("add",(e)=>{resetStyleOfAll_Layer1_Flags_City()})
 		});
 	}
 
 function declareLayerStyle_Owner() {
 	globalThis.LayerStyle_Owner = L.featureGroup([])
-	LayerStyle_Owner.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_owner.addTo(map)};})
+	LayerStyle_Owner.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == false) {legend_owner.addTo(map)};})
 	LayerStyle_Owner.on('remove',(e)=>{legend_owner.remove();})
 	City_data.forEach((value, index) => {
-		eval('LayerStyle_Owner.on("add",(e)=>{Layer1_Flags_ColorByOwner_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-		eval('LayerStyle_Owner.on("remove",(e)=>{Layer1_Flags_ColorByOwner_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		LayerStyle_Owner.on("add",(e)=>{resetStyleOfAll_Layer1_Flags_City()})
 		});
 	}
 
 function declareLayerStyle_EconomicPower() {
 	globalThis.LayerStyle_EconomicPower = L.featureGroup([])
-	LayerStyle_EconomicPower.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == 0) {legend_EcoPow.addTo(map)};})
+	LayerStyle_EconomicPower.on('add',(e)=>{if (map.hasLayer(featureGroup_Legend) == false) {legend_EcoPow.addTo(map)};})
 	LayerStyle_EconomicPower.on('remove',(e)=>{legend_EcoPow.remove();})
 	City_data.forEach((value, index) => {
-		eval('LayerStyle_EconomicPower.on("add",(e)=>{Layer1_Flags_ColorByEcoPow_City' + index + '.addTo(Layer0_City' + index + ').bringToBack();})')
-		eval('LayerStyle_EconomicPower.on("remove",(e)=>{Layer1_Flags_ColorByEcoPow_City' + index + '.removeFrom(Layer0_City' + index + ');})')
+		LayerStyle_EconomicPower.on("add",(e)=>{resetStyleOfAll_Layer1_Flags_City()})
 		});
 	}
 
 function declareLayer1_Image_InactiveFlags_City() {
 	City_data.forEach((value, index) => {
 		eval('globalThis.Layer1_Image_InactiveFlags_City' + index + ' = L.featureGroup([])') 
-		eval('Layer1_Image_InactiveFlags_City' + index + '.addTo(Layer0_City' + index + ')')
+		eval('Layer1_Image_InactiveFlags_City' + index).addTo(eval('Layer0_City' + index))
 		});
 	}
 	
@@ -338,38 +339,19 @@ function declareLayer1_TextFlagSize_City() {
 		});
 	}
 
-function declareLayer1_Flags_ColorByRole_City() {
+function declareLayer1_Flags_City() {
 	City_data.forEach((value, index) => {
-		eval('globalThis.Layer1_Flags_ColorByRole_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Role,onEachFeature})') 
-		if (index == 0) {
-			eval('Layer1_Flags_ColorByRole_City' + index + '.addTo(Layer0_City' + index + ')')
-			}
+		eval('globalThis.Layer1_Flags_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Flags,onEachFeature})')
+		eval('Layer1_Flags_City' + index).addTo(eval('Layer0_City' + index))
 		});
-	}
-
-function declareLayer1_Flags_ColorByRepair_City() {
-	City_data.forEach((value, index) => {
-		eval('globalThis.Layer1_Flags_ColorByRepair_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Repair,onEachFeature})') 
-		});
-	}
-	
-function declareLayer1_Flags_ColorByOwner_City() {
-	City_data.forEach((value, index) => {
-		eval('globalThis.Layer1_Flags_ColorByOwner_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Owner,onEachFeature})') 
-		});
-	}
-	
-function declareLayer1_Flags_ColorByEcoPow_City() {
-	City_data.forEach((value, index) => {
-		eval('globalThis.Layer1_Flags_ColorByEcoPow_City' + index + ' = L.geoJson(Flags_city' + index + ',{style:Style_Economic_Power,onEachFeature})') 
-		});
+		
 	}
 
 function declareLayer1_Firefighting_City() {
 	City_data.forEach((value, index) => {
 		eval('globalThis.' + 'Layer1_Firefighting_City' + index + ' = L.layerGroup([])')
 		if (index == 0) {
-			eval('Layer1_Firefighting_City' + index + '.addTo(Layer0_Overlay_Firefighting)')
+			eval('Layer1_Firefighting_City' + index).addTo(Layer0_Overlay_Firefighting)
 			}
 		});
 	}
@@ -378,7 +360,7 @@ function declareLayer1_TaxBreakPoints_City() {
 	City_data.forEach((value, index) => {
 		eval('globalThis.' + 'Layer1_TaxBreakPoints_City' + index + ' = L.layerGroup([])')
 		if (index == 0) {
-			eval('Layer1_TaxBreakPoints_City' + index + '.addTo(Layer0_Overlay_TaxBreakPoints)')
+			eval('Layer1_TaxBreakPoints_City' + index).addTo(Layer0_Overlay_TaxBreakPoints)
 			}
 		});
 	}
@@ -417,8 +399,8 @@ function createInactiveImagesOnFlags(feature) {
 function generateTaxBreakPoints() {
 	City_data.forEach((value, index) => {
 		City_data[index][8].forEach((value) => {
-			eval('L.marker(xy([' + value[0] + ', ' + value[1] + '])).addTo(Layer1_TaxBreakPoints_City'+ index +')')
-			eval('L.marker(xy([' + value[0] + ', ' + value[1] + ']), {icon: cssIcon}).addTo(Layer1_TaxBreakPoints_City' + index + ')')
+			L.marker(xy([value[0], value[1]])).addTo(eval('Layer1_TaxBreakPoints_City'+ index))
+			L.marker(xy([value[0], value[1]]), {icon: cssIcon}).addTo(eval('Layer1_TaxBreakPoints_City' + index))
 			});
 		});
 	}
@@ -440,11 +422,11 @@ function createMilitaryFirefightingLayer(feature) {
 		const y0=( feature.geometry.coordinates[0][0][1] - firefighting_influence )
 		const y1=( feature.geometry.coordinates[0][2][1] + firefighting_influence )
 		const Firefighting_Rectangle = L.rectangle([xy([x0, y0]),xy([x1, y1])], {color: 'DarkSlateGray',fillColor: 'LightGreen', weight: 3, fillOpacity: 0.5, interactive: false})
-		eval('Firefighting_Rectangle.addTo(Layer1_Firefighting_City' + feature.properties.city + ');')
+		Firefighting_Rectangle.addTo(eval('Layer1_Firefighting_City' + feature.properties.city ))
 		}
 	}
 
-// POKUD AUTOCOMPLETE FUNKCI DAM PRIMO DO BUTTON ONCLICK PAK TO TAM NEFUNGUJE MUSUIM TO MIT TAKHLE
+// POKUD AUTOCOMPLETE FUNKCI DAM PRIMO DO BUTTON ONCLICK PAK TO TAM NEFUNGUJE MUSIM TO MIT TAKHLE
 function runAutocomplete_flag_id() {
 	autocomplete(document.getElementById("myInput1"), Autocomplete_FlagId);
 	}
@@ -493,16 +475,16 @@ function GoToFlag_Button_2() {
 
 function Jump_to_Flag_from_ID(value) {
 	value = Number(value)
-	for (const cityGeoJSON of All_Flags_city) {
-		const feature = cityGeoJSON.features.find(f => f.id === value);
+	for (const Flags_city of All_Flags_city) {
+		const feature = Flags_city.features.find(f => f.id === value);
 		if (feature) {
 			const x = ( feature.geometry.coordinates[0][0][0] + ( ( feature.geometry.coordinates[0][2][0] - feature.geometry.coordinates[0][0][0] ) / 2 ));
 			const y = ( feature.geometry.coordinates[0][0][1] + ( ( feature.geometry.coordinates[0][2][1] - feature.geometry.coordinates[0][0][1] ) / 2 ));
 			const city = feature.properties.city
 			City_data.forEach((value, index) => {
-				eval('Layer0_City' + index + '.removeFrom(map)') 
+				eval('Layer0_City' + index).removeFrom(map)
 				});
-			eval('Layer0_City' + city + '.addTo(map)')
+			eval('Layer0_City' + city).addTo(map)
 			map.closePopup();
 			map.removeLayer(SearchMarker);
 			SearchMarker = new L.marker(xy([x, y])).on('click', function(e) { map.removeLayer(SearchMarker);});
@@ -537,7 +519,7 @@ function Search_Button_3() {
 
 function Show_only_account_id_3() {
 	Show_only_account_id = Autocomplete_AccountName.indexOf(document.getElementById('search_form_3').elements[0].value);
-	Reset_style_of_Geojson_Flags_Layers();
+	resetStyleOfAll_Layer1_Flags_City();
 	document.getElementById("Disable_Highlight_Button").style.display = "flex";
 	document.getElementById("button03").disabled = true;
 	}
@@ -562,23 +544,20 @@ function Search_Button_4() {
 
 function Show_only_account_id_4() {
 	Show_only_account_id = Autocomplete_AccountHouse.indexOf(document.getElementById('search_form_4').elements[0].value);
-	Reset_style_of_Geojson_Flags_Layers();
+	resetStyleOfAll_Layer1_Flags_City();
 	document.getElementById("Disable_Highlight_Button").style.display = "flex";
 	document.getElementById("button04").disabled = true;
 	}
 
-function Reset_style_of_Geojson_Flags_Layers() {
+function resetStyleOfAll_Layer1_Flags_City() {
 	City_data.forEach((value, index) => {
-		eval('Layer1_Flags_ColorByRole_City' + index + '.resetStyle()')
-		eval('Layer1_Flags_ColorByRepair_City' + index + '.resetStyle()')
-		eval('Layer1_Flags_ColorByOwner_City' + index + '.resetStyle()')
-		eval('Layer1_Flags_ColorByEcoPow_City' + index + '.resetStyle()')
+		eval('Layer1_Flags_City' + index).resetStyle()
 		});
 	}
 
 function getFlagIDFromName(FlagName) {
-	for (const cityGeoJSON of All_Flags_city) {
-		const feature = cityGeoJSON.features.find(f => f.properties.name === FlagName);
+	for (const Flags_city of All_Flags_city) {
+		const feature = Flags_city.features.find(f => f.properties.name === FlagName);
 		if (feature) {
 			console.log('Flag Name To ID: "' + FlagName + '" = ' + feature.id)
 			return feature.id
@@ -588,8 +567,8 @@ function getFlagIDFromName(FlagName) {
 	}
 
 function getFlagInfoFromID(FlagID) {
-	for (const cityGeoJSON of All_Flags_city) {
-		const feature = cityGeoJSON.features.find(f => f.id === FlagID);
+	for (const Flags_city of All_Flags_city) {
+		const feature = Flags_city.features.find(f => f.id === FlagID);
 		if (feature) {
 			let html =''
 			html += '<table style="white-space: nowrap;width: 100%;"><tr><td>Name:</td><td><b>'
@@ -622,9 +601,9 @@ function getFlagInfoFromID(FlagID) {
 function getAllFlagsForID(AccountID) {
 	const breakAfter = 20;
 	let cityResults = [];
-	All_Flags_city.forEach((cityGeoJSON, index) => {
-		if (!cityGeoJSON || !cityGeoJSON.features) return;
-		const filteredFeatures = cityGeoJSON.features.filter(feature =>
+	All_Flags_city.forEach((Flags_city, index) => {
+		if (!Flags_city || !Flags_city.features) return;
+		const filteredFeatures = Flags_city.features.filter(feature =>
 			feature.properties.owner == AccountID
 		);
 		if (filteredFeatures.length === 0) return;
@@ -648,7 +627,7 @@ function getAllFlagsForID(AccountID) {
 
 function generateLeaderboardTable(ArrayWithData, IndexInSubArray) {
 	const entries = Object.entries(ArrayWithData).filter(([key, value]) => !isNaN(key) && Array.isArray(value));
-	entries.sort((a,b) => Number(b[1][IndexInSubArray]) - Number(a[1][IndexInSubArray]));
+	entries.sort((a,b) => b[1][IndexInSubArray] - a[1][IndexInSubArray]);
 	let html = `<table class='popup_table'>`;
 	html += `<thead><tr><th colspan="3"><h2>${Account_data_fieldNames[IndexInSubArray]} Leaderboard</h2></th></tr></thead><tbody>`;
 	html += `<thead><tr><td><u><b>House</b></u></td><td><u><b>Name</b></u></td><td><u><b>${Account_data_fieldNames[IndexInSubArray]}</b></u></td></tr></thead><tbody>`;
@@ -686,9 +665,9 @@ function function_select_first_marker_onMapClickAddMarker (e) {
 	document.getElementById("InfluenceButton2").disabled = false;
 	document.getElementById("InfluenceButton3").disabled = false;
 	this.map.removeEventListener('click');
-	marker_first.remove();
-	marker_first = L.marker(e.latlng, {draggable: true});
-	marker_first.addTo(featureGroup_Legend);
+	SelectionMarkerFirst.remove();
+	SelectionMarkerFirst = L.marker(e.latlng, {draggable: true});
+	SelectionMarkerFirst.addTo(featureGroup_Legend);
 	}
 
 function function_select_second_marker(e) {
@@ -714,9 +693,9 @@ function function_select_second_marker_onMapClickAddMarker (e) {
 	document.getElementById("InfluenceButton2").disabled = false;
 	document.getElementById("InfluenceButton3").disabled = false;
 	this.map.removeEventListener('click');
-	marker_second.remove();
-	marker_second = L.marker(e.latlng, {draggable: true});
-	marker_second.addTo(featureGroup_Legend);
+	SelectionMarkerSecond.remove();
+	SelectionMarkerSecond = L.marker(e.latlng, {draggable: true});
+	SelectionMarkerSecond.addTo(featureGroup_Legend);
 	}
 
 function function_get_selection_influence () {
@@ -727,18 +706,18 @@ function function_get_selection_influence () {
 	let Selection_city = 0
 	let Selection_is_empty = true
 	let Influence_from_role_percent = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	Selection_x0 = Math.min(marker_first.getLatLng().lng, marker_second.getLatLng().lng)// Longitude
-	Selection_y0 = Math.min(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
-	Selection_x1 = Math.max(marker_first.getLatLng().lng, marker_second.getLatLng().lng)// Longitude
-	Selection_y1 = Math.max(marker_first.getLatLng().lat, marker_second.getLatLng().lat)// Latitude
+	Selection_x0 = Math.min(SelectionMarkerFirst.getLatLng().lng, SelectionMarkerSecond.getLatLng().lng)// Longitude
+	Selection_y0 = Math.min(SelectionMarkerFirst.getLatLng().lat, SelectionMarkerSecond.getLatLng().lat)// Latitude
+	Selection_x1 = Math.max(SelectionMarkerFirst.getLatLng().lng, SelectionMarkerSecond.getLatLng().lng)// Longitude
+	Selection_y1 = Math.max(SelectionMarkerFirst.getLatLng().lat, SelectionMarkerSecond.getLatLng().lat)// Latitude
 	City_data.forEach((value, index) => {
-		eval('if (map.hasLayer(Layer0_City' + index + ') == 1) { Selection_city = ' + index + ' }')
+		if (map.hasLayer(eval('Layer0_City' + index)) == true) { Selection_city = index }
 		});
-	const temp1 = marker_first.getLatLng()
-	const temp2 = marker_second.getLatLng()
+	const temp1 = SelectionMarkerFirst.getLatLng()
+	const temp2 = SelectionMarkerSecond.getLatLng()
 	featureGroup_Legend.clearLayers();
-	marker_first = L.marker(temp1, {draggable: true}).addTo(featureGroup_Legend);
-	marker_second = L.marker(temp2, {draggable: true}).addTo(featureGroup_Legend);
+	SelectionMarkerFirst = L.marker(temp1, {draggable: true}).addTo(featureGroup_Legend);
+	SelectionMarkerSecond = L.marker(temp2, {draggable: true}).addTo(featureGroup_Legend);
 	rectangle_from_markers = L.rectangle([xy([Selection_x0, Selection_y0]),xy([Selection_x1, Selection_y1])], {color: 'Blue',fillColor: 'SkyBlue', weight: 3, fillOpacity: 0.9, interactive: false}).addTo(featureGroup_Legend);
 	L.geoJson(All_Flags_city, {
 		onEachFeature: function(feature, layer){
@@ -838,7 +817,7 @@ function function_highlightFeature(e) {
 		layer.bringToFront();
 		info.update(layer.feature);
 		
-		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == 1) {
+		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == true) {
 			if (layer.feature.properties.role != 0) {
 				const influence = layer.feature.properties.inf
 				const coordinates = [
@@ -866,7 +845,7 @@ function function_resetHighlight(e) {
 		layer.bringToBack();
 		info.update();
 
-		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == 1) {
+		if (map.hasLayer(Layer0_Overlay_InfluenceMouseOver) == true) {
 			Influence_Rectangle_MouseOver.removeFrom(Layer0_Overlay_InfluenceMouseOver)
 			}
 	}
@@ -876,7 +855,7 @@ function onEachFeature(feature, layer) {
 			mouseover: function_highlightFeature,	
 			mouseout: function_resetHighlight,	
 			});
-		var popup_text=(`
+		const popup_text=(`
 		<table class='popup_table'>
 		<tr><td>Name:</td>				<td><b>${feature.properties.name}</b></td></tr>
 		<tr><td>Owner:</td>				<td>${Account_data[feature.properties.owner][1]}</td></tr>
@@ -892,78 +871,49 @@ function onEachFeature(feature, layer) {
 		layer.bindPopup(popup_text,{maxWidth: 1000,});
 	}
 
-function Style_Role(feature) {
-	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_role(feature.properties.role)
-		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_role(feature.properties.role)
-		};
+function Style_Flags(feature) {
 	return {
 		weight: 1,
 		opacity: 1,
 		color: getColor_active(feature.properties.active),
 		dashArray: '4',
 		fillOpacity: 0.8,
-		fillColor: color
-		};
-	}
-	
-function Style_Repair(feature) {
-	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_repair(feature.properties.repair)
-		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_repair(feature.properties.repair)
-		};
-	return {
-		weight: 1,
-		opacity: 1,
-		color: getColor_active(feature.properties.active),
-		dashArray: '4',
-		fillOpacity: 0.8,
-		fillColor: color
+		fillColor: getFillColorFlag(feature)
 		};
 	}
 
-function Style_Owner(feature) {
+function getFillColorFlag(feature){
 	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_owner(Account_data[feature.properties.owner][0])
-		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_owner(Account_data[feature.properties.owner][0])
-		};
-	return {
-		weight: 1,
-		opacity: 1,
-		color: getColor_active(feature.properties.active),
-		dashArray: '4',
-		fillOpacity: 0.8,
-		fillColor: color
-		};
+	if (Show_only_account_id == false) {
+		if (map.hasLayer(LayerStyle_Role) == true) {
+			color = getColor_role(feature.properties.role)
+			}
+		else if (map.hasLayer(LayerStyle_Repair) == true) {
+			color = getColor_repair(feature.properties.repair)
+			}
+		else if (map.hasLayer(LayerStyle_Owner) == true) {
+			color = getColor_owner(Account_data[feature.properties.owner][0])
+			}
+		else if (map.hasLayer(LayerStyle_EconomicPower) == true) {
+			color = getColor_Economic_Power(feature.properties.ep)
+			}
 	}
-
-function Style_Economic_Power(feature) {
-	let color = 'LightGray'
-	if (Show_only_account_id == 0) {
-		color = getColor_Economic_Power(feature.properties.ep)
-		}
-	else if (Show_only_account_id != 0 && Show_only_account_id == feature.properties.owner) {
-		color = getColor_Economic_Power(feature.properties.ep)
-		};
-	return {
-		weight: 1,
-		opacity: 1,
-		color: getColor_active(feature.properties.active),
-		dashArray: '4',
-		fillOpacity: 0.8,
-		fillColor: color
-		};
+	else if (Show_only_account_id == feature.properties.owner) {
+		if (map.hasLayer(LayerStyle_Role) == true) {
+			color = getColor_role(feature.properties.role)
+			}
+		else if (map.hasLayer(LayerStyle_Repair) == true) {
+			color = getColor_repair(feature.properties.repair)
+			}
+		else if (map.hasLayer(LayerStyle_Owner) == true) {
+			color = getColor_owner(Account_data[feature.properties.owner][0])
+			}
+		else if (map.hasLayer(LayerStyle_EconomicPower) == true) {
+			color = getColor_Economic_Power(feature.properties.ep)
+			}
 	}
-
+	return color
+	}
 function getColor_role(FlagRole) {
 	return  FlagRoleColors[FlagRole]
 	}
@@ -993,8 +943,8 @@ function getColor_owner(AccountHouseName) {
 	const g = (sum * 41) % 256; // prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97
 	const b = (sum * 67) % 256;
 	return `#${[r, g, b]
-	.map((x) => x.toString(16).padStart(2, '0'))
-	.join('')}`;
+		.map((x) => x.toString(16).padStart(2, '0'))
+		.join('')}`;
 	}
 
 function getColor_Economic_Power(FlagEconomicPower) {
@@ -1015,7 +965,7 @@ function parseDate(StringWithGeneratedTime) {
   
 function update_tick_timer() {
 	const now = new Date();
-	let diff = Generated_time_edited - now; // ms difference
+	let diff = Generated_time_edited - now;
 	diff = Math.abs(diff);
 	const totalSeconds = Math.floor(diff / 1000);
 	const hours = Math.floor(totalSeconds / 3600);
@@ -1026,7 +976,7 @@ function update_tick_timer() {
 
 function generateBaseMapsChooser() {
 	City_data.forEach((value, index) => {
-		eval('baseMaps["' + value[0] + '"] = ' + 'Layer0_City' + index)
+		baseMaps[value[0]] = eval('Layer0_City' + index)
 		});
 	}
 
@@ -1049,7 +999,7 @@ function generateCityBoundsOrangeRectangles() {
 			y0 -= 1000
 			x1 += 1000
 			y1 += 1000
-			eval(`L.rectangle([xy([x0, y0]),xy([x1, y1])], {color: "Orange",fill: false, weight: 10}).bindPopup("<abbr style='white-space: nowrap;'>No Flag is beyond this line<abbr>").addTo(Layer0_City` +  index + `)`)
+			L.rectangle([xy([x0, y0]),xy([x1, y1])], {color: "Orange",fill: false, weight: 10}).bindPopup("<abbr style='white-space: nowrap;'>No Flag is beyond this line<abbr>").addTo(eval(`Layer0_City` +  index))
 			}
 		)
 	}
@@ -1162,8 +1112,8 @@ let SearchMarker = L.marker()
 const Select_Ignore_interactive_map_Rectangle = L.rectangle([[-10000000, -10000000],[10000000, 10000000]], {color: "gray", weight: 0, fillOpacity: 0, interactive: true});
 let Influence_Rectangle_MouseOver
 let Show_only_account_id = 0
-let marker_first = L.marker([0,0])
-let marker_second = L.marker([0,0])
+let SelectionMarkerFirst = L.marker([0,0])
+let SelectionMarkerSecond = L.marker([0,0])
 let rectangle_from_markers
 
 //<!-- Pulsing Marker -->
@@ -1194,10 +1144,10 @@ const SimpleGraticuleOptions = {
 	zoomIntervals: [
 		{start: -5, end: -4, interval: 2048},
 		{start: -3, end: -3, interval: 1024},
-		{start: -2, end: -2, interval: 512},
-		{start: -1, end: -1, interval: 256},
-		{start: 0, end: 1, interval: 128},
-		{start: 2, end: 3, interval: 64}
+		{start: -2, end: -2, interval: 512 },
+		{start: -1, end: -1, interval: 256 },
+		{start:  0, end:  1, interval: 128 },
+		{start:  2, end:  3, interval: 64  }
 		]
 	};
 L.simpleGraticule(SimpleGraticuleOptions).addTo(map);
@@ -1214,16 +1164,13 @@ declareLayer0_Overlays();
 declareLayer1_Image_InactiveFlags_City();
 declareLayer1_Image_RoleFlags_City();
 declareLayer1_TextFlagSize_City();
-declareLayer1_Flags_ColorByRole_City();
-declareLayer1_Flags_ColorByRepair_City();
-declareLayer1_Flags_ColorByOwner_City();
-declareLayer1_Flags_ColorByEcoPow_City();
-declareLayer1_Firefighting_City();
-declareLayer1_TaxBreakPoints_City();
 declareLayerStyle_Role();
 declareLayerStyle_Repair();
 declareLayerStyle_Owner();
 declareLayerStyle_EconomicPower();
+declareLayer1_Flags_City();
+declareLayer1_Firefighting_City();
+declareLayer1_TaxBreakPoints_City();
 declareLayer0_City0_events();
 declareLegend();
 generate_RoleImg_InactiveImg_FlagSizeText_MilitaryFirefightingLayer();
