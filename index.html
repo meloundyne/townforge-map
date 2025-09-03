@@ -8,17 +8,22 @@
 <!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
 	<link rel="stylesheet" href="./dist/L.SimpleGraticule.css" />
 	<script src="./dist/L.SimpleGraticule.js"></script>
-<!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
+<!-- _______________________ -->
 
 <!-- https://github.com/BenPortner/leaflet-burgermenu --> 
 	<link rel="stylesheet" href="./dist/leaflet-burgermenu.css"/>
 	<script src="./dist/leaflet-burgermenu.umd.min.js"></script>
-<!-- https://github.com/BenPortner/leaflet-burgermenu -->
+<!-- _______________________ -->
 
 <!-- Autocomplete on forms --> 
 	<link rel="stylesheet" href="./dist/my-autocomplete.css"/>
 	<script src="./dist/my-autocomplete.js"></script>
-<!-- Autocomplete on forms --> 
+<!-- _______________________ -->
+
+<!-- https://github.com/KoGor/leaflet-fullHash -->
+<!-- https://gist.github.com/relet/6b73fccc6cb2636f1e60c6a5ddc6bf1b -->
+	<script src="./dist/leaflet.fullhash.js"></script>
+<!-- _______________________ -->
 <style>
 #map {
 	height: 100%;
@@ -980,6 +985,22 @@ function generateBaseMapsChooser() {
 		});
 	}
 
+function generateAllMapLayers_for_link_hash() {
+	City_data.forEach((value, index) => {
+		HashMapLayers[value[0].replace(/\s+/g, '_')] = eval('Layer0_City' + index)
+		});
+	HashMapLayers['Fi'] = Layer0_Overlay_Firefighting
+	HashMapLayers['TB'] = Layer0_Overlay_TaxBreakPoints
+	HashMapLayers['RI'] = Layer0_Overlay_RoleImages
+	HashMapLayers['FI'] = Layer0_Overlay_InfluenceMouseOver
+	HashMapLayers['FS'] = Layer0_Overlay_TextFlagSize
+	HashMapLayers['Ro'] = LayerStyle_Role
+	HashMapLayers['Re'] = LayerStyle_Repair
+	HashMapLayers['Ow'] = LayerStyle_Owner
+	HashMapLayers['Ep'] = LayerStyle_EconomicPower
+	HashMapLayers['.'] = Layer0_simpleGraticule
+	}
+
 function generateCityBoundsOrangeRectangles() {
 	All_Flags_city.forEach(
 		(Flags_cityN, index) => {
@@ -1150,7 +1171,8 @@ const SimpleGraticuleOptions = {
 		{start:  2, end:  3, interval: 64  }
 		]
 	};
-L.simpleGraticule(SimpleGraticuleOptions).addTo(map);
+Layer0_simpleGraticule = L.featureGroup([]).addTo(map)
+L.simpleGraticule(SimpleGraticuleOptions).addTo(Layer0_simpleGraticule);
 //<!-- https://github.com/ablakey/Leaflet.SimpleGraticule --> 
 generateAll_Flags_city();
 generateMapBounds();
@@ -1314,6 +1336,10 @@ var overlays = {
 var overlays_overlays = {};
 var layerControl = L.control.layers(baseMaps,baseMaps_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
 var layerControl = L.control.layers(overlays,overlays_overlays,{ collapsed:false, position:'topleft' }).addTo(map);
+
+var HashMapLayers = new Object();
+generateAllMapLayers_for_link_hash()
+var hash = new L.Hash(map, HashMapLayers);
 
 const Burger_Search_popup = L.popup({maxWidth: 1000, className: 'popup_without_tip', autoClose: true, closeOnClick: false}).setLatLng(xy([0, 0]))
 L.control.burgerMenu({
