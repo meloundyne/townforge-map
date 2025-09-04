@@ -644,7 +644,7 @@ function generateLeaderboardTable(ArrayWithData, IndexInSubArray) {
 	}
 
 function formatNumberWithDots(NumberWithoutDots) {
-	return NumberWithoutDots.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	return NumberWithoutDots.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 
 function function_select_first_marker(e) {
