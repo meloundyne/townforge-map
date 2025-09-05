@@ -637,14 +637,36 @@ function generateLeaderboardTable(ArrayWithData, IndexInSubArray) {
 	html += `<thead><tr><th colspan="3"><h2>${Account_data_fieldNames[IndexInSubArray]} Leaderboard</h2></th></tr></thead><tbody>`;
 	html += `<thead><tr><td><u><b>House</b></u></td><td><u><b>Name</b></u></td><td><u><b>${Account_data_fieldNames[IndexInSubArray]}</b></u></td></tr></thead><tbody>`;
 	for (const [index, accountArray] of entries) {
-		html += `<tr><td>${Account_data[index][0]}</td><td>${Account_data[index][1]}</td><td align="right">${formatNumberWithDots(accountArray[IndexInSubArray])}</td></tr>`;
+		let IndexInSubArray_value = accountArray[IndexInSubArray]
+		IndexInSubArray_value = formatNumberWithDots(IndexInSubArray_value)
+		if (IndexInSubArray == 23) { // for sustained gold
+			IndexInSubArray_value = accountArray[IndexInSubArray] / 100000000
+			IndexInSubArray_value = formatNumberWithDots(IndexInSubArray_value)
+			IndexInSubArray_value = formatNumber_8ZeroesAfterDot(IndexInSubArray_value)
+			}
+		html += `<tr><td>${Account_data[index][0]}</td><td>${Account_data[index][1]}</td><td align="right">${IndexInSubArray_value}</td></tr>`;
 		}
 	html += `</tbody></table>`;
 	return html;
 	}
 
+function formatNumber_8ZeroesAfterDot(str) {
+	if (!str.includes('.')) {
+		return str + '.' + '0'.repeat(8);
+		}
+	const [beforeDot, afterDot = ''] = str.split('.');
+	const paddedAfterDot = afterDot.padEnd(8, '0');
+	return `${beforeDot}.${paddedAfterDot}`;
+	}
+
 function formatNumberWithDots(NumberWithoutDots) {
-	return NumberWithoutDots.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	const Halves_of_number = NumberWithoutDots.toString().split('.')
+	let FinalNumber = Halves_of_number[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	if(typeof Halves_of_number[1] != 'undefined') {
+		FinalNumber += '.'
+		FinalNumber += Halves_of_number[1]
+		}
+	return FinalNumber
 	}
 
 function function_select_first_marker(e) {
