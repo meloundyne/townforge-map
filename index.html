@@ -639,24 +639,15 @@ function generateLeaderboardTable(ArrayWithData, IndexInSubArray) {
 	for (const [index, accountArray] of entries) {
 		let IndexInSubArray_value = accountArray[IndexInSubArray]
 		IndexInSubArray_value = formatNumberWithDots(IndexInSubArray_value)
-		if (IndexInSubArray == 23) { // for sustained gold
+		if (IndexInSubArray == 23) { // for sustained gold (whole gold)
 			IndexInSubArray_value = accountArray[IndexInSubArray] / 100000000
+			IndexInSubArray_value = Math.trunc(IndexInSubArray_value)
 			IndexInSubArray_value = formatNumberWithDots(IndexInSubArray_value)
-			IndexInSubArray_value = formatNumber_8ZeroesAfterDot(IndexInSubArray_value)
 			}
 		html += `<tr><td>${Account_data[index][0]}</td><td>${Account_data[index][1]}</td><td align="right">${IndexInSubArray_value}</td></tr>`;
 		}
 	html += `</tbody></table>`;
 	return html;
-	}
-
-function formatNumber_8ZeroesAfterDot(str) {
-	if (!str.includes('.')) {
-		return str + '.' + '0'.repeat(8);
-		}
-	const [beforeDot, afterDot = ''] = str.split('.');
-	const paddedAfterDot = afterDot.padEnd(8, '0');
-	return `${beforeDot}.${paddedAfterDot}`;
 	}
 
 function formatNumberWithDots(NumberWithoutDots) {
